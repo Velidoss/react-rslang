@@ -1,15 +1,18 @@
-import React from 'react';
-import './App.css';
+import React, { Fragment } from 'react';
+import { Container } from '@material-ui/core';
 
 function App() {
   const a = 2;
 
   return (
-    <div className="App">
-      hello, world!
-      {' '}
-      {a}
-    </div>
+    <>
+      <Container>
+        132
+        {' '}
+        {a}
+      </Container>
+    </>
+
   );
 }
 
