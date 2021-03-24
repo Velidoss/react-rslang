@@ -1,9 +1,14 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
 
 const MiniGames = () => (
   <Typography>
-    Minigames component
+    <Grid container>
+      <NavLink to="/savannah">
+        Саванна
+      </NavLink>
+    </Grid>
   </Typography>
 );
 

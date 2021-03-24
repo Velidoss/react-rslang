@@ -1,0 +1,74 @@
+{
+  "words" : [
+    {
+      "id" : 0,
+      "word" : "Cat",
+      "translation": "Кот"
+    },
+    {
+      "id" : 1,
+      "word" : "Bag",
+      "translation": "Портфель"
+    },    
+    {
+      "id" : 2,
+      "word" : "Forest",
+      "translation": "Лес"
+    },    
+    {
+      "id" : 3,
+      "word" : "Mountain",
+      "translation": "Гора"
+    },    
+    {
+      "id" : 4,
+      "word" : "Sky",
+      "translation": "Небо"
+    },    
+    {
+      "id" : 5,
+      "word" : "Sun",
+      "translation": "Солнце"
+    },    
+    {
+      "id" : 6,
+      "word" : "Clouds",
+      "translation": "Тучи"
+    },    
+    {
+      "id" : 7,
+      "word" : "Water",
+      "translation": "Вода"
+    },    
+    {
+      "id" : 8,
+      "word" : "River",
+      "translation": "Река"
+    },    
+    {
+      "id" : 9,
+      "word" : "Lake",
+      "translation": "Озеро"
+    },    
+    {
+      "id" : 10,
+      "word" : "Hill",
+      "translation": "Склон"
+    },    
+    {
+      "id" : 11,
+      "word" : "Elk",
+      "translation": "Олень"
+    },    
+    {
+      "id" : 12,
+      "word" : "Wolf",
+      "translation": "Волк"
+    },    
+    {
+      "id" : 13,
+      "word" : "Dog",
+      "translation": "Собака"
+    }
+  ]
+}
