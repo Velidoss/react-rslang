@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import savannahConstants from '../../../../constants/savannahContants';
-import SavannahStart from '../../SavannahStart/SavannahStart';
+import SavannahStart from '../SavannahStart/SavannahStart';
 import {
   setGameActive, setWrongAnswer, setRightAnswer, setGameFinished, eraseGameState,
 } from '../../../../store/savannahReducer/savannahActionCreators';
