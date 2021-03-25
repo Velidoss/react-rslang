@@ -5,8 +5,8 @@ import { Container, Button } from '@material-ui/core';
 const SavannahActive = ({ makeAnswer, words, finishGame }) => {
   const [wordGroup, setWordGroup] = useState(0);
 
-  const onCLick = (word) => {
-    makeAnswer(word);
+  const onCLick = (group, answer) => {
+    makeAnswer(group, answer);
     setWordGroup(wordGroup + 1);
   };
 
@@ -24,7 +24,9 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
       }
       {
       words[wordGroup].map((word) => (
-        <Button key={word.id} onClick={() => onCLick(word.word)}>{word.translation}</Button>
+        <Button key={word.id} onClick={() => onCLick(words[wordGroup], word.word)}>
+          {word.translation}
+        </Button>
       ))
     }
     </Container>

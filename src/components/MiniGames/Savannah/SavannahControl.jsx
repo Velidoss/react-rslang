@@ -18,11 +18,11 @@ const SavannhaControl = () => {
 
   const startGame = () => dispatch(setGameActive());
 
-  const makeAnswer = (wordsGroup, answer) => {
-    const result = checkIfAnswerIsRight(wordsGroup, answer);
+  const makeAnswer = (wordGroup, answer) => {
+    const result = checkIfAnswerIsRight(wordGroup, answer);
     return result
-      ? setRightAnswer()
-      : setWrongAnswer();
+      ? dispatch(setRightAnswer())
+      : dispatch(setWrongAnswer());
   };
 
   const finishGame = () => {

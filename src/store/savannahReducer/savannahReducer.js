@@ -29,9 +29,9 @@ const savannahReducer = (state = initialState, action) => {
     case SET_ANSWER:
       return { ...state };
     case SET_RIGHT_ANSWER:
-      return { ...state, rightAnswers: { ...state.rightAnswers + 1 } };
+      return { ...state, rightAnswers: state.rightAnswers + 1 };
     case SET_WRONG_ANSWER:
-      return { ...state, wrongAnswers: { ...state.wrongAnswers + 1 } };
+      return { ...state, wrongAnswers: state.wrongAnswers + 1 };
     case FETCH_WORDS:
       return { ...state, words: createWordsForSavannah([...action.payload.words]) };
     default:
