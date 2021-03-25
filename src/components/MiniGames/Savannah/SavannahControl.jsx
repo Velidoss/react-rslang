@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import savannahConstants from '../../../constants/savannahContants';
 import SavannahStart from './SavannahStart';
 import {
-  setGameActive, setWrongAnswer, setRightAnswer, setGameFinished,
+  setGameActive, setWrongAnswer, setRightAnswer, setGameFinished, eraseGameState,
 } from '../../../store/savannahReducer/savannahReducer';
 import savannahSelector from '../../../store/selectors/savannahSelector';
 import SavannahActive from './SavannahActive';
@@ -44,6 +44,7 @@ const SavannhaControl = () => {
     case GAME_STATE_RESULT:
       return (
         <SavannahResult
+          eraseGameState={() => dispatch(eraseGameState())}
           right={state.rightAnswers}
           wrong={state.wrongAnswers}
         />

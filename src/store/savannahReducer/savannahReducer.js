@@ -1,6 +1,6 @@
 import getWords from '../../api/getWords';
 import {
-  SET_GAME_STATE, SET_ANSWER, FETCH_WORDS, SET_RIGHT_ANSWER, SET_WRONG_ANSWER,
+  SET_GAME_STATE, SET_ANSWER, FETCH_WORDS, SET_RIGHT_ANSWER, SET_WRONG_ANSWER, ERASE_GAME_STATE,
 } from './savannahReducerActions';
 import savannahConstants from '../../constants/savannahContants';
 import createWordsForSavannah from '../../utils/createWordsForSavannah';
@@ -32,6 +32,14 @@ const savannahReducer = (state = initialState, action) => {
       return { ...state, rightAnswers: state.rightAnswers + 1 };
     case SET_WRONG_ANSWER:
       return { ...state, wrongAnswers: state.wrongAnswers + 1 };
+    case ERASE_GAME_STATE:
+      return {
+        ...state,
+        gameState: GAME_STATE_START,
+        rightAnswers: 0,
+        wrongAnswers: 0,
+        words: [],
+      };
     case FETCH_WORDS:
       return { ...state, words: createWordsForSavannah([...action.payload.words]) };
     default:
@@ -55,6 +63,10 @@ export const setRightAnswer = () => ({
 
 export const setWrongAnswer = () => ({
   type: SET_WRONG_ANSWER,
+});
+
+export const eraseGameState = () => ({
+  type: ERASE_GAME_STATE,
 });
 
 export const getWordsFromAPI = () => async (dispatch) => {
