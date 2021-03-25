@@ -8,6 +8,7 @@ import {
 import savannahSelector from '../../../store/selectors/savannahSelector';
 import SavannahActive from './SavannahActive';
 import checkIfAnswerIsRight from '../../../utils/checkIfAnswerIsRight';
+import SavannahResult from './SavannahResult';
 
 const SavannhaControl = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,12 @@ const SavannhaControl = () => {
         />
       );
     case GAME_STATE_RESULT:
-      return <div>result</div>;
+      return (
+        <SavannahResult
+          right={state.rightAnswers}
+          wrong={state.wrongAnswers}
+        />
+      );
     default:
       return <SavannahStart startGame={startGame} />;
   }
