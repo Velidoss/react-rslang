@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Button } from '@material-ui/core';
-import useCounter from './utils/useCounter';
+import useCounter from '../hooks/useCounter';
 
 const SavannahActive = ({ makeAnswer, words, finishGame }) => {
   const [wordGroup, setWordGroup] = useState(0);

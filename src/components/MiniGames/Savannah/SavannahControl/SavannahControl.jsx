@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import savannahConstants from '../../../constants/savannahContants';
-import SavannahStart from './SavannahStart';
+import savannahConstants from '../../../../constants/savannahContants';
+import SavannahStart from '../../SavannahStart/SavannahStart';
 import {
   setGameActive, setWrongAnswer, setRightAnswer, setGameFinished, eraseGameState,
-} from '../../../store/savannahReducer/savannahActionCreators';
-import savannahSelector from '../../../store/selectors/savannahSelector';
-import SavannahActive from './SavannahActive';
-import checkIfAnswerIsRight from '../../../utils/checkIfAnswerIsRight';
-import SavannahResult from './SavannahResult';
+} from '../../../../store/savannahReducer/savannahActionCreators';
+import savannahSelector from '../../../../store/selectors/savannahSelector';
+import SavannahActive from '../SavannahActive/SavannahActive';
+import checkIfAnswerIsRight from '../../../../utils/checkIfAnswerIsRight';
+import SavannahResult from '../SavannahResult/SavannahResult';
 
 const SavannahControl = () => {
   const dispatch = useDispatch();
