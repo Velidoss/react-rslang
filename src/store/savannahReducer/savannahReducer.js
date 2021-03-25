@@ -67,8 +67,8 @@ export const setGameActive = () => (dispatch) => {
   dispatch(setGameState(GAME_STATE_ACTIVE));
 };
 
-export const setGameFinished = () => {
-  setGameState(GAME_STATE_RESULT);
+export const setGameFinished = () => (dispatch) => {
+  dispatch(setGameState(GAME_STATE_RESULT));
 };
 
 export default savannahReducer;

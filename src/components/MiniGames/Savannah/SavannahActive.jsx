@@ -11,12 +11,12 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
   };
 
   useEffect(() => {
-    if (wordGroup === words.length) {
+    if (wordGroup > 0 && wordGroup === words.length) {
       finishGame();
     }
   }, [wordGroup]);
 
-  return words.length > 0 && wordGroup !== words.length - 1 ? (
+  return words.length > 0 && wordGroup < words.length ? (
     <Container>
       {
         words[wordGroup].filter((word) => word.question)

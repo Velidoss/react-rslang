@@ -26,7 +26,7 @@ const SavannhaControl = () => {
   };
 
   const finishGame = () => {
-    setGameFinished();
+    dispatch(setGameFinished());
   };
 
   switch (state.gameState) {
