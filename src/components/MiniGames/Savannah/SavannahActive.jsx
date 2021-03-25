@@ -4,10 +4,12 @@ import { Container, Button } from '@material-ui/core';
 
 const SavannahActive = ({ makeAnswer, words, finishGame }) => {
   const [wordGroup, setWordGroup] = useState(0);
+  const [timeForAnswer, setTimeForAnswer] = useState(5);
 
   const onCLick = (group, answer) => {
     makeAnswer(group, answer);
     setWordGroup(wordGroup + 1);
+    setTimeForAnswer(5);
   };
 
   useEffect(() => {
@@ -16,12 +18,24 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
     }
   }, [wordGroup]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (timeForAnswer > 0) {
+        setTimeForAnswer(timeForAnswer - 1);
+      } else {
+        onCLick(words[wordGroup], null);
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [timeForAnswer]);
+
   return words.length > 0 && wordGroup < words.length ? (
     <Container>
       {
         words[wordGroup].filter((word) => word.question)
           .map((question) => <div key={question.id}>{question.word}</div>)
       }
+      {timeForAnswer}
       {
       words[wordGroup].map((word) => (
         <Button key={word.id} onClick={() => onCLick(words[wordGroup], word.word)}>

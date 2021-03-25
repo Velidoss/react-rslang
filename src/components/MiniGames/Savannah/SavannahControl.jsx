@@ -13,7 +13,6 @@ import SavannahResult from './SavannahResult';
 const SavannhaControl = () => {
   const dispatch = useDispatch();
   const state = useSelector(savannahSelector);
-  console.log(state);
 
   const { GAME_STATE_START, GAME_STATE_ACTIVE, GAME_STATE_RESULT } = savannahConstants.gameStates;
 

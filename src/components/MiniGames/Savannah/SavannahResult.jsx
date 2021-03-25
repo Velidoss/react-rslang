@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
 const SavannahResult = ({ right, wrong, eraseGameState }) => {
-  const calculatePercentage = (x, y) => (x / (x + y)) * 100;
+  const calculatePercentage = (x, y) => ((x / (x + y)) * 100).toFixed(2);
 
   return (
     <div>
@@ -13,11 +13,11 @@ const SavannahResult = ({ right, wrong, eraseGameState }) => {
       <div>{`Wrong: ${wrong}`}</div>
       <NavLink to="/minigames">
         <Button onClick={eraseGameState}>
-          To minigames
+          Другие мини-игры
         </Button>
       </NavLink>
       <Button onClick={eraseGameState}>
-        Play again
+        Сыграть еще раз
       </Button>
     </div>
   );
