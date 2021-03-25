@@ -37,7 +37,7 @@ function App() {
         component="main"
       >
         <Switch>
-          <Route path="/learn" render={() => <Learn />} />
+          <Route path="/learn" component={Learn} />
           <Route path="/minigames" render={() => <MiniGames />} />
           <Route path="/statistics" render={() => <Statistics />} />
           <Route path="/savannah" render={() => <SavannahControl />} />

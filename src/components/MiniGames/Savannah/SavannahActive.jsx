@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Button } from '@material-ui/core';
+import useCounter from './utils/useCounter';
 
 const SavannahActive = ({ makeAnswer, words, finishGame }) => {
   const [wordGroup, setWordGroup] = useState(0);
@@ -12,22 +13,15 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
     setTimeForAnswer(5);
   };
 
+  const timeOutAnswer = () => onCLick(words[wordGroup], null);
+
   useEffect(() => {
     if (wordGroup > 0 && wordGroup === words.length) {
       finishGame();
     }
   }, [wordGroup]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (timeForAnswer > 0) {
-        setTimeForAnswer(timeForAnswer - 1);
-      } else {
-        onCLick(words[wordGroup], null);
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [timeForAnswer]);
+  useCounter({ timeForAnswer, setTimeForAnswer, timeOutAnswer });
 
   return words.length > 0 && wordGroup < words.length ? (
     <Container>

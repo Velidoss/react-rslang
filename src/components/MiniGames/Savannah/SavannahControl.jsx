@@ -4,13 +4,13 @@ import savannahConstants from '../../../constants/savannahContants';
 import SavannahStart from './SavannahStart';
 import {
   setGameActive, setWrongAnswer, setRightAnswer, setGameFinished, eraseGameState,
-} from '../../../store/savannahReducer/savannahReducer';
+} from '../../../store/savannahReducer/savannahActionCreators';
 import savannahSelector from '../../../store/selectors/savannahSelector';
 import SavannahActive from './SavannahActive';
 import checkIfAnswerIsRight from '../../../utils/checkIfAnswerIsRight';
 import SavannahResult from './SavannahResult';
 
-const SavannhaControl = () => {
+const SavannahControl = () => {
   const dispatch = useDispatch();
   const state = useSelector(savannahSelector);
 
@@ -53,4 +53,4 @@ const SavannhaControl = () => {
   }
 };
 
-export default SavannhaControl;
+export default SavannahControl;
