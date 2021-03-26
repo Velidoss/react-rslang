@@ -35,7 +35,7 @@ const savannahReducer = (state = initialState, { type, payload }) => {
         words: [],
       };
     case FETCH_WORDS:
-      return { ...state, words: createWordsForSavannah([...payload.words]) };
+      return { ...state, words: createWordsForSavannah([...payload]) };
     default:
       return { ...state };
   }

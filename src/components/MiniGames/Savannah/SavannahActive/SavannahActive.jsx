@@ -6,7 +6,6 @@ import useCounter from '../hooks/useCounter';
 const SavannahActive = ({ makeAnswer, words, finishGame }) => {
   const [wordGroup, setWordGroup] = useState(0);
   const [timeForAnswer, setTimeForAnswer] = useState(5);
-
   const onCLick = (group, answer) => {
     makeAnswer(group, answer);
     setWordGroup(wordGroup + 1);
@@ -33,7 +32,7 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
       {
       words[wordGroup].map((word) => (
         <Button key={word.id} onClick={() => onCLick(words[wordGroup], word.word)}>
-          {word.translation}
+          {word.wordTranslate}
         </Button>
       ))
     }
