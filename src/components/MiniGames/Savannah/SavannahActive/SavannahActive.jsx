@@ -26,7 +26,12 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
     <Container>
       {
         words[wordGroup].filter((word) => word.question)
-          .map((question) => <div key={question.id}>{question.word}</div>)
+          .map((question) => (
+            <div key={question.id}>
+              {question.word}
+              {' '}
+            </div>
+          ))
       }
       {timeForAnswer}
       {

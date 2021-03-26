@@ -1,6 +1,10 @@
+import createInstance from './createInstance';
+
 const getWords = async () => {
-  const response = await fetch('https://react-rslang-back-48.herokuapp.com/words');
-  return response.json();
+  const request = createInstance('/words', { group: 1, page: 10 });
+  const response = await request.get();
+  console.log(response.data);
+  return response.data;
 };
 
 export default getWords;
