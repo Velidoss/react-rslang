@@ -1,7 +1,7 @@
 import {
   SET_GAME_STATE, FETCH_WORDS, SET_RIGHT_ANSWER, SET_WRONG_ANSWER, ERASE_GAME_STATE,
 } from './savannahReducerActions';
-import savannahConstants from '../../constants/savannahContants';
+import savannahConstants from '../../constants/savannahConstants';
 import createWordsForSavannah from '../../utils/createWordsForSavannah';
 
 const {
