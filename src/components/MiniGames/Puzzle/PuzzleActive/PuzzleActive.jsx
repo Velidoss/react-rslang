@@ -1,67 +1,91 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Container, Button, IconButton } from '@material-ui/core';
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import useCounter from '../../Savannah/hooks/useCounter';
-import wordAudio from '../../../../common/wordAudio';
-import DataAccessContants from '../../../../constants/DataAccessContants';
+import React, { useEffect, useState } from 'react';
+// import PropTypes from 'prop-types';
+import { Container, Button } from '@material-ui/core';
+// import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+// import useCounter from '../../Savannah/hooks/useCounter';
+// import wordAudio from '../../../../common/wordAudio';
+// import DataAccessContants from '../../../../constants/DataAccessContants';
+import getWords from '../../../../api/getWords';
 
-const PuzzleActive = ({ makeAnswer, words, finishGame }) => {
-  console.log(makeAnswer);
-  console.log(words);
-  console.log(finishGame);
+const PuzzleActive = () => {
+  const [data, setData] = useState([]);
+  const [movesCounter, setMovesCounter] = useState(0);
+  const [rightAnswers, setRightAnswers] = useState(0);
+  const [wrongAnswers, setWrongAnswers] = useState(0);
+  let arrOfRandomIndexes;
 
-  const [wordGroup, setWordGroup] = useState(0);
-  const [timeForAnswer, setTimeForAnswer] = useState(5);
+  const createArrOfRandomIndexes = () => {
+    const res = Array(data.length).fill(0).map((item, index) => index);
 
-  const { ApiUrl } = DataAccessContants;
+    for (let i = res.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [res[i], res[j]] = [res[j], res[i]];
+    }
 
-  const onCLick = (group, answer) => {
-    makeAnswer(group, answer);
-    setWordGroup(wordGroup + 1);
-    setTimeForAnswer(5);
+    return res;
   };
 
-  const timeOutAnswer = () => onCLick(words[wordGroup], null);
-
   useEffect(() => {
-    if (wordGroup > 0 && wordGroup === words.length) {
-      finishGame();
+    getWords().then((arrays) => setData(arrays));
+    arrOfRandomIndexes = createArrOfRandomIndexes();
+    console.log(arrOfRandomIndexes);
+    console.log(data);
+  }, [data.length]);
+
+  // const checkIsAnswerRight = () => {
+  //   if (data[index]) {
+  //     setRightAnswers(rightAnswers + 1);
+  //   } else {
+  //     setWrongAnswers(wrongAnswers + 1);
+  //   }
+  // };
+
+  const increment = (rightOrWrong) => {
+    if (rightOrWrong === 'right') {
+      setRightAnswers(rightAnswers + 1);
+    } else {
+      setWrongAnswers(wrongAnswers + 1);
     }
-  }, [wordGroup]);
 
-  useCounter({ timeForAnswer, setTimeForAnswer, timeOutAnswer });
+    setMovesCounter(movesCounter + 1);
+  };
 
-  return words.length > 0 && wordGroup < words.length ? (
-    <Container>
-      {
-        words[wordGroup].filter((word) => word.question)
-          .map((question) => (
-            <div key={question.id}>
-              {question.word}
-              {' '}
-              <IconButton onClick={() => wordAudio(`${ApiUrl}/${question.audio}`).play()}>
-                <VolumeUpIcon />
-              </IconButton>
-            </div>
-          ))
-      }
-      {timeForAnswer}
-      {
-        words[wordGroup].map((word) => (
-          <Button key={word.id} onClick={() => onCLick(words[wordGroup], word.word)}>
-            {word.wordTranslate}
-          </Button>
-        ))
-      }
-    </Container>
-  ) : <div />;
-};
+  const createQuestion = () => {
+    console.log('creating question');
 
-PuzzleActive.propTypes = {
-  makeAnswer: PropTypes.func.isRequired,
-  words: PropTypes.arrayOf({}).isRequired,
-  finishGame: PropTypes.func.isRequired,
+    return (
+      <Container>
+        <div>
+          task:
+          {data[movesCounter]?.textExampleTranslate}
+        </div>
+        <div>field</div>
+        <div>blocks</div>
+        <Button onClick={() => increment('right')}>
+          right:
+          {rightAnswers}
+        </Button>
+        <Button onClick={() => increment('wrong')}>
+          wrong:
+          {wrongAnswers}
+        </Button>
+        <div>{movesCounter}</div>
+      </Container>
+    );
+  };
+
+  // if (movesCounter < data.length) {
+  if (true) {
+    return createQuestion();
+  }
+
+  return null;
+  // return (
+  //   <Container>
+  //     <Button onClick={() => setMovesCounter(movesCounter + 1)} />
+  //     <div>{movesCounter}</div>
+  //   </Container>
+  // );
 };
 
 export default PuzzleActive;
