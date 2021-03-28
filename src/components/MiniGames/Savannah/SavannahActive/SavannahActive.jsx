@@ -4,13 +4,10 @@ import { Container, Button, IconButton } from '@material-ui/core';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import useCounter from '../hooks/useCounter';
 import wordAudio from '../../../../common/wordAudio';
-import DataAccessContants from '../../../../constants/DataAccessContants';
 
 const SavannahActive = ({ makeAnswer, words, finishGame }) => {
   const [wordGroup, setWordGroup] = useState(0);
   const [timeForAnswer, setTimeForAnswer] = useState(5);
-
-  const { ApiUrl } = DataAccessContants;
 
   const onCLick = (group, answer) => {
     makeAnswer(group, answer);
@@ -36,7 +33,7 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
             <div key={question.id}>
               {question.word}
               {' '}
-              <IconButton onClick={() => wordAudio(`${ApiUrl}/${question.audio}`).play()}>
+              <IconButton onClick={() => wordAudio(question.audio).play()}>
                 <VolumeUpIcon />
               </IconButton>
             </div>

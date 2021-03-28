@@ -1,0 +1,3 @@
+export const FETCH_TEXTBOOK_WORDS = 'FETCH_TEXTBOOK_WORDS';
+
+export default FETCH_TEXTBOOK_WORDS;
