@@ -1,28 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Grid, CircularProgress, List, ListItem, Avatar, IconButton, Typography,
+  Grid, CircularProgress, List,
 } from '@material-ui/core';
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { useDispatch, useSelector } from 'react-redux';
 import textBookSelector from '../../store/selectors/textBookSelector';
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
-import DataAccessContants from '../../constants/DataAccessContants';
 import useTextBookStyles from './useTextBookStyles';
-import readFewAudios from './readFewAudios';
+import TextBookPagination from './TextBookPagination/TextBookPagination';
+import WordItem from './WordItem/WordItem';
 
 const TextBook = () => {
   const classes = useTextBookStyles();
 
+  const [pageNumber, setPageNumber] = useState(0);
+
+  // const [groupNumber, setGroupNumber] = useState(0);
+
   const dispatch = useDispatch();
   const { words } = useSelector(textBookSelector);
 
-  const { ApiUrl } = DataAccessContants;
-
   useEffect(() => {
-    dispatch(getTextBookWords());
-  }, []);
-
-  console.log(words);
+    dispatch(getTextBookWords(0, pageNumber));
+  }, [pageNumber]);
 
   if (words.length === 0) {
     return (
@@ -31,53 +30,21 @@ const TextBook = () => {
   }
 
   return (
-    <Grid container>
+    <Grid container className={classes.container}>
       <Grid item xs={12}>
         <List>
           {
             words.map((word) => (
-              <ListItem key={word.id}>
-                <Grid container direction="row">
-                  <Grid item xs={2}>
-                    <Avatar className={classes.avatar} src={`${ApiUrl}/${word.image}`} />
-                  </Grid>
-                  <Grid item container direction="column" xs={10}>
-                    <Grid item>
-                      <IconButton
-                        onClick={
-                          () => readFewAudios(word.audio, word.audioMeaning, word.audioExample)
-                        }
-                      >
-                        <VolumeUpIcon />
-                      </IconButton>
-                      <Typography variant="span">
-                        {word.word}
-                      </Typography>
-                      <Typography variant="span">
-                        {word.transcription}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography>
-                        Перевод
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="span">
-                        {word.textExample}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="span">
-                        {word.textExampleTranslate}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </ListItem>
+              <WordItem word={word} key={word.id} />
             ))
           }
         </List>
+      </Grid>
+      <Grid>
+        <TextBookPagination
+          currentPage={pageNumber}
+          changePage={(event, number) => setPageNumber(number)}
+        />
       </Grid>
     </Grid>
   );

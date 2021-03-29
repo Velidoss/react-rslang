@@ -37,7 +37,7 @@ function App() {
         component="main"
       >
         <Switch>
-          <Route path="/learn" component={TextBook} />
+          <Route path="/textbook" component={TextBook} />
           <Route path="/minigames" component={MiniGames} />
           <Route path="/statistics" component={Statistics} />
           <Route path="/savannah" component={SavannahControl} />

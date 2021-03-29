@@ -1,3 +1,5 @@
 export const FETCH_TEXTBOOK_WORDS = 'FETCH_TEXTBOOK_WORDS';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
+export const CHANGE_GROUP = 'CHANGE_GROUP';
 
 export default FETCH_TEXTBOOK_WORDS;
