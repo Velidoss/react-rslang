@@ -11,7 +11,7 @@ import useTextBookStyles from '../useTextBookStyles';
 import DataAccessContants from '../../../constants/DataAccessContants';
 import readFewAudios from '../readFewAudios';
 
-const WordItem = ({ word }) => {
+const WordItem = ({ word, showControls, showTranslation }) => {
   const [openStats, toggleOpenStats] = useState(false);
   const { ApiUrl } = DataAccessContants;
 
@@ -41,12 +41,21 @@ const WordItem = ({ word }) => {
               </Typography>
             </Grid>
             <Grid item className={classes.wordControlsItem}>
-              <IconButton>
-                <Star />
-              </IconButton>
-              <IconButton>
-                <Delete />
-              </IconButton>
+              {
+                showControls
+                  ? (
+                    <Grid>
+                      <IconButton>
+                        <Star />
+                      </IconButton>
+                      <IconButton>
+                        <Delete />
+                      </IconButton>
+                    </Grid>
+                  )
+                  : <div />
+              }
+
               <IconButton onClick={() => toggleOpenStats((prev) => !prev)}>
                 {
                   openStats
@@ -58,9 +67,18 @@ const WordItem = ({ word }) => {
 
           </Grid>
           <Grid item>
-            <Typography variant="h5">
-              Перевод
-            </Typography>
+            {
+              showTranslation
+                ? (
+                  <Typography variant="h5">
+                    {
+                      word.wordTranslate
+                    }
+                  </Typography>
+                )
+                : <div />
+            }
+
           </Grid>
           <Grid item>
             <Typography className={classes.wordExplanation} variant="subtitle2">
@@ -89,10 +107,13 @@ WordItem.propTypes = {
     audioMeaning: PropTypes.string.isRequired,
     audioExample: PropTypes.string.isRequired,
     word: PropTypes.string.isRequired,
+    wordTranslate: PropTypes.string.isRequired,
     transcription: PropTypes.string.isRequired,
     textExample: PropTypes.string.isRequired,
     textExampleTranslate: PropTypes.string.isRequired,
   }).isRequired,
+  showControls: PropTypes.bool.isRequired,
+  showTranslation: PropTypes.bool.isRequired,
 };
 
 export default WordItem;

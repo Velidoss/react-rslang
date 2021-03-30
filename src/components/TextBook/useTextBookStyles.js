@@ -4,6 +4,7 @@ const useTextBookStyles = makeStyles(() => ({
   container: {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
+    marginTop: 60,
   },
   wordContainer: {
     borderBottom: '1px solid black',
@@ -24,6 +25,11 @@ const useTextBookStyles = makeStyles(() => ({
   },
   wordTranslatedExplanation: {
     fontWeight: 300,
+  },
+  paginationContainer: {
+    marginTop: 40,
+    display: 'flex',
+    justifyContent: 'center',
   },
   wordControls: {
     display: 'flex',

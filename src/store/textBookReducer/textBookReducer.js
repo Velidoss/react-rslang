@@ -1,9 +1,9 @@
-import { FETCH_TEXTBOOK_WORDS, CHANGE_PAGE, CHANGE_GROUP } from './textBookReducerActions';
+import { FETCH_TEXTBOOK_WORDS, CHANGE_TRANSLATION, CHANGE_CONTROLS } from './textBookReducerActions';
 
 const initialState = {
   words: [],
-  page: 0,
-  group: 0,
+  showTranslation: true,
+  showControls: true,
 };
 
 const textBookReducer = (state = initialState, { type, payload }) => {
@@ -13,15 +13,15 @@ const textBookReducer = (state = initialState, { type, payload }) => {
         ...state,
         words: payload,
       };
-    case CHANGE_PAGE:
+    case CHANGE_TRANSLATION:
       return {
         ...state,
-        page: payload,
+        showTranslation: payload,
       };
-    case CHANGE_GROUP:
+    case CHANGE_CONTROLS:
       return {
         ...state,
-        group: payload,
+        showControls: payload,
       };
     default:
       return { ...state };
