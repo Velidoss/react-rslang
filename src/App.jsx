@@ -11,7 +11,7 @@ import Statistics from './components/Statistics/Statistics';
 import Error404 from './components/Error404/Error404';
 import Footer from './components/Footer/Footer';
 import SavannahControl from './components/MiniGames/Savannah/SavannahControl/SavannahControl';
-import PuzzleControl from './components/MiniGames/Puzzle/PuzzleControl/PuzzleControl';
+import Puzzle from './components/MiniGames/Puzzle/Puzzle/Puzzle';
 
 function App() {
   const useStyles = makeStyles((theme) => ({
@@ -42,7 +42,7 @@ function App() {
           <Route path="/minigames" component={MiniGames} />
           <Route path="/statistics" component={Statistics} />
           <Route path="/savannah" component={SavannahControl} />
-          <Route path="/puzzle" component={PuzzleControl} />
+          <Route path="/puzzle" component={Puzzle} />
           <Route exact path="/" component={Main} />
           <Route path="*" component={Error404} />
         </Switch>

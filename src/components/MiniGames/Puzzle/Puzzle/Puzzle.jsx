@@ -5,7 +5,7 @@ import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
 import Blocks from '../Blocks/Blocks';
 
-const PuzzleActive = () => {
+const Puzzle = () => {
   const [data, setData] = useState([]);
   const [randomIndexes, setRandomIndexes] = useState([]);
   const [choice, setChoice] = useState([]);
@@ -91,7 +91,7 @@ const PuzzleActive = () => {
               </Button>
             </>
           )
-          : <div>Game finished!</div>
+          : <div>Game completed!</div>
       }
 
       <div>{`Right answers: ${rightAnswers}`}</div>
@@ -100,4 +100,4 @@ const PuzzleActive = () => {
   );
 };
 
-export default PuzzleActive;
+export default Puzzle;
