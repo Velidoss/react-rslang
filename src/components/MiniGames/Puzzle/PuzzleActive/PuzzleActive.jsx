@@ -1,91 +1,103 @@
 import React, { useEffect, useState } from 'react';
-// import PropTypes from 'prop-types';
 import { Container, Button } from '@material-ui/core';
-// import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-// import useCounter from '../../Savannah/hooks/useCounter';
-// import wordAudio from '../../../../common/wordAudio';
-// import DataAccessContants from '../../../../constants/DataAccessContants';
 import getWords from '../../../../api/getWords';
+import shuffleArr from '../../../../utils/shuffleArr';
+import removeLast from '../../../../utils/removeLast';
+import Blocks from '../Blocks/Blocks';
 
 const PuzzleActive = () => {
   const [data, setData] = useState([]);
-  const [movesCounter, setMovesCounter] = useState(0);
+  const [randomIndexes, setRandomIndexes] = useState([]);
+  const [choice, setChoice] = useState([]);
+  const [chosen, setChosen] = useState([]);
+
+  const [movesCounter, setMovesCounter] = useState(-1);
   const [rightAnswers, setRightAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
-  let arrOfRandomIndexes;
 
-  const createArrOfRandomIndexes = () => {
-    const res = Array(data.length).fill(0).map((item, index) => index);
-
-    for (let i = res.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [res[i], res[j]] = [res[j], res[i]];
-    }
-
-    return res;
+  const createArrOfRandomIndexes = (len) => {
+    const res = Array(len).fill(0).map((item, index) => index);
+    return shuffleArr(res);
   };
 
+  const getCurrentPhrase = () => (
+    data[randomIndexes[movesCounter]]?.textExample.replace(/<\/?(b|i)>/gi, '')
+  );
+
   useEffect(() => {
-    getWords().then((arrays) => setData(arrays));
-    arrOfRandomIndexes = createArrOfRandomIndexes();
-    console.log(arrOfRandomIndexes);
-    console.log(data);
-  }, [data.length]);
+    getWords().then((words) => {
+      setData(words);
+      const randomArr = createArrOfRandomIndexes(words.length);
+      setRandomIndexes(randomArr);
+      setMovesCounter(movesCounter + 1);
+    });
+  }, []);
 
-  // const checkIsAnswerRight = () => {
-  //   if (data[index]) {
-  //     setRightAnswers(rightAnswers + 1);
-  //   } else {
-  //     setWrongAnswers(wrongAnswers + 1);
-  //   }
-  // };
+  useEffect(() => {
+    if (data.length) {
+      const nextPhrase = getCurrentPhrase().split(' ');
+      setChoice(shuffleArr(nextPhrase));
+      setChosen([]);
+    }
+  }, [movesCounter]);
 
-  const increment = (rightOrWrong) => {
+  const subminAnswer = (rightOrWrong) => {
     if (rightOrWrong === 'right') {
       setRightAnswers(rightAnswers + 1);
+      setMovesCounter(movesCounter + 1);
     } else {
       setWrongAnswers(wrongAnswers + 1);
     }
-
-    setMovesCounter(movesCounter + 1);
   };
 
-  const createQuestion = () => {
-    console.log('creating question');
-
-    return (
-      <Container>
-        <div>
-          task:
-          {data[movesCounter]?.textExampleTranslate}
-        </div>
-        <div>field</div>
-        <div>blocks</div>
-        <Button onClick={() => increment('right')}>
-          right:
-          {rightAnswers}
-        </Button>
-        <Button onClick={() => increment('wrong')}>
-          wrong:
-          {wrongAnswers}
-        </Button>
-        <div>{movesCounter}</div>
-      </Container>
-    );
+  const checkIsAnswerRight = () => {
+    if (chosen.join(' ') === getCurrentPhrase()) {
+      subminAnswer('right');
+    } else {
+      subminAnswer('wrong');
+    }
   };
 
-  // if (movesCounter < data.length) {
-  if (true) {
-    return createQuestion();
-  }
+  const moveTo = (event, upOrDown) => {
+    const word = event.target.textContent;
 
-  return null;
-  // return (
-  //   <Container>
-  //     <Button onClick={() => setMovesCounter(movesCounter + 1)} />
-  //     <div>{movesCounter}</div>
-  //   </Container>
-  // );
+    if (upOrDown === 'down') {
+      setChosen(removeLast(chosen, word));
+      setChoice(choice.concat(word));
+    } else {
+      setChoice(removeLast(choice, word));
+      setChosen(chosen.concat(word));
+    }
+  };
+
+  return (
+    <Container>
+
+      {
+        movesCounter < data.length
+          ? (
+            <>
+              <div>
+                {data[randomIndexes[movesCounter]]?.textExampleTranslate}
+              </div>
+              <div>
+                <Blocks blocks={chosen} action={(event) => moveTo(event, 'down')} />
+              </div>
+              <div>
+                <Blocks blocks={choice} action={(event) => moveTo(event, 'up')} />
+              </div>
+              <Button onClick={checkIsAnswerRight}>
+                check
+              </Button>
+            </>
+          )
+          : <div>Game finished!</div>
+      }
+
+      <div>{`Right answers: ${rightAnswers}`}</div>
+      <div>{`Wrong answers: ${wrongAnswers}`}</div>
+    </Container>
+  );
 };
 
 export default PuzzleActive;
