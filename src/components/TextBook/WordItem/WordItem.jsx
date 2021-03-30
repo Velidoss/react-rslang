@@ -17,8 +17,6 @@ const WordItem = ({ word }) => {
 
   const classes = useTextBookStyles();
 
-  console.log(openStats);
-
   return (
     <ListItem className={classes.wordContainer}>
       <Grid container direction="row">
