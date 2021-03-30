@@ -41,7 +41,7 @@ const Puzzle = () => {
     }
   }, [movesCounter]);
 
-  const subminAnswer = (rightOrWrong) => {
+  const submitAnswer = (rightOrWrong) => {
     if (rightOrWrong === 'right') {
       setRightAnswers(rightAnswers + 1);
       setMovesCounter(movesCounter + 1);
@@ -52,9 +52,9 @@ const Puzzle = () => {
 
   const checkIsAnswerRight = () => {
     if (chosen.join(' ') === getCurrentPhrase()) {
-      subminAnswer('right');
+      submitAnswer('right');
     } else {
-      subminAnswer('wrong');
+      submitAnswer('wrong');
     }
   };
 
