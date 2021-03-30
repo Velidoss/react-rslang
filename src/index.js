@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import store from './store/store';
 import App from './App';
+import '@fontsource/roboto';
+import '@fontsource/lobster';
 
 ReactDOM.render(
   <React.StrictMode>
