@@ -20,6 +20,8 @@ const TextBook = () => {
   const dispatch = useDispatch();
   const { words, showControls, showTranslation } = useSelector(textBookSelector);
 
+  const changePage = (event, number) => setPageNumber(number - 1);
+
   useEffect(() => {
     dispatch(getTextBookWords(groupNumber, pageNumber));
   }, [groupNumber, pageNumber]);
@@ -52,7 +54,7 @@ const TextBook = () => {
       <Grid item container className={classes.paginationContainer}>
         <TextBookPagination
           currentPage={pageNumber}
-          changePage={(event, number) => setPageNumber(number)}
+          changePage={changePage}
         />
       </Grid>
     </Grid>
