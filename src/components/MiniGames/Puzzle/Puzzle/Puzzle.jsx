@@ -21,7 +21,7 @@ const Puzzle = () => {
   };
 
   const getCurrentPhrase = () => (
-    data[randomIndexes[movesCounter]]?.textExample.replace(/<\/?(b|i)>/gi, '')
+    data[randomIndexes[movesCounter]]?.textExample.replace(/<\/?(b|i)>/gi, '').split(' ')
   );
 
   useEffect(() => {
@@ -35,9 +35,9 @@ const Puzzle = () => {
 
   useEffect(() => {
     if (data.length) {
-      const nextPhrase = getCurrentPhrase().split(' ');
-      setChoice(shuffleArr(nextPhrase));
+      const nextPhrase = getCurrentPhrase();
       setChosen([]);
+      setChoice(shuffleArr(nextPhrase));
     }
   }, [movesCounter]);
 
@@ -50,12 +50,22 @@ const Puzzle = () => {
     }
   };
 
+  const convertForComparsion = (word) => word.toLowerCase().replace('.', '').replace(',', '');
+
   const checkIsAnswerRight = () => {
-    if (chosen.join(' ') === getCurrentPhrase()) {
-      submitAnswer('right');
-    } else {
-      submitAnswer('wrong');
+    const currentPhrase = getCurrentPhrase();
+
+    if (currentPhrase.length !== chosen.length) {
+      return submitAnswer('wrong');
     }
+
+    for (let i = 0; i < currentPhrase.length; i++) {
+      if (convertForComparsion(currentPhrase[i]) !== convertForComparsion(chosen[i])) {
+        return submitAnswer('wrong');
+      }
+    }
+
+    return submitAnswer('right');
   };
 
   const moveTo = (event, upOrDown) => {

@@ -10,6 +10,7 @@ const Blocks = ({ blocks, action }) => {
 
       return (
         <Button
+          style={{ textTransform: 'none' }}
           key={id}
           onClick={action}
         >
