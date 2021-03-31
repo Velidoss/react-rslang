@@ -5,6 +5,7 @@ const useTextBookStyles = makeStyles(() => ({
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
     marginTop: 60,
+    overflow: 'hidden',
   },
   wordContainer: {
     borderBottom: '1px solid black',

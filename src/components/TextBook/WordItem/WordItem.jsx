@@ -4,12 +4,12 @@ import {
   Grid, ListItem, Avatar, IconButton, Typography, Divider, Collapse,
 } from '@material-ui/core';
 import {
-  VolumeUp, Star, Delete, KeyboardArrowDown, KeyboardArrowUp,
+  Star, Delete, KeyboardArrowDown, KeyboardArrowUp,
 } from '@material-ui/icons';
 import WordStats from '../WordStats/WordStats';
 import useTextBookStyles from '../useTextBookStyles';
 import DataAccessContants from '../../../constants/DataAccessContants';
-import readFewAudios from '../readFewAudios';
+import WordPlayButton from './WordPlayButton/WordPlayButton';
 
 const WordItem = ({ word, showControls, showTranslation }) => {
   const [openStats, toggleOpenStats] = useState(false);
@@ -26,13 +26,11 @@ const WordItem = ({ word, showControls, showTranslation }) => {
         <Grid item container direction="column" xs={10}>
           <Grid item container className={classes.wordControls}>
             <Grid item className={classes.wordControlsItem}>
-              <IconButton
-                onClick={
-                () => readFewAudios(word.audio, word.audioMeaning, word.audioExample)
-              }
-              >
-                <VolumeUp />
-              </IconButton>
+              <WordPlayButton
+                audio={word.audio}
+                audioMeaning={word.audioMeaning}
+                audioExample={word.audioExample}
+              />
               <Typography variant="h4" className={classes.wordName}>
                 {word.word}
               </Typography>
