@@ -1,5 +1,5 @@
 const removeLast = (arr, word) => {
-  for (let i = arr.length - 1; i >= 0; i--) {
+  for (let i = arr.length - 1; i >= 0; i -= 1) {
     if (arr[i] === word) {
       arr.splice(i, 1);
       break;

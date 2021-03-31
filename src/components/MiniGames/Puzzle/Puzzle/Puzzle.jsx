@@ -20,9 +20,12 @@ const Puzzle = () => {
     return shuffleArr(res);
   };
 
-  const getCurrentPhrase = () => (
-    data[randomIndexes[movesCounter]]?.textExample.replace(/<\/?(b|i)>/gi, '').split(' ')
-  );
+  const removeHtmlTags = (phrase) => phrase.replace(/<\/?(b|i)>/gi, '');
+
+  const getCurrentPhrase = () => {
+    const phrase = data[randomIndexes[movesCounter]]?.textExample;
+    return removeHtmlTags(phrase).split(' ');
+  };
 
   useEffect(() => {
     getWords().then((words) => {
@@ -59,7 +62,7 @@ const Puzzle = () => {
       return submitAnswer('wrong');
     }
 
-    for (let i = 0; i < currentPhrase.length; i++) {
+    for (let i = 0; i < currentPhrase.length; i += 1) {
       if (convertForComparsion(currentPhrase[i]) !== convertForComparsion(chosen[i])) {
         return submitAnswer('wrong');
       }
