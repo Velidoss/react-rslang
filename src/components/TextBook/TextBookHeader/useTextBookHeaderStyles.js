@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useTextBookTitleStyles = makeStyles({
+const useTextBookHeaderStyles = makeStyles({
+  textBookHeaderContainer: {
+    marginTop: 60,
+  },
   button: {
     marginRight: 16,
   },
@@ -10,4 +13,4 @@ const useTextBookTitleStyles = makeStyles({
   },
 });
 
-export default useTextBookTitleStyles;
+export default useTextBookHeaderStyles;

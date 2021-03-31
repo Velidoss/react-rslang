@@ -8,21 +8,21 @@ import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCrea
 import useTextBookStyles from './useTextBookStyles';
 import TextBookPagination from './TextBookPagination/TextBookPagination';
 import WordItem from './WordItem/WordItem';
-import TextBookTitle from './TextBookTitle/TextBookTitle';
+import TextBookHeader from './TextBookHeader/TextBookHeader';
 
 const TextBook = () => {
   const classes = useTextBookStyles();
 
   const [pageNumber, setPageNumber] = useState(0);
 
-  // const [groupNumber, setGroupNumber] = useState(0);
+  const [groupNumber, setGroupNumber] = useState(0);
 
   const dispatch = useDispatch();
   const { words, showControls, showTranslation } = useSelector(textBookSelector);
 
   useEffect(() => {
-    dispatch(getTextBookWords(0, pageNumber));
-  }, [pageNumber]);
+    dispatch(getTextBookWords(groupNumber, pageNumber));
+  }, [groupNumber, pageNumber]);
 
   if (words.length === 0) {
     return (
@@ -32,7 +32,7 @@ const TextBook = () => {
 
   return (
     <Grid container>
-      <TextBookTitle />
+      <TextBookHeader groupNumber={groupNumber} setGroupNumber={setGroupNumber} />
       <Grid container item className={classes.container}>
         <Grid item xs={12}>
           <List>

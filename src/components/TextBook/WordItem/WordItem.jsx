@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Grid, ListItem, Avatar, IconButton, Typography, Divider, Grow,
+  Grid, ListItem, Avatar, IconButton, Typography, Divider, Collapse,
 } from '@material-ui/core';
 import {
   VolumeUp, Star, Delete, KeyboardArrowDown, KeyboardArrowUp,
@@ -78,7 +78,6 @@ const WordItem = ({ word, showControls, showTranslation }) => {
                 )
                 : <div />
             }
-
           </Grid>
           <Grid item>
             <Typography className={classes.wordExplanation} variant="subtitle2">
@@ -90,10 +89,10 @@ const WordItem = ({ word, showControls, showTranslation }) => {
               {word.textExampleTranslate}
             </Typography>
           </Grid>
-          <Divider />
-          <Grow in={openStats}>
+          <Collapse in={openStats}>
+            <Divider />
             <WordStats />
-          </Grow>
+          </Collapse>
         </Grid>
       </Grid>
     </ListItem>

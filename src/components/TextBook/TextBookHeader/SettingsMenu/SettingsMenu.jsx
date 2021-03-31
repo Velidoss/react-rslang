@@ -4,12 +4,12 @@ import {
 import { SettingsApplications } from '@material-ui/icons';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useTextBookTitleStyles from '../useTextBookTitleStyles';
+import useTextBookHeaderStyles from '../useTextBookHeaderStyles';
 import textBookSelector from '../../../../store/selectors/textBookSelector';
 import { changeTranslationStateAC, fetchControlsStateAC } from '../../../../store/textBookReducer/TextBookActionCreators';
 
 const SettingsMenu = () => {
-  const classes = useTextBookTitleStyles();
+  const classes = useTextBookHeaderStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const { showTranslation, showControls } = useSelector(textBookSelector);
@@ -24,7 +24,7 @@ const SettingsMenu = () => {
   };
 
   return (
-    <Grid container>
+    <Grid container item xs={1}>
       <IconButton onClick={handleClick} disableRipple className={classes.button}>
         <SettingsApplications className={classes.buttonIcon} />
       </IconButton>
