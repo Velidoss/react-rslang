@@ -12,7 +12,7 @@ const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
       <GroupsMenu setGroupNumber={setGroupNumber} />
       <SettingsMenu />
       <Grid container item xs={10}>
-        <Typography variant="h3" class={classes.groupName}>
+        <Typography variant="h3" className={classes.groupName}>
           {`Раздел ${groupNumber + 1}`}
         </Typography>
       </Grid>
