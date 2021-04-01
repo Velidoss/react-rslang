@@ -26,7 +26,7 @@ NavDrawerItem.propTypes = {
   path: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  icon: PropTypes.node.isRequired,
+  icon: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default React.memo(NavDrawerItem);

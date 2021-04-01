@@ -18,19 +18,27 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: 'grid',
+    gridTemplate: 'auto / repeat(3, 1fr)',
+    justifyContent: 'center',
+    justifyItems: 'center',
     alignItems: 'center',
   },
   logoRss: {
     width: 'auto',
     height: theme.mixins.toolbar.minHeight * 0.65,
   },
+  rss: {
+    justifySelf: 'left',
+  },
   devs: {
     display: 'flex',
   },
   dev: {
     padding: `0 ${theme.spacing(1)}px`,
+  },
+  year: {
+    justifySelf: 'right',
   },
 }
 ));
@@ -45,22 +53,18 @@ const Footer = () => {
           href="https://rs.school/react/"
           rel="noreferrer"
           target="_blank"
+          className={classes.rss}
         >
-          <LogoRssWhite className={classes.logoRss} width="auto" />
+          <LogoRssWhite className={classes.logoRss} />
         </a>
-        <Box
-          container
-          justify="center"
-          alignItems="center"
-          className={classes.devs}
-        >
+        <Box className={classes.devs}>
           {developers.map((dev) => (
             <div key={dev} className={classes.dev}>
               <DevIcon name={dev} />
             </div>
           ))}
         </Box>
-        <Typography variant="subtitle2">2021</Typography>
+        <Typography variant="subtitle2" className={classes.year}>2021</Typography>
       </Box>
     </footer>
   );
