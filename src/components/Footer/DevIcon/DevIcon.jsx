@@ -30,7 +30,9 @@ const DevIcon = ({ name }) => {
       <Link href={`https://github.com/${name}`} color="inherit">
         <GitHubIcon className={classes.icon} />
       </Link>
-      <Typography variant="body2">{`/${name}`}</Typography>
+      <Typography variant="body2">
+        {`${name}`}
+      </Typography>
     </Box>
   );
 };

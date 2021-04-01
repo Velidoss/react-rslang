@@ -12,30 +12,37 @@ const developers = ['Velidoss', 'arumirinka', 'va-z', 'reagentjs'];
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 'auto',
-    padding: `${theme.spacing(1)}px ${theme.spacing(3)}px`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
   },
   wrapper: {
     width: '100%',
     display: 'grid',
-    gridTemplate: 'auto / repeat(3, 1fr)',
+    gridTemplate: 'auto / 25% 1fr 25%',
     justifyContent: 'center',
     justifyItems: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      gridTemplate: 'auto / 17% 1fr 10%',
+    },
+  },
+  rss: {
+    justifySelf: 'left',
+    display: 'flex',
     alignItems: 'center',
   },
   logoRss: {
     width: 'auto',
     height: theme.mixins.toolbar.minHeight * 0.65,
-  },
-  rss: {
-    justifySelf: 'left',
+    [theme.breakpoints.down('md')]: {
+      height: theme.mixins.toolbar.minHeight * 0.40,
+    },
   },
   devs: {
     display: 'flex',
-  },
-  dev: {
-    padding: `0 ${theme.spacing(1)}px`,
+    justifyContent: 'space-evenly',
+    width: '100%',
   },
   year: {
     justifySelf: 'right',
@@ -58,11 +65,7 @@ const Footer = () => {
           <LogoRssWhite className={classes.logoRss} />
         </a>
         <Box className={classes.devs}>
-          {developers.map((dev) => (
-            <div key={dev} className={classes.dev}>
-              <DevIcon name={dev} />
-            </div>
-          ))}
+          {developers.map((dev) => <DevIcon key={dev} name={dev} />)}
         </Box>
         <Typography variant="subtitle2" className={classes.year}>2021</Typography>
       </Box>
