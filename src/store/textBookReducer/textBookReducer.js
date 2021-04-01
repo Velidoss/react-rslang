@@ -1,4 +1,4 @@
-import { FETCH_TEXTBOOK_WORDS, CHANGE_TRANSLATION, CHANGE_CONTROLS } from './textBookReducerActions';
+import { FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS } from './textBookReducerActions';
 
 const initialState = {
   words: [],
@@ -13,12 +13,12 @@ const textBookReducer = (state = initialState, { type, payload }) => {
         ...state,
         words: payload,
       };
-    case CHANGE_TRANSLATION:
+    case TOGGLE_TRANSLATION:
       return {
         ...state,
         showTranslation: payload,
       };
-    case CHANGE_CONTROLS:
+    case TOGGLE_CONTROLS:
       return {
         ...state,
         showControls: payload,

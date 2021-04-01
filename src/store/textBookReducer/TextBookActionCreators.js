@@ -1,5 +1,5 @@
 import getWords from '../../api/getWords';
-import { FETCH_TEXTBOOK_WORDS, CHANGE_TRANSLATION, CHANGE_CONTROLS } from './textBookReducerActions';
+import { FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS } from './textBookReducerActions';
 
 export const fetchWordsAC = (words) => ({
   type: FETCH_TEXTBOOK_WORDS,
@@ -7,12 +7,12 @@ export const fetchWordsAC = (words) => ({
 });
 
 export const changeTranslationStateAC = (state) => ({
-  type: CHANGE_TRANSLATION,
+  type: TOGGLE_TRANSLATION,
   payload: state,
 });
 
 export const fetchControlsStateAC = (state) => ({
-  type: CHANGE_CONTROLS,
+  type: TOGGLE_CONTROLS,
   payload: state,
 });
 
