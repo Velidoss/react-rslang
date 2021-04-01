@@ -64,29 +64,35 @@ const WordItem = ({ word, showControls, showTranslation }) => {
             </Grid>
 
           </Grid>
-          <Grid item>
-            {
+          {
               showTranslation
                 ? (
-                  <Typography variant="h5">
-                    {
+                  <Grid item>
+                    <Typography variant="h5">
+                      {
                       word.wordTranslate
                     }
-                  </Typography>
+                    </Typography>
+                  </Grid>
                 )
                 : <div />
             }
-          </Grid>
           <Grid item>
             <Typography className={classes.wordExplanation} variant="subtitle2">
               <span dangerouslySetInnerHTML={{ __html: word.textExample }} />
             </Typography>
           </Grid>
-          <Grid item>
-            <Typography className={classes.wordTranslatedExplanation} variant="subtitle2">
-              {word.textExampleTranslate}
-            </Typography>
-          </Grid>
+          {
+            showTranslation
+              ? (
+                <Grid item>
+                  <Typography className={classes.wordTranslatedExplanation} variant="subtitle2">
+                    {word.textExampleTranslate}
+                  </Typography>
+                </Grid>
+              )
+              : <div />
+          }
           <Collapse in={openStats}>
             <Divider />
             <WordStats />
