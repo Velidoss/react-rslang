@@ -1,5 +1,4 @@
 import * as React from 'react';
-//
 import { Grid, Hidden } from '@material-ui/core';
 //
 import NavList from './NavList/NavList';

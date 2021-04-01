@@ -12,22 +12,21 @@ import HeaderAuth from './HeaderAuth/HeaderAuth';
 
 const Header = () => {
   const { pathname } = useLocation();
+  console.log(pathname);
 
   return (
-    <header className={pathname === '/' || 'test'}>
-      <AppBar position="static">
-        <Toolbar>
-          <Grid container justify="space-between" alignItems="center">
-            <Grid item>
-              <HeaderNav />
-            </Grid>
-            <Grid item>
-              <HeaderAuth />
-            </Grid>
+    <AppBar position="static">
+      <Toolbar>
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>
+            <HeaderNav />
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </header>
+          <Grid item>
+            <HeaderAuth />
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 };
 

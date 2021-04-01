@@ -1,5 +1,4 @@
 import * as React from 'react';
-//
 import { Grid } from '@material-ui/core';
 //
 import NavListLink from './NavListLink/NavListLink';

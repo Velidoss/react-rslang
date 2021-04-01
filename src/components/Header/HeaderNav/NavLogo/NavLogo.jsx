@@ -1,5 +1,4 @@
 import * as React from 'react';
-//
 import { makeStyles } from '@material-ui/core';
 //
 import logoRSLang from '../../../../assets/logo-rslang.svg';
