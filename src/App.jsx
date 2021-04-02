@@ -5,7 +5,7 @@ import {
 import { Switch, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
-import Learn from './components/Learn/Learn';
+import TextBook from './components/TextBook/TextBook';
 import MiniGames from './components/MiniGames/MiniGames';
 import Statistics from './components/Statistics/Statistics';
 import Error404 from './components/Error404/Error404';
@@ -18,11 +18,11 @@ function App() {
       display: 'flex',
       flexDirection: 'column',
       minHeight: '100vh',
+      fontFamily: 'Roboto',
     },
     main: {
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
-      background: 'lightblue',
     },
   }));
 
@@ -37,7 +37,7 @@ function App() {
         component="main"
       >
         <Switch>
-          <Route path="/learn" component={Learn} />
+          <Route path="/textbook" component={TextBook} />
           <Route path="/minigames" component={MiniGames} />
           <Route path="/statistics" component={Statistics} />
           <Route path="/savannah" component={SavannahControl} />

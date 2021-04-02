@@ -19,7 +19,7 @@ const Header = () => (
               RS-LANG
             </Button>
           </NavLink>
-          <NavLink activeStyle={{ textDecoration: 'none' }} to="/learn">
+          <NavLink activeStyle={{ textDecoration: 'none' }} to="/textbook">
             <Button variant="contained" color="primary" size="small">
               Учебник
             </Button>
