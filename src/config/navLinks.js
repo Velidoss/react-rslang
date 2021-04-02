@@ -24,7 +24,7 @@ export const navLinks = [
     path: [
       {
         label: 'Саванна',
-        path: '/savanna',
+        path: '/savannah',
         icon: Pets,
       },
       {

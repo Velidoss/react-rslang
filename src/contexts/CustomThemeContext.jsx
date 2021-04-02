@@ -1,7 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-//
-import { CssBaseline, ThemeProvider, useMediaQuery } from '@material-ui/core';
+import {
+  CssBaseline,
+  ThemeProvider,
+  useMediaQuery,
+} from '@material-ui/core';
 //
 import * as themes from '../themes/index';
 

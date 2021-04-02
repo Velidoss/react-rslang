@@ -11,7 +11,11 @@ import { useAuthChange } from '../../../../../../contexts/AuthContext';
 const Login = ({ onClose }) => {
   const dispatch = useDispatch();
   const { login } = useAuthChange();
-  const { register, handleSubmit, errors } = useForm();
+  const {
+    register,
+    handleSubmit,
+    errors,
+  } = useForm();
   const {
     isLoading,
     isError,
@@ -51,3 +55,5 @@ const Login = ({ onClose }) => {
 Login.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
+
+export default React.memo(Login);

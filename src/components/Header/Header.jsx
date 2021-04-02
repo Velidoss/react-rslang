@@ -17,7 +17,11 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Grid container justify="space-between" alignItems="center">
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+        >
           <Grid item>
             <HeaderNav />
           </Grid>
