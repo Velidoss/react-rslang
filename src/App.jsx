@@ -10,7 +10,6 @@ import Statistics from './components/Statistics/Statistics';
 import Error404 from './components/Error404/Error404';
 import Footer from './components/Footer/Footer';
 import SavannahControl from './components/MiniGames/Savannah/SavannahControl/SavannahControl';
-//
 
 function App() {
   const useStyles = makeStyles({

@@ -1,3 +1,5 @@
+import * as React from 'react';
+//
 import * as images from '../../../assets/images/index';
 
 const {
@@ -25,3 +27,7 @@ const featuresConfig = [
     image: featurePlay,
   },
 ];
+
+const Features = () => {
+
+};

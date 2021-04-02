@@ -15,7 +15,7 @@ const CustomThemeProvider = ({ children }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [themeParams, setThemeParams] = React.useState({
     theme: prefersDarkMode ? themes.dark : themes.light,
-    themeName: prefersDarkMode ? 'dark' : 'ligth',
+    themeName: prefersDarkMode ? 'dark' : 'light',
   });
 
   const changeTheme = (value) => {
