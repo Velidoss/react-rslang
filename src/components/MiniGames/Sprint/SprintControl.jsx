@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button } from '@material-ui/core';
+import { Container, Button, CircularProgress } from '@material-ui/core';
 import SprintActive from './SprintActive/SprintActive';
 import SprintResult from './SprintResult/SprintResult';
 import getWords from '../../../api/getWords';
@@ -16,7 +16,7 @@ const shuffle = (array) => {
 };
 
 const SprintControl = () => {
-  const [gameState, setGameState] = useState('GAME_STATE_START');
+  const [gameState, setGameState] = useState('GAME_STATE_LOADING');
   const [wordsArray, setWordsArray] = useState([]);
   const [answersState, setAnswersState] = useState({ right: [], wrong: [] });
   const [questionNum, setQuestionNum] = useState(0);
@@ -38,6 +38,7 @@ const SprintControl = () => {
     wordsArray.map((el) => tmpArr.push({ word: el.word, translation: el.wordTranslate }));
     setQuestionsArr(tmpArr);
     setMixedAnswersArr(shuffle(tmpArr));
+    setGameState('GAME_STATE_START');
   }, [wordsArray]);
 
   const startGame = () => {
@@ -54,6 +55,12 @@ const SprintControl = () => {
           <Button onClick={startGame}>
             Start
           </Button>
+        </Container>
+      );
+    case 'GAME_STATE_LOADING':
+      return (
+        <Container>
+          <CircularProgress />
         </Container>
       );
     case 'GAME_STATE_ACTIVE':
