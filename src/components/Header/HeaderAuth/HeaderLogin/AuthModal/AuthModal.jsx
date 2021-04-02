@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core';
 //
 import TabPanel from '../../../../_common/TabPanel';
-// import Login from './Login/Login';
-// import Register from './Register/Register';
+import Login from './Login/Login';
+import Register from './Register/Register';
 
 const tabsConfig = [
   {
@@ -18,14 +18,14 @@ const tabsConfig = [
     label: 'Логин',
     tabId: 'auth-tab-0',
     tabPanelId: 'auth-tabpanel-0',
-    // content: Login,
+    content: Login,
   },
   {
     index: 1,
     label: 'Регистрация',
     tabId: 'auth-tab-1',
     tabPanelId: 'auth-tabpanel-1',
-    // content: Register,
+    content: Register,
   },
 ];
 
