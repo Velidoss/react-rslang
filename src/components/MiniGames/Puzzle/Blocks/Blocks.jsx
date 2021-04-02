@@ -10,7 +10,8 @@ const Blocks = ({ blocks, action }) => {
 
       return (
         <Button
-          style={{ textTransform: 'none' }}
+          variant="contained"
+          color="inherit"
           key={id}
           onClick={action}
         >

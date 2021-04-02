@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Button } from '@material-ui/core';
+
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
 import Blocks from '../Blocks/Blocks';
+import Answers from '../Answers/Answers';
+import useStyles from '../styles/styles';
 
 const Puzzle = () => {
+  const styles = useStyles();
+
   const [data, setData] = useState([]);
   const [randomIndexes, setRandomIndexes] = useState([]);
   const [choice, setChoice] = useState([]);
@@ -89,31 +94,43 @@ const Puzzle = () => {
   };
 
   return (
-    <Container>
+    <Container className={styles.root}>
 
       {
         movesCounter < data.length
           ? (
             <>
-              <div>
+              <p className="task">
                 {data[randomIndexes[movesCounter]]?.textExampleTranslate}
+              </p>
+              <div className="blocks">
+                <Blocks
+                  blocks={chosen}
+                  action={(event) => moveTo(event, 'down')}
+                />
               </div>
-              <div>
-                <Blocks blocks={chosen} action={(event) => moveTo(event, 'down')} />
+              <div className="blocks">
+                <Blocks
+                  blocks={choice}
+                  action={(event) => moveTo(event, 'up')}
+                />
               </div>
-              <div>
-                <Blocks blocks={choice} action={(event) => moveTo(event, 'up')} />
-              </div>
-              <Button onClick={checkIsAnswerRight}>
+              <Button
+                onClick={checkIsAnswerRight}
+                variant="contained"
+                color="secondary"
+              >
                 check
               </Button>
             </>
           )
-          : <div>Game completed!</div>
+          : <p>Game completed!</p>
       }
 
-      <div>{`Right answers: ${rightAnswers}`}</div>
-      <div>{`Wrong answers: ${wrongAnswers}`}</div>
+      <Answers
+        right={rightAnswers}
+        wrong={wrongAnswers}
+      />
     </Container>
   );
 };
