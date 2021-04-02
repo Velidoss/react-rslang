@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Button } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 
@@ -30,6 +30,21 @@ const SprintActive = ({
 
     showNextQuestion();
   };
+
+  const handleKeydown = (e) => {
+    if (e.key === 'ArrowRight') {
+      checkAnswer('right');
+    } else if (e.key === 'ArrowLeft') {
+      checkAnswer('wrong');
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeydown);
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
+  }, [questionNum]);
 
   return (
     <Container>
