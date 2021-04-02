@@ -1,10 +1,14 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+//
+import Hero from './Hero/Hero';
 
 const Main = () => (
-  <Typography>
-    Main page
-  </Typography>
+  <>
+    <Hero />
+    {/* <Features />
+    <Video />
+    <Team /> */}
+  </>
 );
 
 export default Main;

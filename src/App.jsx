@@ -1,9 +1,8 @@
 import React from 'react';
-import {
-  Container, CssBaseline, makeStyles,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { Switch, Route } from 'react-router-dom';
-import Header from './components/Header/Header';
+//
+import { Header } from './components/Header/Header';
 import Main from './components/Main/Main';
 import TextBook from './components/TextBook/TextBook';
 import MiniGames from './components/MiniGames/MiniGames';
@@ -14,29 +13,20 @@ import SavannahControl from './components/MiniGames/Savannah/SavannahControl/Sav
 import Puzzle from './components/MiniGames/Puzzle/Puzzle/Puzzle';
 
 function App() {
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles({
     root: {
       display: 'flex',
       flexDirection: 'column',
       minHeight: '100vh',
       fontFamily: 'Roboto',
     },
-    main: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-  }));
+  });
 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <Header />
-      <Container
-        className={classes.main}
-        component="main"
-      >
         <Switch>
           <Route path="/textbook" component={TextBook} />
           <Route path="/minigames" component={MiniGames} />
@@ -46,7 +36,6 @@ function App() {
           <Route exact path="/" component={Main} />
           <Route path="*" component={Error404} />
         </Switch>
-      </Container>
       <Footer />
     </div>
   );

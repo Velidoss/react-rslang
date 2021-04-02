@@ -3,6 +3,7 @@ const DataAccessContants = {
   ApiEndPoints: {
     GET_WORDS_ENDPOINT: '/words',
     GET_WORD_WITH_ASSETS: '',
+    SIGN_IN: '/signin',
   },
 };
 
