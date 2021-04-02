@@ -16,7 +16,7 @@ export const navLinks = [
   },
   {
     label: 'Учебник',
-    path: '/learn',
+    path: '/textbook',
     icon: MenuBook,
   },
   {

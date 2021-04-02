@@ -27,15 +27,15 @@ function App() {
   return (
     <div className={classes.root}>
       <Header />
-        <Switch>
-          <Route path="/textbook" component={TextBook} />
-          <Route path="/minigames" component={MiniGames} />
-          <Route path="/statistics" component={Statistics} />
-          <Route path="/savannah" component={SavannahControl} />
-          <Route path="/puzzle" component={Puzzle} />
-          <Route exact path="/" component={Main} />
-          <Route path="*" component={Error404} />
-        </Switch>
+      <Switch>
+        <Route path="/textbook" component={TextBook} />
+        <Route path="/minigames" component={MiniGames} />
+        <Route path="/statistics" component={Statistics} />
+        <Route path="/savannah" component={SavannahControl} />
+        <Route path="/puzzle" component={Puzzle} />
+        <Route exact path="/" component={Main} />
+        <Route path="*" component={Error404} />
+      </Switch>
       <Footer />
     </div>
   );

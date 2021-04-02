@@ -11,5 +11,4 @@ const store = createStore(combineReducers(
   applyMiddleware(thunk),
 ));
 
-
 export default store;
