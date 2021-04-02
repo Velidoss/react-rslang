@@ -11,6 +11,7 @@ import Statistics from './components/Statistics/Statistics';
 import Error404 from './components/Error404/Error404';
 import Footer from './components/Footer/Footer';
 import SavannahControl from './components/MiniGames/Savannah/SavannahControl/SavannahControl';
+import SprintControl from './components/MiniGames/Sprint/SprintControl';
 
 function App() {
   const useStyles = makeStyles((theme) => ({
@@ -41,6 +42,7 @@ function App() {
           <Route path="/minigames" component={MiniGames} />
           <Route path="/statistics" component={Statistics} />
           <Route path="/savannah" component={SavannahControl} />
+          <Route path="/sprint" component={SprintControl} />
           <Route exact path="/" component={Main} />
           <Route path="*" component={Error404} />
         </Switch>
