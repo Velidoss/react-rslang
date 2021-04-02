@@ -24,7 +24,11 @@ const Puzzle = () => {
 
   const getCurrentPhrase = () => {
     const phrase = data[randomIndexes[movesCounter]]?.textExample;
-    return removeHtmlTags(phrase).split(' ');
+    if (phrase) {
+      return removeHtmlTags(phrase).split(' ');
+    }
+
+    return null;
   };
 
   useEffect(() => {
@@ -37,9 +41,10 @@ const Puzzle = () => {
   }, []);
 
   useEffect(() => {
-    if (data.length) {
-      const nextPhrase = getCurrentPhrase();
-      setChosen([]);
+    setChosen([]);
+    const nextPhrase = getCurrentPhrase();
+
+    if (data.length && nextPhrase) {
       setChoice(shuffleArr(nextPhrase));
     }
   }, [movesCounter]);
