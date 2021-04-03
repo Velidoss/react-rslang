@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Container, Button } from '@material-ui/core';
 
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
-import Blocks from '../Blocks/Blocks';
+import Field from '../Field/Field';
 import Answers from '../Answers/Answers';
 import useStyles from '../styles/styles';
+import DataAccessContants from '../../../../constants/DataAccessContants';
+import puzzleConstants from '../../../../constants/puzzleConstants';
+
+const { GROUPS_QUANTITY, PAGES_QUANTITY } = DataAccessContants;
+const { ANIMATION_DURATION } = puzzleConstants;
 
 const Puzzle = () => {
   const styles = useStyles();
@@ -16,9 +21,20 @@ const Puzzle = () => {
   const [choice, setChoice] = useState([]);
   const [chosen, setChosen] = useState([]);
 
+  const [currentPhrase, setCurrentPhrase] = useState('');
+
   const [movesCounter, setMovesCounter] = useState(-1);
   const [rightAnswers, setRightAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
+
+  const checkButton = useRef();
+  const addClassWrong = () => {
+    checkButton.current.classList.add('wrong');
+
+    setTimeout(() => {
+      checkButton.current.classList.remove('wrong');
+    }, ANIMATION_DURATION);
+  };
 
   const createArrOfRandomIndexes = (len) => {
     const res = Array(len).fill(0).map((item, index) => index);
@@ -37,7 +53,10 @@ const Puzzle = () => {
   };
 
   useEffect(() => {
-    getWords().then((words) => {
+    const randomGroup = Math.floor(Math.random() * GROUPS_QUANTITY);
+    const randomPage = Math.floor(Math.random() * PAGES_QUANTITY);
+
+    getWords(randomGroup, randomPage).then((words) => {
       setData(words);
       const randomArr = createArrOfRandomIndexes(words.length);
       setRandomIndexes(randomArr);
@@ -51,6 +70,7 @@ const Puzzle = () => {
 
     if (data.length && nextPhrase) {
       setChoice(shuffleArr(nextPhrase));
+      setCurrentPhrase(nextPhrase);
     }
   }, [movesCounter]);
 
@@ -59,6 +79,7 @@ const Puzzle = () => {
       setRightAnswers(rightAnswers + 1);
       setMovesCounter(movesCounter + 1);
     } else {
+      addClassWrong();
       setWrongAnswers(wrongAnswers + 1);
     }
   };
@@ -66,7 +87,9 @@ const Puzzle = () => {
   const convertForComparsion = (word) => word.toLowerCase().replace('.', '').replace(',', '');
 
   const checkIsAnswerRight = () => {
-    const currentPhrase = getCurrentPhrase();
+    if (checkButton.current.classList.contains('wrong')) {
+      return null;
+    }
 
     if (currentPhrase.length !== chosen.length) {
       return submitAnswer('wrong');
@@ -100,31 +123,25 @@ const Puzzle = () => {
         movesCounter < data.length
           ? (
             <>
-              <p className="task">
+              <h3 className="task">
                 {data[randomIndexes[movesCounter]]?.textExampleTranslate}
-              </p>
-              <div className="blocks">
-                <Blocks
-                  blocks={chosen}
-                  action={(event) => moveTo(event, 'down')}
-                />
-              </div>
-              <div className="blocks">
-                <Blocks
-                  blocks={choice}
-                  action={(event) => moveTo(event, 'up')}
-                />
-              </div>
+              </h3>
+              <Field
+                chosen={chosen}
+                choice={choice}
+                moveTo={moveTo}
+              />
               <Button
                 onClick={checkIsAnswerRight}
                 variant="contained"
                 color="secondary"
+                ref={checkButton}
               >
                 check
               </Button>
             </>
           )
-          : <p>Game completed!</p>
+          : <h3>Game completed!</h3>
       }
 
       <Answers

@@ -1,4 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
+import puzzleConstants from '../../../../constants/puzzleConstants';
+
+const { ANIMATION_DURATION } = puzzleConstants;
 
 const useStyles = makeStyles({
   root: {
@@ -19,6 +22,28 @@ const useStyles = makeStyles({
           marginRight: '2vw',
         },
       },
+    },
+
+    '& .wrong': {
+      animation: `$strafe ${ANIMATION_DURATION}ms linear`,
+    },
+  },
+
+  '@keyframes strafe': {
+    '0%': {
+      transform: 'translateX(0%)',
+    },
+
+    '25%': {
+      transform: 'translateX(-15%)',
+    },
+
+    '75%': {
+      transform: 'translateX(15%)',
+    },
+
+    '100%': {
+      transform: 'translateX(0%)',
     },
   },
 });
