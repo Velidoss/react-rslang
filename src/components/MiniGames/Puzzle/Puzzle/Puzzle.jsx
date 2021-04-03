@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Button } from '@material-ui/core';
 
 import getWords from '../../../../api/getWords';
@@ -13,7 +14,7 @@ import puzzleConstants from '../../../../constants/puzzleConstants';
 const { GROUPS_QUANTITY, PAGES_QUANTITY } = DataAccessContants;
 const { ANIMATION_DURATION } = puzzleConstants;
 
-const Puzzle = () => {
+const Puzzle = ({ resetComponent }) => {
   const styles = useStyles();
 
   const [data, setData] = useState([]);
@@ -26,6 +27,8 @@ const Puzzle = () => {
   const [movesCounter, setMovesCounter] = useState(-1);
   const [rightAnswers, setRightAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
+
+  const isGameActive = () => movesCounter < data.length;
 
   const checkButton = useRef();
   const addClassWrong = () => {
@@ -120,7 +123,7 @@ const Puzzle = () => {
     <Container className={styles.root}>
 
       {
-        movesCounter < data.length
+        isGameActive()
           ? (
             <>
               <h3 className="task">
@@ -131,18 +134,19 @@ const Puzzle = () => {
                 choice={choice}
                 moveTo={moveTo}
               />
-              <Button
-                onClick={checkIsAnswerRight}
-                variant="contained"
-                color="secondary"
-                ref={checkButton}
-              >
-                check
-              </Button>
             </>
           )
           : <h3>Game completed!</h3>
       }
+
+      <Button
+        onClick={isGameActive() ? checkIsAnswerRight : resetComponent}
+        variant="contained"
+        color="secondary"
+        ref={checkButton}
+      >
+        {isGameActive() ? 'check' : 'Start new game'}
+      </Button>
 
       <Answers
         right={rightAnswers}
@@ -150,6 +154,10 @@ const Puzzle = () => {
       />
     </Container>
   );
+};
+
+Puzzle.propTypes = {
+  resetComponent: PropTypes.func.isRequired,
 };
 
 export default Puzzle;
