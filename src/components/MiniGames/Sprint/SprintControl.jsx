@@ -22,6 +22,7 @@ const SprintControl = () => {
   const [questionNum, setQuestionNum] = useState(0);
   const [questionsArr, setQuestionsArr] = useState([]);
   const [mixedAnswersArr, setMixedAnswersArr] = useState([]);
+  const [points, setPoints] = useState(0);
 
   const getWordsArray = async () => {
     const data = await getWords();
@@ -45,6 +46,7 @@ const SprintControl = () => {
     setGameState('GAME_STATE_ACTIVE');
     setAnswersState({ right: [], wrong: [] });
     setQuestionNum(0);
+    setPoints(0);
   };
 
   switch (gameState) {
@@ -72,6 +74,8 @@ const SprintControl = () => {
           setQuestionNum={setQuestionNum}
           answersState={answersState}
           setAnswersState={setAnswersState}
+          points={points}
+          setPoints={setPoints}
           finishGame={() => setGameState('GAME_STATE_RESULT')}
         />
       );
@@ -79,6 +83,7 @@ const SprintControl = () => {
       return (
         <SprintResult
           answersState={answersState}
+          points={points}
           startGame={startGame}
         />
       );
