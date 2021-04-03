@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Button } from '@material-ui/core';
+import { Container, Typography, Button } from '@material-ui/core';
 
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
@@ -32,10 +32,10 @@ const Puzzle = ({ resetComponent }) => {
 
   const checkButton = useRef();
   const addClassWrong = () => {
-    checkButton.current.classList.add('wrong');
+    checkButton.current.classList.add('check__button-wrong');
 
     setTimeout(() => {
-      checkButton.current.classList.remove('wrong');
+      checkButton.current.classList.remove('check__button-wrong');
     }, ANIMATION_DURATION);
   };
 
@@ -90,7 +90,7 @@ const Puzzle = ({ resetComponent }) => {
   const convertForComparsion = (word) => word.toLowerCase().replace('.', '').replace(',', '');
 
   const checkIsAnswerRight = () => {
-    if (checkButton.current.classList.contains('wrong')) {
+    if (checkButton.current.classList.contains('check__button-wrong')) {
       return null;
     }
 
@@ -126,9 +126,9 @@ const Puzzle = ({ resetComponent }) => {
         isGameActive()
           ? (
             <>
-              <h3 className="task">
+              <Typography variant="h5" className="task">
                 {data[randomIndexes[movesCounter]]?.textExampleTranslate}
-              </h3>
+              </Typography>
               <Field
                 chosen={chosen}
                 choice={choice}
@@ -136,7 +136,11 @@ const Puzzle = ({ resetComponent }) => {
               />
             </>
           )
-          : <h3>Game completed!</h3>
+          : (
+            <Typography variant="h5">
+              Game completed!
+            </Typography>
+          )
       }
 
       <Button
@@ -144,6 +148,7 @@ const Puzzle = ({ resetComponent }) => {
         variant="contained"
         color="secondary"
         ref={checkButton}
+        className="check-button"
       >
         {isGameActive() ? 'check' : 'Start new game'}
       </Button>

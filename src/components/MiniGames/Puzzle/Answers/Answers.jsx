@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
 
 const Answers = ({ right, wrong }) => (
   <>
-    <p>
+    <Typography>
       <span>Верных ответов: </span>
       <span>{right}</span>
-    </p>
-    <p>
+    </Typography>
+    <Typography>
       <span>Неверных ответов: </span>
       <span>{wrong}</span>
-    </p>
+    </Typography>
   </>
 );
 

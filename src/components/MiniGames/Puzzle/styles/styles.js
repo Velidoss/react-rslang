@@ -24,7 +24,11 @@ const useStyles = makeStyles({
       },
     },
 
-    '& .wrong': {
+    '& .check__button': {
+      marginBottom: '2rem',
+    },
+
+    '& .check__button-wrong': {
       animation: `$strafe ${ANIMATION_DURATION}ms linear`,
     },
   },
