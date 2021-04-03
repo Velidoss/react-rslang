@@ -15,6 +15,18 @@ const shuffle = (array) => {
   return shuffledArray;
 };
 
+const createQnAArrays = (array) => {
+  const qArray = shuffle([...array]);
+  const shuffledQArray = shuffle([...qArray]);
+  const aArray = [];
+  qArray.map((el, i) => {
+    const num = Math.round(Math.random());
+    aArray.push(num ? qArray[i] : shuffledQArray[i]);
+    return el;
+  });
+  return { qArray, aArray };
+};
+
 const SprintControl = () => {
   const [gameState, setGameState] = useState('GAME_STATE_LOADING');
   const [wordsArray, setWordsArray] = useState([]);
@@ -35,18 +47,23 @@ const SprintControl = () => {
 
   useEffect(() => {
     if (!wordsArray || !wordsArray.length) return;
-    const tmpArr = [];
-    wordsArray.map((el) => tmpArr.push({ word: el.word, translation: el.wordTranslate }));
-    setQuestionsArr(tmpArr);
-    setMixedAnswersArr(shuffle(tmpArr));
     setGameState('GAME_STATE_START');
   }, [wordsArray]);
+
+  const setQnA = () => {
+    const tmpArr = [];
+    wordsArray.map((el) => tmpArr.push({ word: el.word, translation: el.wordTranslate }));
+    const { qArray, aArray } = createQnAArrays(tmpArr);
+    setQuestionsArr(qArray);
+    setMixedAnswersArr(aArray);
+  };
 
   const startGame = () => {
     setGameState('GAME_STATE_ACTIVE');
     setAnswersState({ right: [], wrong: [] });
     setQuestionNum(0);
     setPoints(0);
+    setQnA();
   };
 
   switch (gameState) {
