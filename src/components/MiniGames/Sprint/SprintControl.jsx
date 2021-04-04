@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, CircularProgress } from '@material-ui/core';
+import {
+  Button, CircularProgress, Typography,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import SprintActive from './SprintActive/SprintActive';
 import SprintResult from './SprintResult/SprintResult';
 import getWords from '../../../api/getWords';
+
+const useStyles = makeStyles(() => ({
+  sprintResultP: {
+    textAlign: 'center',
+    margin: '1rem',
+  },
+}));
 
 const shuffle = (array) => {
   const shuffledArray = [...array];
@@ -35,6 +45,8 @@ const SprintControl = () => {
   const [questionsArr, setQuestionsArr] = useState([]);
   const [mixedAnswersArr, setMixedAnswersArr] = useState([]);
   const [points, setPoints] = useState(0);
+
+  const classes = useStyles();
 
   const getWordsArray = async () => {
     const data = await getWords();
@@ -70,17 +82,21 @@ const SprintControl = () => {
     default:
     case 'GAME_STATE_START':
       return (
-        <Container>
-          <Button onClick={startGame}>
+        <Typography className={classes.sprintResultP}>
+          <Button
+            onClick={startGame}
+            variant="contained"
+            color="secondary"
+          >
             Start
           </Button>
-        </Container>
+        </Typography>
       );
     case 'GAME_STATE_LOADING':
       return (
-        <Container>
+        <Typography className={classes.sprintResultP}>
           <CircularProgress />
-        </Container>
+        </Typography>
       );
     case 'GAME_STATE_ACTIVE':
       return (
