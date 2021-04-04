@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
 const SprintResult = ({ answersState, points, startGame }) => {
-  const calcRes = (r = 0, w = 0) => ((r / (r + w)) * 100).toFixed(0);
-  const percentage = calcRes(answersState.right.length, answersState.wrong.length);
+  const calcRes = (r = 0, w = 0) => ((r / (r + w)) * 100) || 0;
+  const percentage = calcRes(answersState.right.length, answersState.wrong.length).toFixed(0);
 
   return (
     <div>
