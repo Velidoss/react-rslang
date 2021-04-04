@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+
+const renderTime = ({ remainingTime }) => {
+  if (remainingTime === 0) {
+    return <div className="timer">Время вышло!</div>;
+  }
+
+  return (
+    <div className="timer">
+      <div className="text">{`${remainingTime > 3 ? 'Осталось' : 'Скорее!'}`}</div>
+      <div className="value">{remainingTime}</div>
+      <div className="text">секунд</div>
+    </div>
+  );
+};
 
 const SprintActive = ({
   questionsArr, mixedAnswersArr, questionNum, setQuestionNum, answersState, setAnswersState,
@@ -79,6 +94,17 @@ const SprintActive = ({
       </div>
       <div>
         {`За верный ответ: +${pointsPerAnswer}.`}
+      </div>
+      <div className="timer__wrapper">
+        <CountdownCircleTimer
+          isPlaying
+          duration={60}
+          size={120}
+          colors={[['#004777', 0.45], ['#019671', 0.45], ['#A30000']]}
+          onComplete={finishGame}
+        >
+          {renderTime}
+        </CountdownCircleTimer>
       </div>
     </Container>
   );
