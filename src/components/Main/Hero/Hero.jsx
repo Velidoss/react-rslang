@@ -18,7 +18,8 @@ const {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: '90vh',
+    height: '80vh',
+    minHeight: '80vh',
     color: '#fff',
     backgroundImage: `url(${heroBackground})`,
     backgroundSize: 'cover',
@@ -28,12 +29,17 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down('xs')]: {
       height: '60vh',
+      minHeight: '60vh',
     },
   },
   container: {
     maxWidth: '100%',
     height: '100%',
-    paddingBottom: theme.spacing(2),
+    paddingBottom: '3vw',
+
+    [theme.breakpoints.down('xs')]: {
+      paddingBottom: '0',
+    },
   },
   textContainer: {
     height: '100%',
