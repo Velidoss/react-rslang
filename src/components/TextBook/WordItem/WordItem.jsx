@@ -62,7 +62,6 @@ const WordItem = ({ word, showControls, showTranslation }) => {
                 }
               </IconButton>
             </Grid>
-
           </Grid>
           {
               showTranslation

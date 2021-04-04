@@ -10,6 +10,7 @@ import { CustomThemeProvider } from './contexts/CustomThemeContext';
 //
 import '@fontsource/roboto';
 import '@fontsource/lobster';
+import AudioContextState from './context/AudioContextState';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +18,9 @@ ReactDOM.render(
       <Provider store={store}>
         <AuthProvider>
           <CustomThemeProvider>
-            <App />
+            <AudioContextState>
+              <App />
+            </AudioContextState>
           </CustomThemeProvider>
         </AuthProvider>
       </Provider>
