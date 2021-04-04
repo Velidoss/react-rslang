@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button } from '@material-ui/core';
+import { Container, Button, Grid } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import './sprintActiveStyles.css';
 
 const renderTime = ({ remainingTime }) => {
   if (remainingTime === 0) {
@@ -77,35 +78,45 @@ const SprintActive = ({
 
   return (
     <Container>
-      <div>
-        {questionsArr[questionNum].word}
-      </div>
-      <div>
-        {mixedAnswersArr[questionNum].translation}
-      </div>
-      <Button onClick={() => handleAnswer('wrong')}>
-        Неверно
-      </Button>
-      <Button onClick={() => handleAnswer('right')}>
-        Верно
-      </Button>
-      <div>
-        {`Очки: ${points}.`}
-      </div>
-      <div>
-        {`За верный ответ: +${pointsPerAnswer}.`}
-      </div>
-      <div className="timer__wrapper">
-        <CountdownCircleTimer
-          isPlaying
-          duration={60}
-          size={120}
-          colors={[['#004777', 0.45], ['#019671', 0.45], ['#A30000']]}
-          onComplete={finishGame}
-        >
-          {renderTime}
-        </CountdownCircleTimer>
-      </div>
+      <Grid container spacing={2} justify="center" alignItems="center">
+        <Grid item xs={12} sm={8}>
+          <div className="sprint-active__main">
+            <div>
+              {questionsArr[questionNum].word}
+            </div>
+            <div>
+              {mixedAnswersArr[questionNum].translation}
+            </div>
+            <div className="sprint-active__buttons">
+              <Button onClick={() => handleAnswer('wrong')}>
+                Неверно
+              </Button>
+              <Button onClick={() => handleAnswer('right')}>
+                Верно
+              </Button>
+            </div>
+            <div>
+              {`Очки: ${points}.`}
+            </div>
+            <div>
+              {`За верный ответ: +${pointsPerAnswer}.`}
+            </div>
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <div className="timer__wrapper">
+            <CountdownCircleTimer
+              isPlaying
+              duration={60}
+              size={120}
+              colors={[['#004777', 0.45], ['#019671', 0.45], ['#A30000']]}
+              onComplete={finishGame}
+            >
+              {renderTime}
+            </CountdownCircleTimer>
+          </div>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
