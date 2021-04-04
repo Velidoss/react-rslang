@@ -1,22 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Typography, Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
 import Field from '../Field/Field';
+import Buttons from '../Buttons/Buttons';
 import Answers from '../Answers/Answers';
-import useStyles from '../styles/styles';
 import DataAccessContants from '../../../../constants/DataAccessContants';
 import puzzleConstants from '../../../../constants/puzzleConstants';
 
-const { GROUPS_QUANTITY, PAGES_QUANTITY } = DataAccessContants;
+const { PAGES_QUANTITY } = DataAccessContants;
 const { ANIMATION_DURATION } = puzzleConstants;
 
-const Puzzle = ({ resetComponent }) => {
-  const styles = useStyles();
-
+const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   const [data, setData] = useState([]);
   const [randomIndexes, setRandomIndexes] = useState([]);
   const [choice, setChoice] = useState([]);
@@ -56,10 +54,9 @@ const Puzzle = ({ resetComponent }) => {
   };
 
   useEffect(() => {
-    const randomGroup = Math.floor(Math.random() * GROUPS_QUANTITY);
     const randomPage = Math.floor(Math.random() * PAGES_QUANTITY);
 
-    getWords(randomGroup, randomPage).then((words) => {
+    getWords(difficulty, randomPage).then((words) => {
       setData(words);
       const randomArr = createArrOfRandomIndexes(words.length);
       setRandomIndexes(randomArr);
@@ -120,13 +117,12 @@ const Puzzle = ({ resetComponent }) => {
   };
 
   return (
-    <Container className={styles.root}>
-
+    <>
       {
         isGameActive()
           ? (
             <>
-              <Typography variant="h5" className="task">
+              <Typography variant="h5">
                 {data[randomIndexes[movesCounter]]?.textExampleTranslate}
               </Typography>
               <Field
@@ -143,26 +139,26 @@ const Puzzle = ({ resetComponent }) => {
           )
       }
 
-      <Button
-        onClick={isGameActive() ? checkIsAnswerRight : resetComponent}
-        variant="contained"
-        color="secondary"
-        ref={checkButton}
-        className="check-button"
-      >
-        {isGameActive() ? 'check' : 'Start new game'}
-      </Button>
+      <Buttons
+        isGameActive={isGameActive()}
+        checkIsAnswerRight={checkIsAnswerRight}
+        checkButton={checkButton}
+        selectDifficulty={selectDifficulty}
+        resetGame={resetGame}
+      />
 
       <Answers
         right={rightAnswers}
         wrong={wrongAnswers}
       />
-    </Container>
+    </>
   );
 };
 
 Puzzle.propTypes = {
-  resetComponent: PropTypes.func.isRequired,
+  difficulty: PropTypes.number.isRequired,
+  selectDifficulty: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
 };
 
 export default Puzzle;
