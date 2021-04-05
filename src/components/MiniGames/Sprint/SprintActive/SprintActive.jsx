@@ -1,8 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Button, Grid } from '@material-ui/core';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Container, Button, Grid, Typography, Divider,
+} from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import BatteryFullIcon from '@material-ui/icons/BatteryFull';
+import BatteryCharging80Icon from '@material-ui/icons/BatteryCharging80';
+import BatteryCharging50Icon from '@material-ui/icons/BatteryCharging50';
+import BatteryCharging20Icon from '@material-ui/icons/BatteryCharging20';
 import './sprintActiveStyles.css';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  sprintActiveBtn: {
+    margin: '1rem',
+  },
+  sprintActiveP: {
+    textAlign: 'center',
+  },
+  sprintActiveHr: {
+    marginBottom: '1rem',
+    width: '80%',
+  },
+  sprintActivePIconSpan: {
+    bottom: '3px',
+    position: 'relative',
+  },
+}));
 
 const renderTime = ({ remainingTime }) => {
   if (remainingTime === 0) {
@@ -18,6 +44,19 @@ const renderTime = ({ remainingTime }) => {
   );
 };
 
+const showBatteryIcon = (pointsPerAnswer) => {
+  if (pointsPerAnswer === 80) {
+    return <span className="span-battery span--80p"><BatteryFullIcon /></span>;
+  }
+  if (pointsPerAnswer === 40) {
+    return <span className="span-battery span--40p"><BatteryCharging80Icon /></span>;
+  }
+  if (pointsPerAnswer === 20) {
+    return <span className="span-battery span--20p"><BatteryCharging50Icon /></span>;
+  }
+  return <span className="span-battery span--10p"><BatteryCharging20Icon /></span>;
+};
+
 const SprintActive = ({
   questionsArr, mixedAnswersArr, questionNum, setQuestionNum, answersState, setAnswersState,
   points, setPoints, finishGame,
@@ -25,11 +64,36 @@ const SprintActive = ({
   const [streak, setStreak] = useState(1);
   const [pointsPerAnswer, setPointsPerAnswer] = useState(10);
 
+  const classes = useStyles();
+
   const showNextQuestion = () => {
     if (questionsArr.length > questionNum + 1) {
       setQuestionNum(questionNum + 1);
     } else {
       finishGame();
+    }
+  };
+
+  const sprintActiveMain = useRef();
+
+  const changeMainBgOnAnswer = (ans) => {
+    if (!sprintActiveMain.current) {
+      return;
+    }
+    if (ans) {
+      sprintActiveMain.current.classList.add('sprint-active__main--right');
+      setTimeout(() => {
+        if (sprintActiveMain.current) {
+          sprintActiveMain.current.classList.remove('sprint-active__main--right');
+        }
+      }, 300);
+    } else {
+      sprintActiveMain.current.classList.add('sprint-active__main--wrong');
+      setTimeout(() => {
+        if (sprintActiveMain.current) {
+          sprintActiveMain.current.classList.remove('sprint-active__main--wrong');
+        }
+      }, 300);
     }
   };
 
@@ -49,6 +113,7 @@ const SprintActive = ({
       }
       setPoints(points + pointsPerAnswer);
       setStreak(streak + 1);
+      changeMainBgOnAnswer(true);
     } else if ((!isCorrect && answer === 'right') || (isCorrect && answer === 'wrong')) {
       setAnswersState({
         ...answersState,
@@ -56,6 +121,7 @@ const SprintActive = ({
       });
       setStreak(1);
       setPointsPerAnswer(10);
+      changeMainBgOnAnswer(false);
     }
 
     showNextQuestion();
@@ -80,27 +146,43 @@ const SprintActive = ({
     <Container>
       <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item xs={12} sm={8}>
-          <div className="sprint-active__main">
-            <div>
+          <div className="sprint-active__main" ref={sprintActiveMain}>
+            <Typography variant="h5">
               {questionsArr[questionNum].word}
-            </div>
-            <div>
+            </Typography>
+            <Typography variant="h5">
               {mixedAnswersArr[questionNum].translation}
-            </div>
+            </Typography>
             <div className="sprint-active__buttons">
-              <Button onClick={() => handleAnswer('wrong')}>
+              <Button
+                onClick={() => handleAnswer('wrong')}
+                startIcon={<ArrowBackIcon />}
+                color="secondary"
+                className={classes.sprintActiveBtn}
+                variant="outlined"
+              >
                 Неверно
               </Button>
-              <Button onClick={() => handleAnswer('right')}>
+              <Button
+                onClick={() => handleAnswer('right')}
+                endIcon={<ArrowForwardIcon />}
+                color="primary"
+                className={classes.sprintActiveBtn}
+                variant="outlined"
+              >
                 Верно
               </Button>
             </div>
-            <div>
+            <Divider className={classes.sprintActiveHr} />
+            <Typography className={classes.sprintActiveP}>
               {`Очки: ${points}.`}
-            </div>
-            <div>
-              {`За верный ответ: +${pointsPerAnswer}.`}
-            </div>
+            </Typography>
+            <Typography className={classes.sprintActiveP}>
+              <span className={classes.sprintActivePIconSpan}>
+                {`За верный ответ: +${pointsPerAnswer}.`}
+              </span>
+              {showBatteryIcon(pointsPerAnswer)}
+            </Typography>
           </div>
         </Grid>
         <Grid item xs={12} sm={4}>
