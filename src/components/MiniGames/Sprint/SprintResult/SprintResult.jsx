@@ -15,7 +15,14 @@ const useStyles = makeStyles(() => ({
     marginTop: '1rem',
   },
   sprintResultHr: {
+    width: '40vw',
     margin: '1rem',
+  },
+  sprintResultSpanR: {
+    borderBottom: '2px dashed #e03e87',
+  },
+  sprintResultSpanW: {
+    borderBottom: '2px dashed #2f2f2f',
   },
 }));
 
@@ -28,12 +35,12 @@ const SprintResult = ({ answersState, points, startGame }) => {
   return (
     <>
       <Typography className={`${classes.sprintResultMT} ${classes.sprintResultP}`}>
-        <span>Верные ответы: </span>
-        <span>{`${answersState.right.join(', ') || 'нет'}.`}</span>
+        <span className={classes.sprintResultSpanR}>Верные ответы:</span>
+        <span>{` ${answersState.right.join(', ') || 'нет'}.`}</span>
       </Typography>
       <Typography className={classes.sprintResultP}>
-        <span>Неверные ответы: </span>
-        <span>{`${answersState.wrong.join(', ') || 'нет'}.`}</span>
+        <span className={classes.sprintResultSpanW}>Неверные ответы:</span>
+        <span>{` ${answersState.wrong.join(', ') || 'нет'}.`}</span>
       </Typography>
       <Divider className={classes.sprintResultHr} />
       <Typography className={classes.sprintResultP}>

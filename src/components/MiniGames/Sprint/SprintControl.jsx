@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Button, CircularProgress, Typography,
+  Button, CircularProgress, Container,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SprintActive from './SprintActive/SprintActive';
@@ -11,6 +11,14 @@ const useStyles = makeStyles(() => ({
   sprintResultP: {
     textAlign: 'center',
     margin: '1rem',
+  },
+  wrapperContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '60vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '2rem auto',
   },
 }));
 
@@ -82,7 +90,7 @@ const SprintControl = () => {
     default:
     case 'GAME_STATE_START':
       return (
-        <Typography className={classes.sprintResultP}>
+        <Container className={classes.wrapperContainer}>
           <Button
             onClick={startGame}
             variant="contained"
@@ -90,35 +98,39 @@ const SprintControl = () => {
           >
             Start
           </Button>
-        </Typography>
+        </Container>
       );
     case 'GAME_STATE_LOADING':
       return (
-        <Typography className={classes.sprintResultP}>
+        <Container className={classes.wrapperContainer}>
           <CircularProgress />
-        </Typography>
+        </Container>
       );
     case 'GAME_STATE_ACTIVE':
       return (
-        <SprintActive
-          questionsArr={questionsArr}
-          mixedAnswersArr={mixedAnswersArr}
-          questionNum={questionNum}
-          setQuestionNum={setQuestionNum}
-          answersState={answersState}
-          setAnswersState={setAnswersState}
-          points={points}
-          setPoints={setPoints}
-          finishGame={() => setGameState('GAME_STATE_RESULT')}
-        />
+        <Container className={classes.wrapperContainer}>
+          <SprintActive
+            questionsArr={questionsArr}
+            mixedAnswersArr={mixedAnswersArr}
+            questionNum={questionNum}
+            setQuestionNum={setQuestionNum}
+            answersState={answersState}
+            setAnswersState={setAnswersState}
+            points={points}
+            setPoints={setPoints}
+            finishGame={() => setGameState('GAME_STATE_RESULT')}
+          />
+        </Container>
       );
     case 'GAME_STATE_RESULT':
       return (
-        <SprintResult
-          answersState={answersState}
-          points={points}
-          startGame={startGame}
-        />
+        <Container className={classes.wrapperContainer}>
+          <SprintResult
+            answersState={answersState}
+            points={points}
+            startGame={startGame}
+          />
+        </Container>
       );
   }
 };
