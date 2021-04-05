@@ -11,6 +11,9 @@ const MiniGames = () => (
       <NavLink to="/sprint">
         Спринт
       </NavLink>
+      <NavLink to="/puzzle">
+        Пазл
+      </NavLink>
     </Grid>
   </Typography>
 );
