@@ -1,29 +1,30 @@
 import axios from 'axios';
+//
 import DataAccessConstants from '../../constants/DataAccessContants';
 
 const {
   ApiUrl,
   ApiEndPoints: {
-    SIGN_IN,
+    REGISTER,
   },
 } = DataAccessConstants;
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
-const request = () => ({ type: LOGIN_REQUEST });
-const success = () => ({ type: LOGIN_SUCCESS });
-const failure = (message) => ({ type: LOGIN_FAILURE, payload: message });
+const request = () => ({ type: REGISTER_REQUEST });
+const success = () => ({ type: REGISTER_SUCCESS });
+const failure = (message) => ({ type: REGISTER_FAILURE, payload: message });
 
 const sendData = (data) => axios({
   method: 'post',
-  url: `${ApiUrl}${SIGN_IN}`,
+  url: `${ApiUrl}${REGISTER}`,
   data,
   headers: { 'Content-Type': 'multipart/form-data' },
 });
 
-export const loginAC = (data) => (dispatch) => {
+export const registerAC = (data) => (dispatch) => {
   dispatch(request());
 
   return sendData(data)
@@ -32,11 +33,13 @@ export const loginAC = (data) => (dispatch) => {
         throw new Error();
       }
 
-      const { data: { token, refreshToken } } = res;
+      const {
+        data: { email, name },
+      } = res;
 
       dispatch(success());
 
-      return { token, refreshToken };
+      return { email, name };
     })
     .catch((err) => {
       dispatch(failure(err.message));

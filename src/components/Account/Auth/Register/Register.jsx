@@ -1,9 +1,9 @@
 import * as React from 'react';
-// import {
-//   useDispatch,
-//   useSelector,
-//   shallowEqual,
-// } from 'react-redux';
+import {
+  shallowEqual,
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Grid,
@@ -15,9 +15,11 @@ import {
 //
 import AvatarUploadInput from '../../../_common/AvatarUploadInput';
 import FormCard from '../../../_common/FormCard';
-// import { useAuthChange } from '../../../../contexts/AuthContext';
 //
-// import { loginAC } from '../../../../store/loginReducer/loginReducerActions';
+import { registerAC } from '../../../../store/registerReducer/registerReducerActions';
+import { registerSelector } from '../../../../store/selectors/registerSelector';
+//
+// import { useAuthChange } from '../../../../contexts/AuthContext';
 import {
   emailInputFieldRules,
   textInputFieldRules,
@@ -25,12 +27,20 @@ import {
 } from '../../../../constants/authConstants';
 
 const Register = () => {
-  const formRef = React.createRef();
+  const dispatch = useDispatch();
+  const formRef = React.useRef();
   const {
     control, errors, handleSubmit,
   } = useForm();
+  const {
+    isError,
+    errorComponentProps,
+  } = useSelector(registerSelector, shallowEqual);
+  // const login = { useAuthChange };
+
   const onSubmit = () => {
-    console.log('succes', control);
+    const data = new FormData(formRef.current);
+    dispatch(registerAC(data));
   };
 
   return (
@@ -42,6 +52,11 @@ const Register = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h6" align="center">Регистрация</Typography>
+            {
+              isError
+                ? <Typography variant="subtitle2" align="center" color="error">{errorComponentProps.message}</Typography>
+                : null
+            }
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={3}>
@@ -120,7 +135,6 @@ const Register = () => {
         </Grid>
       </form>
     </FormCard>
-
   );
 };
 

@@ -1,114 +1,130 @@
 import * as React from 'react';
 import {
+  shallowEqual,
   useDispatch,
   useSelector,
-  shallowEqual,
 } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import {
-  Box,
   Grid,
-  Paper,
-  TextField,
   Button,
+  TextField,
+  Divider,
   Typography,
-  makeStyles,
 } from '@material-ui/core';
 //
-import { useAuthChange } from '../../../../contexts/AuthContext';
+import FormCard from '../../../_common/FormCard';
 //
 import { loginAC } from '../../../../store/loginReducer/loginReducerActions';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  formWrapper: {
-    padding: theme.spacing(2),
-    maxWidth: '80%',
-  },
-}));
+import { loginSelector } from '../../../../store/selectors/loginSelector';
+//
+import { useAuthChange } from '../../../../contexts/AuthContext';
+import {
+  emailInputFieldRules,
+  textInputFieldRules,
+  getFormInputProps,
+} from '../../../../constants/authConstants';
 
 const Login = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
-  const { login } = useAuthChange();
+  const formRef = React.useRef();
   const {
-    register,
-    handleSubmit,
+    control,
     errors,
+    handleSubmit,
   } = useForm();
   const {
-    isLoading,
     isError,
-    errorMessage,
-  } = useSelector((state) => state.loginReducer, shallowEqual);
+    errorComponentProps,
+  } = useSelector(loginSelector, shallowEqual);
+  const { login } = useAuthChange();
 
-  const handleLogin = handleSubmit((data) => {
+  const onSubmit = () => {
+    const data = new FormData(formRef.current);
+
     dispatch(loginAC(data))
-      .then((res) => { login(res); });
-  });
+      .then((res) => {
+        if (res) {
+          login(res);
+        }
+      });
+  };
 
   return (
-    <Box className={classes.root}>
-      <Paper className={classes.formWrapper}>
-        <Typography variant="h6" gutterBottom align="center">Логин</Typography>
-        <form
-          onSubmit={handleLogin}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%',
-          }}
-        >
-          <Grid container>
-            <Grid item xs={12}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    inputRef={register({
-                      required: true,
-                      // pattern: emailRegex,
-                    })}
-                    fullWidth
-                    error={errors.email}
-                    label="E-mail"
-                    name="email"
-                    size="small"
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    error={errors.password}
-                    inputRef={register({ required: true })}
-                    label="password"
-                    name="password"
-                    size="small"
-                    type="password"
-                    variant="outlined"
-                  />
-                </Grid>
+    <FormCard>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        ref={formRef}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h6" align="center">Логин</Typography>
+            {
+              isError
+                ? (
+                  <Typography variant="subtitle2" align="center" color="error">
+                    {errorComponentProps.message}
+                  </Typography>
+                )
+                : null
+            }
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Controller
+                  name="email"
+                  rules={emailInputFieldRules}
+                  control={control}
+                  defaultValue=""
+                  render={(props) => (
+                    <TextField
+                      {...getFormInputProps(true)}
+                      label="E-mail"
+                      placeholder="example@mail.com"
+                      error={!!(errors.email)}
+                      helperText={errors.email?.message}
+                      {...props}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  name="password"
+                  rules={textInputFieldRules}
+                  control={control}
+                  defaultValue=""
+                  render={(props) => (
+                    <TextField
+                      {...getFormInputProps(true)}
+                      type="password"
+                      label="Пароль"
+                      placeholder="User123"
+                      error={!!(errors.password)}
+                      helperText={errors.password?.message}
+                      {...props}
+                    />
+                  )}
+                />
               </Grid>
             </Grid>
-            {isError && <Grid item xs={12}><div>{errorMessage}</div></Grid>}
-            <Grid item xs={12}>
-              {
-                isLoading
-                  ? null
-                  : <Button type="submit">Отправить</Button>
-              }
-            </Grid>
           </Grid>
-        </form>
-      </Paper>
-    </Box>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              color="secondary"
+              variant="contained"
+              type="submit"
+            >
+              Отправить
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </FormCard>
   );
 };
 

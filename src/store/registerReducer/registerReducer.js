@@ -1,8 +1,8 @@
 import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-} from './loginReducerActions';
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+} from './registerReducerActions';
 
 const initialState = {
   isReady: false,
@@ -11,12 +11,12 @@ const initialState = {
   errorComponentProps: null,
 };
 
-const loginReducer = (state = initialState, { type, payload }) => {
+const registerReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     default: {
       return state;
     }
-    case LOGIN_REQUEST: {
+    case REGISTER_REQUEST: {
       return {
         isReady: false,
         isLoading: true,
@@ -24,7 +24,7 @@ const loginReducer = (state = initialState, { type, payload }) => {
         errorComponentProps: null,
       };
     }
-    case LOGIN_SUCCESS: {
+    case REGISTER_SUCCESS: {
       return {
         isReady: true,
         isLoading: false,
@@ -32,17 +32,17 @@ const loginReducer = (state = initialState, { type, payload }) => {
         errorComponentProps: null,
       };
     }
-    case LOGIN_FAILURE: {
-      console.log(payload);
-
+    case REGISTER_FAILURE: {
       return {
         isReady: false,
         isLoading: false,
         isError: true,
-        errorComponentProps: { message: payload },
+        errorComponentProps: {
+          message: payload,
+        },
       };
     }
   }
 };
 
-export default loginReducer;
+export default registerReducer;
