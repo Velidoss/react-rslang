@@ -33,8 +33,6 @@ const loginReducer = (state = initialState, { type, payload }) => {
       };
     }
     case LOGIN_FAILURE: {
-      console.log(payload);
-
       return {
         isReady: false,
         isLoading: false,
