@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'left',
     },
   },
+
+  name: {
+    fontWeight: 'bold',
+  },
 }));
 
 const Developer = ({ name, text, image }) => {
@@ -50,7 +54,7 @@ const Developer = ({ name, text, image }) => {
         <img src={image} alt="developer" className={classes.image} />
       </Grid>
       <Grid item xs={7} sm={12} className={classes.textContainer}>
-        <Typography variant="h6" gutterBottom>{name}</Typography>
+        <Typography variant="subtitle1" className={classes.name} gutterBottom>{name}</Typography>
         <Typography variant="body2">{text}</Typography>
       </Grid>
     </Grid>

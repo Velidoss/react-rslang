@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     justifySelf: 'left',
     display: 'flex',
     alignItems: 'center',
+
+    '& :hover': {
+      opacity: '0.7',
+    },
   },
   logoRss: {
     width: 'auto',

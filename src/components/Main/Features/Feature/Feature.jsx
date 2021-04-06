@@ -45,7 +45,7 @@ const Feature = ({
     <Grid
       container
       direction="column"
-      justify="start"
+      justify="flex-start"
       className={classes.root}
     >
       <Grid item xs={12} className={classes.title}>

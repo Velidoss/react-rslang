@@ -1,6 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 //
+import { expirationTimeoutDelta } from '../constants/authConstants';
+//
 import {
   getLocalStorageItem,
   setLocalStorageItem,
@@ -31,7 +33,7 @@ const AuthProvider = ({ children }) => {
     const newAuth = {
       token,
       refreshToken,
-      expirationTimestamp: Date.now() + 3_600_000,
+      expirationTimestamp: Date.now() + expirationTimeoutDelta,
     };
 
     setLocalStorageItem('auth', newAuth);

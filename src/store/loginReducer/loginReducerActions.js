@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import DataAccessConstants from '../../constants/DataAccessContants';
 
 const {
@@ -16,7 +16,10 @@ const request = () => ({ type: LOGIN_REQUEST });
 const success = () => ({ type: LOGIN_SUCCESS });
 const failure = () => ({ type: LOGIN_FAILURE });
 
-const sendData = (data) => axios.post(`${ApiUrl}${SIGN_IN}`, data);
+const sendData = (data) => fetch(`${ApiUrl}${SIGN_IN}`, {
+  method: 'POST',
+  body: data,
+});
 
 export const loginAC = (data) => (dispatch) => {
   dispatch(request());

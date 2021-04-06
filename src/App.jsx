@@ -11,6 +11,7 @@ import Error404 from './components/Error404/Error404';
 import Footer from './components/Footer/Footer';
 import SavannahControl from './components/MiniGames/Savannah/SavannahControl/SavannahControl';
 import Puzzle from './components/MiniGames/Puzzle/Puzzle/Puzzle';
+import Account from './components/Account/Account';
 
 function App() {
   const useStyles = makeStyles({
@@ -33,6 +34,7 @@ function App() {
         <Route path="/statistics" component={Statistics} />
         <Route path="/savannah" component={SavannahControl} />
         <Route path="/puzzle" component={Puzzle} />
+        <Route path="/account" component={Account} />
         <Route exact path="/" component={Main} />
         <Route path="*" component={Error404} />
       </Switch>
