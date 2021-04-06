@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setAuth(null);
+    setAuth(initialAuth);
     removeLocalStorageItem('auth');
   };
 
