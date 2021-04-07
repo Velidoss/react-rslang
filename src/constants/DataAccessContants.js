@@ -6,6 +6,8 @@ const DataAccessContants = {
     SIGN_IN: '/signin',
     REGISTER: '/users',
   },
+  GROUPS_QUANTITY: 6,
+  PAGES_QUANTITY: 30,
 };
 
 export default DataAccessContants;

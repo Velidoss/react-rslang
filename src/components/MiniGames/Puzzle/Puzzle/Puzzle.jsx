@@ -1,19 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Button } from '@material-ui/core';
+import React, { useEffect, useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { Container, Typography, Button } from '@material-ui/core';
+
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
-import Blocks from '../Blocks/Blocks';
+import Field from '../Field/Field';
+import Answers from '../Answers/Answers';
+import useStyles from '../styles/styles';
+import DataAccessContants from '../../../../constants/DataAccessContants';
+import puzzleConstants from '../../../../constants/puzzleConstants';
 
-const Puzzle = () => {
+const { GROUPS_QUANTITY, PAGES_QUANTITY } = DataAccessContants;
+const { ANIMATION_DURATION } = puzzleConstants;
+
+const Puzzle = ({ resetComponent }) => {
+  const styles = useStyles();
+
   const [data, setData] = useState([]);
   const [randomIndexes, setRandomIndexes] = useState([]);
   const [choice, setChoice] = useState([]);
   const [chosen, setChosen] = useState([]);
 
+  const [currentPhrase, setCurrentPhrase] = useState('');
+
   const [movesCounter, setMovesCounter] = useState(-1);
   const [rightAnswers, setRightAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
+
+  const isGameActive = () => movesCounter < data.length;
+
+  const checkButton = useRef();
+  const addClassWrong = () => {
+    checkButton.current.classList.add('check__button-wrong');
+
+    setTimeout(() => {
+      checkButton.current.classList.remove('check__button-wrong');
+    }, ANIMATION_DURATION);
+  };
 
   const createArrOfRandomIndexes = (len) => {
     const res = Array(len).fill(0).map((item, index) => index);
@@ -32,7 +56,10 @@ const Puzzle = () => {
   };
 
   useEffect(() => {
-    getWords().then((words) => {
+    const randomGroup = Math.floor(Math.random() * GROUPS_QUANTITY);
+    const randomPage = Math.floor(Math.random() * PAGES_QUANTITY);
+
+    getWords(randomGroup, randomPage).then((words) => {
       setData(words);
       const randomArr = createArrOfRandomIndexes(words.length);
       setRandomIndexes(randomArr);
@@ -46,6 +73,7 @@ const Puzzle = () => {
 
     if (data.length && nextPhrase) {
       setChoice(shuffleArr(nextPhrase));
+      setCurrentPhrase(nextPhrase);
     }
   }, [movesCounter]);
 
@@ -54,6 +82,7 @@ const Puzzle = () => {
       setRightAnswers(rightAnswers + 1);
       setMovesCounter(movesCounter + 1);
     } else {
+      addClassWrong();
       setWrongAnswers(wrongAnswers + 1);
     }
   };
@@ -61,7 +90,9 @@ const Puzzle = () => {
   const convertForComparsion = (word) => word.toLowerCase().replace('.', '').replace(',', '');
 
   const checkIsAnswerRight = () => {
-    const currentPhrase = getCurrentPhrase();
+    if (checkButton.current.classList.contains('check__button-wrong')) {
+      return null;
+    }
 
     if (currentPhrase.length !== chosen.length) {
       return submitAnswer('wrong');
@@ -89,33 +120,49 @@ const Puzzle = () => {
   };
 
   return (
-    <Container>
+    <Container className={styles.root}>
 
       {
-        movesCounter < data.length
+        isGameActive()
           ? (
             <>
-              <div>
+              <Typography variant="h5" className="task">
                 {data[randomIndexes[movesCounter]]?.textExampleTranslate}
-              </div>
-              <div>
-                <Blocks blocks={chosen} action={(event) => moveTo(event, 'down')} />
-              </div>
-              <div>
-                <Blocks blocks={choice} action={(event) => moveTo(event, 'up')} />
-              </div>
-              <Button onClick={checkIsAnswerRight}>
-                check
-              </Button>
+              </Typography>
+              <Field
+                chosen={chosen}
+                choice={choice}
+                moveTo={moveTo}
+              />
             </>
           )
-          : <div>Game completed!</div>
+          : (
+            <Typography variant="h5">
+              Game completed!
+            </Typography>
+          )
       }
 
-      <div>{`Right answers: ${rightAnswers}`}</div>
-      <div>{`Wrong answers: ${wrongAnswers}`}</div>
+      <Button
+        onClick={isGameActive() ? checkIsAnswerRight : resetComponent}
+        variant="contained"
+        color="secondary"
+        ref={checkButton}
+        className="check-button"
+      >
+        {isGameActive() ? 'check' : 'Start new game'}
+      </Button>
+
+      <Answers
+        right={rightAnswers}
+        wrong={wrongAnswers}
+      />
     </Container>
   );
+};
+
+Puzzle.propTypes = {
+  resetComponent: PropTypes.func.isRequired,
 };
 
 export default Puzzle;
