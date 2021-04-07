@@ -50,7 +50,9 @@ export const loginAC = (data) => (dispatch) => {
       };
     })
     .catch((err) => {
-      dispatch(failure(err.message));
+      const message = err?.response?.data || err.message;
+
+      dispatch(failure(message));
       return null;
     });
 };
