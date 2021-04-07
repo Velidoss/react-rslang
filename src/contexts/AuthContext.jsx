@@ -19,6 +19,7 @@ const initialAuth = {
   expirationTimestamp: null,
   name: null,
   avatar: null,
+  userId: null,
 };
 
 const AuthProvider = ({ children }) => {
@@ -27,8 +28,9 @@ const AuthProvider = ({ children }) => {
   const login = ({
     token = null,
     refreshToken = null,
-    name,
-    avatar,
+    name = null,
+    avatar = null,
+    userId = null,
   } = {}) => {
     if (!token || !refreshToken) {
       return;
@@ -40,6 +42,7 @@ const AuthProvider = ({ children }) => {
       expirationTimestamp: Date.now() + expirationTimeoutDelta,
       name,
       avatar,
+      userId,
     };
 
     setLocalStorageItem('auth', newAuth);
@@ -53,13 +56,23 @@ const AuthProvider = ({ children }) => {
 
   React.useEffect(() => {
     const {
-      token, refreshToken, expirationTimestamp, name, avatar,
+      token,
+      refreshToken,
+      expirationTimestamp,
+      name,
+      avatar,
+      userId,
     } = getLocalStorageItem('auth', initialAuth);
     const isTokenValid = token && expirationTimestamp && expirationTimestamp > Date.now();
 
     if (isTokenValid) {
       setAuth({
-        token, refreshToken, expirationTimestamp, name, avatar,
+        token,
+        refreshToken,
+        expirationTimestamp,
+        name,
+        avatar,
+        userId,
       });
     } else {
       removeLocalStorageItem('auth');

@@ -43,7 +43,9 @@ export const registerAC = (data) => (dispatch) => {
       return { email, name };
     })
     .catch((err) => {
-      dispatch(failure(err.message));
+      const message = err?.response?.data || err.message;
+
+      dispatch(failure(message));
       return null;
     });
 };
