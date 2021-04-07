@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container, Button, Grid, Typography, Divider,
 } from '@material-ui/core';
@@ -63,6 +63,7 @@ const SprintActive = ({
 }) => {
   const [streak, setStreak] = useState(1);
   const [pointsPerAnswer, setPointsPerAnswer] = useState(10);
+  const [activeMainBg, setActiveMainBg] = useState('sprint-active__main');
 
   const classes = useStyles();
 
@@ -74,27 +75,15 @@ const SprintActive = ({
     }
   };
 
-  const sprintActiveMain = useRef();
-
   const changeMainBgOnAnswer = (ans) => {
-    if (!sprintActiveMain.current) {
-      return;
-    }
     if (ans) {
-      sprintActiveMain.current.classList.add('sprint-active__main--right');
-      setTimeout(() => {
-        if (sprintActiveMain.current) {
-          sprintActiveMain.current.classList.remove('sprint-active__main--right');
-        }
-      }, 300);
+      setActiveMainBg('sprint-active__main sprint-active__main--right');
     } else {
-      sprintActiveMain.current.classList.add('sprint-active__main--wrong');
-      setTimeout(() => {
-        if (sprintActiveMain.current) {
-          sprintActiveMain.current.classList.remove('sprint-active__main--wrong');
-        }
-      }, 300);
+      setActiveMainBg('sprint-active__main sprint-active__main--wrong');
     }
+    setTimeout(() => {
+      setActiveMainBg('sprint-active__main');
+    }, 300);
   };
 
   const handleAnswer = (answer) => {
@@ -146,7 +135,7 @@ const SprintActive = ({
     <Container>
       <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item xs={12} sm={8}>
-          <div className="sprint-active__main" ref={sprintActiveMain}>
+          <div className={activeMainBg}>
             <Typography variant="h5">
               {questionsArr[questionNum].word}
             </Typography>
