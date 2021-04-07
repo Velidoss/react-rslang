@@ -2,7 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-} from './loginReducerActions';
+} from './loginReducerActionTypes';
 
 const initialState = {
   isReady: false,

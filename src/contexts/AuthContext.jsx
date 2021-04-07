@@ -7,7 +7,7 @@ import {
   getLocalStorageItem,
   setLocalStorageItem,
   removeLocalStorageItem,
-} from '../utils/logalStorage';
+} from '../utils/loсalStorage';
 
 const AuthContext = React.createContext();
 const AuthChangeContext = React.createContext();

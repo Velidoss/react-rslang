@@ -12,7 +12,7 @@ const HeaderNav = () => (
         <NavDrawer />
       </Grid>
     </Hidden>
-    <Grid item className="test">
+    <Grid item>
       <NavLogo />
     </Grid>
     <Hidden smDown>

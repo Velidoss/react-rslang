@@ -8,10 +8,10 @@ import textBookReducer from './textBookReducer/textBookReducer';
 
 const store = createStore(combineReducers(
   {
-    savannahReducer,
-    textBookReducer,
-    loginReducer,
-    registerReducer,
+    savannah: savannahReducer,
+    textBook: textBookReducer,
+    login: loginReducer,
+    register: registerReducer,
   },
 ), composeWithDevTools(
   applyMiddleware(thunk),

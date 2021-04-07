@@ -87,7 +87,7 @@ const Register = () => {
                   render={(props) => (
                     <TextField
                       {...getFormInputProps(true)}
-                      label="Имя"
+                      label="Никнейм"
                       placeholder="User123"
                       error={!!(errors.name)}
                       helperText={errors.name?.message}
@@ -107,7 +107,7 @@ const Register = () => {
                       {...getFormInputProps(true)}
                       type="password"
                       label="Пароль"
-                      placeholder="User123"
+                      placeholder="Password123"
                       error={!!(errors.password)}
                       helperText={errors.password?.message}
                       {...props}
@@ -129,7 +129,7 @@ const Register = () => {
               variant="contained"
               type="submit"
             >
-              Отправить
+              Зарегистрироваться
             </Button>
           </Grid>
         </Grid>

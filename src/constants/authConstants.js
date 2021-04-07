@@ -10,7 +10,7 @@ export const textInputFieldRules = {
   required: 'Обязательное поле',
   pattern: {
     value: /^(?=.*[a-zA-Z])(?=.*\d)[a-z0-9]{6,}/i,
-    message: 'Должен содержать латинские символы и цифры, не менее 6 симоволов',
+    message: 'Должен содержать латинские символы и цифры, не менее 6 символов',
   },
 };
 export const getFormInputProps = (required = false) => ({

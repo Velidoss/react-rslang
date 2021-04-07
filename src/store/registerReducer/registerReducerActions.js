@@ -1,6 +1,11 @@
 import axios from 'axios';
 //
 import DataAccessConstants from '../../constants/DataAccessContants';
+import {
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+} from './registerReducerActionTypes';
 
 const {
   ApiUrl,
@@ -8,10 +13,6 @@ const {
     REGISTER,
   },
 } = DataAccessConstants;
-
-export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
 const request = () => ({ type: REGISTER_REQUEST });
 const success = () => ({ type: REGISTER_SUCCESS });

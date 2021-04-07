@@ -1,5 +1,11 @@
 import axios from 'axios';
+//
 import DataAccessConstants from '../../constants/DataAccessContants';
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from './loginReducerActionTypes';
 
 const {
   ApiUrl,
@@ -7,10 +13,6 @@ const {
     SIGN_IN,
   },
 } = DataAccessConstants;
-
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 const request = () => ({ type: LOGIN_REQUEST });
 const success = () => ({ type: LOGIN_SUCCESS });

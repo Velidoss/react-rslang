@@ -100,7 +100,7 @@ const Login = () => {
                       {...getFormInputProps(true)}
                       type="password"
                       label="Пароль"
-                      placeholder="User123"
+                      placeholder="Password123"
                       error={!!(errors.password)}
                       helperText={errors.password?.message}
                       {...props}
@@ -119,7 +119,7 @@ const Login = () => {
               variant="contained"
               type="submit"
             >
-              Отправить
+              Войти
             </Button>
           </Grid>
         </Grid>

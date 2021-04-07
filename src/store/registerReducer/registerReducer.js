@@ -2,7 +2,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-} from './registerReducerActions';
+} from './registerReducerActionTypes';
 
 const initialState = {
   isReady: false,
