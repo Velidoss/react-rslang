@@ -23,7 +23,10 @@ const theme = createMuiTheme({
     h1: {
       fontFamily: 'Lobster',
     },
+    h2: {
+      fontWeight: '100',
+    },
   },
 });
 
-export default responsiveFontSizes(theme);
+export default responsiveFontSizes(theme, { factor: 5 });

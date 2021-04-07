@@ -12,6 +12,17 @@ const NavListMenu = ({ label, links }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => { setAnchorEl(event.currentTarget); };
   const handleClose = () => { setAnchorEl(null); };
+  const handleScroll = () => {
+    if (anchorEl) {
+      handleClose();
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+
+    return () => document.removeEventListener('scroll', handleScroll);
+  });
 
   return (
     <>
@@ -23,6 +34,7 @@ const NavListMenu = ({ label, links }) => {
       />
       <Menu
         keepMounted
+        disableScrollLock
         id="simple-menu"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

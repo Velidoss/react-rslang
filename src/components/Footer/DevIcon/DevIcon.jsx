@@ -12,7 +12,14 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
+  },
+  link: {
+    textDecoration: 'none',
 
+    '& :hover': {
+      opacity: '0.7',
+      textDecoration: 'none !important',
+    },
   },
   icon: {
     [theme.breakpoints.down('md')]: {
@@ -27,12 +34,16 @@ const DevIcon = ({ name }) => {
 
   return (
     <Box className={classes.root}>
-      <Link href={`https://github.com/${name}`} color="inherit">
+      <Link
+        href={`https://github.com/${name}`}
+        className={classes.link}
+        color="inherit"
+      >
         <GitHubIcon className={classes.icon} />
+        <Typography variant="body2">
+          {`${name}`}
+        </Typography>
       </Link>
-      <Typography variant="body2">
-        {`${name}`}
-      </Typography>
     </Box>
   );
 };

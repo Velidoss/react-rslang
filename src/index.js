@@ -9,6 +9,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CustomThemeProvider } from './contexts/CustomThemeContext';
 //
 import '@fontsource/roboto';
+import '@fontsource/roboto/100.css';
 import '@fontsource/lobster';
 
 ReactDOM.render(
