@@ -3,13 +3,20 @@ import DataAccessContants from '../constants/DataAccessContants';
 
 const { ApiUrl } = DataAccessContants;
 
-const getUserWords = async (userId, authToken) => {
+const sendWordToDifficult = async (userId, authToken, wordId) => {
   const response = await axios({
-    method: 'get',
-    url: `${ApiUrl}/users/${userId}/words`,
+    method: 'post',
+    url: `${ApiUrl}/users/${userId}/words/${wordId}`,
     headers: {
       Authorization: `Bearer ${authToken}`,
+      'Content-Type': 'application/json',
     },
+    data: JSON.stringify({
+      difficulty: 'true',
+      optional: {
+
+      },
+    }),
   }).catch((error) => {
     console.log(error);
     return {};
@@ -17,4 +24,4 @@ const getUserWords = async (userId, authToken) => {
   return response.data;
 };
 
-export default getUserWords;
+export default sendWordToDifficult;

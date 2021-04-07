@@ -9,8 +9,12 @@ import useTextBookStyles from './useTextBookStyles';
 import TextBookPagination from './TextBookPagination/TextBookPagination';
 import WordItem from './WordItem/WordItem';
 import TextBookHeader from './TextBookHeader/TextBookHeader';
+import { fetchUserWords } from '../../store/userWordsReducer/userWordsActionCreators';
+import userWordsSelector from '../../store/selectors/userWordsSelector';
 
 const TextBook = () => {
+  const { userWords } = useSelector(userWordsSelector);
+
   const classes = useTextBookStyles();
 
   const [pageNumber, setPageNumber] = useState(0);
@@ -18,15 +22,20 @@ const TextBook = () => {
   const [groupNumber, setGroupNumber] = useState(0);
 
   const dispatch = useDispatch();
+
   const { words, showControls, showTranslation } = useSelector(textBookSelector);
 
   const changePage = (event, number) => setPageNumber(number - 1);
 
   useEffect(() => {
+    dispatch(fetchUserWords());
+  }, []);
+
+  useEffect(() => {
     dispatch(getTextBookWords(groupNumber, pageNumber));
   }, [groupNumber, pageNumber]);
 
-  if (words.length === 0) {
+  if (words.length === 0 && userWords.length === 0) {
     return (
       <CircularProgress />
     );
@@ -42,6 +51,7 @@ const TextBook = () => {
             words.map((word) => (
               <WordItem
                 word={word}
+                userWords={userWords}
                 showControls={showControls}
                 showTranslation={showTranslation}
                 key={word.id}

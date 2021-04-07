@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Grid, ListItem, Avatar, IconButton, Typography, Divider, Collapse,
 } from '@material-ui/core';
 import {
-  Star, Delete, KeyboardArrowDown, KeyboardArrowUp,
+  Delete, KeyboardArrowDown, KeyboardArrowUp,
 } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
 import WordStats from '../WordStats/WordStats';
 import useTextBookStyles from '../useTextBookStyles';
 import DataAccessContants from '../../../constants/DataAccessContants';
 import WordPlayButton from './WordPlayButton/WordPlayButton';
+import { addWordToDifficult, deleteWordFromDifficult } from '../../../store/userWordsReducer/userWordsActionCreators';
+import WordInDifficultsButton from './WordInDifficultsButton/WordInDifficultsButton';
+import checkIfWordInDifficult from '../../../store/userWordsReducer/checkIfWordInDifficult';
 
-const WordItem = ({ word, showControls, showTranslation }) => {
+const WordItem = ({
+  word, userWords, showControls, showTranslation,
+}) => {
+  const dispatch = useDispatch();
+  const [isDifficult, toggleIsDifficult] = useState(false);
   const [openStats, toggleOpenStats] = useState(false);
   const { ApiUrl } = DataAccessContants;
+
+  useEffect(() => checkIfWordInDifficult(word, userWords) && toggleIsDifficult(true), [userWords]);
 
   const classes = useTextBookStyles();
 
@@ -43,9 +53,11 @@ const WordItem = ({ word, showControls, showTranslation }) => {
                 showControls
                   ? (
                     <Grid>
-                      <IconButton>
-                        <Star />
-                      </IconButton>
+                      <WordInDifficultsButton
+                        isDifficult={isDifficult}
+                        addWordToDifficult={() => dispatch(addWordToDifficult(word.id))}
+                        removeWordFromDifficult={() => dispatch(deleteWordFromDifficult(word.id))}
+                      />
                       <IconButton>
                         <Delete />
                       </IconButton>
@@ -104,6 +116,7 @@ const WordItem = ({ word, showControls, showTranslation }) => {
 
 WordItem.propTypes = {
   word: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     audio: PropTypes.string.isRequired,
     audioMeaning: PropTypes.string.isRequired,
@@ -116,6 +129,7 @@ WordItem.propTypes = {
   }).isRequired,
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
+  userWords: PropTypes.arrayOf({}).isRequired,
 };
 
 export default WordItem;
