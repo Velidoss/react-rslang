@@ -4,6 +4,7 @@ const DataAccessContants = {
     GET_WORDS_ENDPOINT: '/words',
     GET_WORD_WITH_ASSETS: '',
     SIGN_IN: '/signin',
+    REGISTER: '/users',
   },
   GROUPS_QUANTITY: 6,
   PAGES_QUANTITY: 30,
