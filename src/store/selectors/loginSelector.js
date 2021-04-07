@@ -1,1 +1,1 @@
-export const loginSelector = (state) => state.loginReducer;
+export const loginSelector = (state) => state.login;

@@ -1,1 +1,1 @@
-export const registerSelector = (state) => state.registerReducer;
+export const registerSelector = (state) => state.register;

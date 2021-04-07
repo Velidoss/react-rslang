@@ -94,4 +94,4 @@ const ImageUploadInput = () => {
   );
 };
 
-export default React.memo(ImageUploadInput);
+export default ImageUploadInput;

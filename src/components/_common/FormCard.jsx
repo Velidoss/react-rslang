@@ -14,8 +14,9 @@ const useStyles = makeStyles((theme) => ({
 
   paper: {
     padding: theme.spacing(2),
-    width: '80%',
+    margin: theme.spacing(2),
     maxWidth: '500px',
+    minWidth: '250px',
   },
 }));
 
@@ -35,4 +36,4 @@ FormCard.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default React.memo(FormCard);
+export default FormCard;
