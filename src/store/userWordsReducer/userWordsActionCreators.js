@@ -8,19 +8,19 @@ export const setUserWords = (wordsList) => ({
   payload: wordsList,
 });
 
-export const fetchUserWords = () => async (dispatch) => {
+export const fetchUserWords = (userId, authToken) => async (dispatch) => {
   const words = await getUserWords(userId, authToken);
-  dispatch(setUserWords(words));
+  return words && words.length > 0 && dispatch(setUserWords(words));
 };
 
-export const addWordToDifficult = (wordId) => async (dispatch) => {
+export const addWordToDifficult = (wordId, userId, authToken) => async (dispatch) => {
   const wordSent = await sendWordToDifficult(userId, authToken, wordId);
   console.log(wordSent);
   const words = await getUserWords(userId, authToken);
   dispatch(setUserWords(words));
 };
 
-export const deleteWordFromDifficult = (wordId) => async (dispatch) => {
+export const deleteWordFromDifficult = (wordId, userId, authToken) => async (dispatch) => {
   const wordSent = await removeWordFromDifficult(userId, authToken, wordId);
   console.log(wordSent);
   const words = await getUserWords(userId, authToken);

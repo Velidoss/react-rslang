@@ -11,9 +11,12 @@ import WordItem from './WordItem/WordItem';
 import TextBookHeader from './TextBookHeader/TextBookHeader';
 import { fetchUserWords } from '../../store/userWordsReducer/userWordsActionCreators';
 import userWordsSelector from '../../store/selectors/userWordsSelector';
+import { useAuth } from '../../contexts/AuthContext';
 
 const TextBook = () => {
   const { userWords } = useSelector(userWordsSelector);
+
+  const { auth: { userId, token } } = useAuth();
 
   const classes = useTextBookStyles();
 
@@ -28,7 +31,7 @@ const TextBook = () => {
   const changePage = (event, number) => setPageNumber(number - 1);
 
   useEffect(() => {
-    dispatch(fetchUserWords());
+    dispatch(fetchUserWords(userId, token));
   }, []);
 
   useEffect(() => {
@@ -54,6 +57,8 @@ const TextBook = () => {
                 userWords={userWords}
                 showControls={showControls}
                 showTranslation={showTranslation}
+                userId={userId}
+                token={token}
                 key={word.id}
               />
             ))

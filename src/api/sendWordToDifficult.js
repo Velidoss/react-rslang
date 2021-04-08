@@ -1,27 +1,16 @@
-import axios from 'axios';
-import DataAccessContants from '../constants/DataAccessContants';
-
-const { ApiUrl } = DataAccessContants;
+import getOneUserWord from './getOneUserWord';
+import putWordData from './putWordData';
+import postWordData from './postWordData';
 
 const sendWordToDifficult = async (userId, authToken, wordId) => {
-  const response = await axios({
-    method: 'post',
-    url: `${ApiUrl}/users/${userId}/words/${wordId}`,
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-      'Content-Type': 'application/json',
-    },
-    data: JSON.stringify({
-      difficulty: 'true',
-      optional: {
+  const isWordDifficultAlredy = await getOneUserWord(userId, authToken, wordId);
+  console.log(isWordDifficultAlredy);
+  const { status } = isWordDifficultAlredy;
 
-      },
-    }),
-  }).catch((error) => {
-    console.log(error);
-    return {};
-  });
-  return response.data;
+  if (status === 200) {
+    return putWordData(userId, authToken, wordId, { difficulty: 'true' });
+  }
+  return postWordData(userId, authToken, wordId, { difficulty: 'true' });
 };
 
 export default sendWordToDifficult;

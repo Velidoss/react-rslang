@@ -1,27 +1,5 @@
-import axios from 'axios';
-import DataAccessContants from '../constants/DataAccessContants';
+import putWordData from './putWordData';
 
-const { ApiUrl } = DataAccessContants;
-
-const removeWordFromDifficult = async (userId, authToken, wordId) => {
-  const response = await axios({
-    method: 'put',
-    url: `${ApiUrl}/users/${userId}/words/${wordId}`,
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-      'Content-Type': 'application/json',
-    },
-    data: JSON.stringify({
-      difficulty: 'easy',
-      optional: {
-
-      },
-    }),
-  }).catch((error) => {
-    console.log(error);
-    return {};
-  });
-  return response.data;
-};
+const removeWordFromDifficult = async (userId, authToken, wordId) => putWordData(userId, authToken, wordId, { difficulty: 'false' });
 
 export default removeWordFromDifficult;

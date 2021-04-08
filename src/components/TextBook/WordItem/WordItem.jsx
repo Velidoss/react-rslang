@@ -16,14 +16,17 @@ import WordInDifficultsButton from './WordInDifficultsButton/WordInDifficultsBut
 import checkIfWordInDifficult from '../../../store/userWordsReducer/checkIfWordInDifficult';
 
 const WordItem = ({
-  word, userWords, showControls, showTranslation,
+  word, userWords, showControls, showTranslation, userId, token,
 }) => {
   const dispatch = useDispatch();
   const [isDifficult, toggleIsDifficult] = useState(false);
   const [openStats, toggleOpenStats] = useState(false);
   const { ApiUrl } = DataAccessContants;
 
-  useEffect(() => checkIfWordInDifficult(word, userWords) && toggleIsDifficult(true), [userWords]);
+  useEffect(() => (
+    checkIfWordInDifficult(word, userWords)
+      ? toggleIsDifficult(true)
+      : toggleIsDifficult(false)), [userWords]);
 
   const classes = useTextBookStyles();
 
@@ -50,13 +53,17 @@ const WordItem = ({
             </Grid>
             <Grid item className={classes.wordControlsItem}>
               {
-                showControls
+                showControls && userId && token
                   ? (
                     <Grid>
                       <WordInDifficultsButton
                         isDifficult={isDifficult}
-                        addWordToDifficult={() => dispatch(addWordToDifficult(word.id))}
-                        removeWordFromDifficult={() => dispatch(deleteWordFromDifficult(word.id))}
+                        addWordToDifficult={
+                          () => dispatch(addWordToDifficult(word.id, userId, token))
+                        }
+                        removeWordFromDifficult={
+                          () => dispatch(deleteWordFromDifficult(word.id, userId, token))
+                        }
                       />
                       <IconButton>
                         <Delete />
@@ -114,6 +121,11 @@ const WordItem = ({
   );
 };
 
+WordItem.defaultProps = {
+  userId: null,
+  token: null,
+};
+
 WordItem.propTypes = {
   word: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -130,6 +142,8 @@ WordItem.propTypes = {
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
   userWords: PropTypes.arrayOf({}).isRequired,
+  userId: PropTypes.string,
+  token: PropTypes.string,
 };
 
 export default WordItem;
