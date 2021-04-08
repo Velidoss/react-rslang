@@ -16,15 +16,16 @@ import WordInDifficultsButton from './WordInDifficultsButton/WordInDifficultsBut
 import checkIfWordInDifficult from '../../../store/userWordsReducer/checkIfWordInDifficult';
 
 const WordItem = ({
-  word, userWords, showControls, showTranslation, userId, token,
+  word, userWords, showControls, showTranslation, userId, token, isAuth,
 }) => {
   const dispatch = useDispatch();
   const [isDifficult, toggleIsDifficult] = useState(false);
+  const [isLoading, toggleIsLoading] = useState(false);
   const [openStats, toggleOpenStats] = useState(false);
   const { ApiUrl } = DataAccessContants;
 
   useEffect(() => (
-    checkIfWordInDifficult(word, userWords)
+    userId && checkIfWordInDifficult(word, userWords)
       ? toggleIsDifficult(true)
       : toggleIsDifficult(false)), [userWords]);
 
@@ -53,16 +54,25 @@ const WordItem = ({
             </Grid>
             <Grid item className={classes.wordControlsItem}>
               {
-                showControls && userId && token
+                showControls && isAuth
                   ? (
                     <Grid>
                       <WordInDifficultsButton
                         isDifficult={isDifficult}
+                        isLoading={isLoading}
                         addWordToDifficult={
-                          () => dispatch(addWordToDifficult(word.id, userId, token))
+                          () => {
+                            toggleIsLoading(true);
+                            dispatch(addWordToDifficult(word.id, userId, token));
+                            toggleIsLoading(false);
+                          }
                         }
                         removeWordFromDifficult={
-                          () => dispatch(deleteWordFromDifficult(word.id, userId, token))
+                          () => {
+                            toggleIsLoading(true);
+                            dispatch(deleteWordFromDifficult(word.id, userId, token));
+                            toggleIsLoading(false);
+                          }
                         }
                       />
                       <IconButton>
@@ -142,6 +152,7 @@ WordItem.propTypes = {
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
   userWords: PropTypes.arrayOf({}).isRequired,
+  isAuth: PropTypes.bool.isRequired,
   userId: PropTypes.string,
   token: PropTypes.string,
 };

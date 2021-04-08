@@ -1,5 +1,8 @@
 import putWordData from './putWordData';
 
-const removeWordFromDifficult = async (userId, authToken, wordId) => putWordData(userId, authToken, wordId, { difficulty: 'false' });
+const removeWordFromDifficult = async (userId, authToken, wordId) => {
+  const response = putWordData(userId, authToken, wordId, { difficulty: 'false' });
+  return response;
+};
 
 export default removeWordFromDifficult;

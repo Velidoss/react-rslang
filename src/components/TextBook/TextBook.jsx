@@ -14,24 +14,20 @@ import userWordsSelector from '../../store/selectors/userWordsSelector';
 import { useAuth } from '../../contexts/AuthContext';
 
 const TextBook = () => {
+  const dispatch = useDispatch();
   const { userWords } = useSelector(userWordsSelector);
-
-  const { auth: { userId, token } } = useAuth();
+  const { auth: { userId, token }, isAuth } = useAuth();
 
   const classes = useTextBookStyles();
 
   const [pageNumber, setPageNumber] = useState(0);
-
   const [groupNumber, setGroupNumber] = useState(0);
-
-  const dispatch = useDispatch();
 
   const { words, showControls, showTranslation } = useSelector(textBookSelector);
 
   const changePage = (event, number) => setPageNumber(number - 1);
 
   useEffect(() => {
-    console.log('getting user words!');
     dispatch(fetchUserWords(userId, token));
   }, [userId, token]);
 
@@ -44,7 +40,7 @@ const TextBook = () => {
       <CircularProgress />
     );
   }
-
+  console.log('texstbook');
   return (
     <Grid container>
       <TextBookHeader groupNumber={groupNumber} setGroupNumber={setGroupNumber} />
@@ -59,6 +55,7 @@ const TextBook = () => {
                 showControls={showControls}
                 showTranslation={showTranslation}
                 userId={userId}
+                isAuth={isAuth}
                 token={token}
                 key={word.id}
               />

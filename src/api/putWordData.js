@@ -18,7 +18,7 @@ const putWordData = async (userId, authToken, wordId, dataToChange) => {
     console.log(error);
     return {};
   });
-  return response.data;
+  return response;
 };
 
 export default putWordData;

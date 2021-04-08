@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@material-ui/core';
+import { IconButton, CircularProgress } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
 import useWordInDifficultsStyles from './useWordInDifficultsStyles';
 
 const WordInDifficultsButton = (
-  { isDifficult, addWordToDifficult, removeWordFromDifficult },
+  {
+    isDifficult, isLoading, addWordToDifficult, removeWordFromDifficult,
+  },
 ) => {
   const classes = useWordInDifficultsStyles();
+
+  if (isLoading) {
+    return (
+      <CircularProgress />
+    );
+  }
 
   return (isDifficult ? (
     <IconButton
@@ -28,6 +36,7 @@ const WordInDifficultsButton = (
 
 WordInDifficultsButton.propTypes = {
   isDifficult: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   addWordToDifficult: PropTypes.func.isRequired,
   removeWordFromDifficult: PropTypes.func.isRequired,
 };
