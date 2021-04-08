@@ -63,7 +63,22 @@ const SprintActive = ({
 }) => {
   const [streak, setStreak] = useState(1);
   const [pointsPerAnswer, setPointsPerAnswer] = useState(10);
-  const [activeMainBg, setActiveMainBg] = useState('sprint-active__main');
+  const [lastAnswerState, setLastAnswerState] = useState('none');
+
+  let mainBgClassName = 'sprint-active__main';
+
+  if (lastAnswerState === 'right') {
+    mainBgClassName += ' sprint-active__main--right';
+  } else if (lastAnswerState === 'wrong') {
+    mainBgClassName += ' sprint-active__main--wrong';
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLastAnswerState('none');
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [lastAnswerState]);
 
   const classes = useStyles();
 
@@ -73,17 +88,6 @@ const SprintActive = ({
     } else {
       finishGame();
     }
-  };
-
-  const changeMainBgOnAnswer = (ans) => {
-    if (ans) {
-      setActiveMainBg('sprint-active__main sprint-active__main--right');
-    } else {
-      setActiveMainBg('sprint-active__main sprint-active__main--wrong');
-    }
-    setTimeout(() => {
-      setActiveMainBg('sprint-active__main');
-    }, 300);
   };
 
   const handleAnswer = (answer) => {
@@ -102,7 +106,7 @@ const SprintActive = ({
       }
       setPoints(points + pointsPerAnswer);
       setStreak(streak + 1);
-      changeMainBgOnAnswer(true);
+      setLastAnswerState('right');
     } else if ((!isCorrect && answer === 'right') || (isCorrect && answer === 'wrong')) {
       setAnswersState({
         ...answersState,
@@ -110,7 +114,7 @@ const SprintActive = ({
       });
       setStreak(1);
       setPointsPerAnswer(10);
-      changeMainBgOnAnswer(false);
+      setLastAnswerState('wrong');
     }
 
     showNextQuestion();
@@ -135,7 +139,7 @@ const SprintActive = ({
     <Container>
       <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item xs={12} sm={8}>
-          <div className={activeMainBg}>
+          <div className={mainBgClassName}>
             <Typography variant="h5">
               {questionsArr[questionNum].word}
             </Typography>
