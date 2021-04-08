@@ -31,8 +31,9 @@ const TextBook = () => {
   const changePage = (event, number) => setPageNumber(number - 1);
 
   useEffect(() => {
+    console.log('getting user words!');
     dispatch(fetchUserWords(userId, token));
-  }, []);
+  }, [userId, token]);
 
   useEffect(() => {
     dispatch(getTextBookWords(groupNumber, pageNumber));
