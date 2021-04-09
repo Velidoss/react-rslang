@@ -7,15 +7,15 @@ import NavLogo from './NavLogo/NavLogo';
 
 const HeaderNav = () => (
   <Grid container alignItems="center" justify="space-between" spacing={2}>
-    <Hidden lgUp>
+    <Hidden mdUp>
       <Grid item>
         <NavDrawer />
       </Grid>
     </Hidden>
-    <Grid item className="test">
+    <Grid item>
       <NavLogo />
     </Grid>
-    <Hidden mdDown>
+    <Hidden smDown>
       <Grid item>
         <NavList />
       </Grid>

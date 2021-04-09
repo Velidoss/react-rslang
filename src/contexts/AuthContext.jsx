@@ -1,11 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 //
+import { expirationTimeoutDelta } from '../constants/authConstants';
+//
 import {
   getLocalStorageItem,
   setLocalStorageItem,
   removeLocalStorageItem,
-} from '../utils/logalStorage';
+} from '../utils/loсalStorage';
 
 const AuthContext = React.createContext();
 const AuthChangeContext = React.createContext();
@@ -15,6 +17,9 @@ const initialAuth = {
   token: null,
   refreshToken: null,
   expirationTimestamp: null,
+  name: null,
+  avatar: null,
+  userId: null,
 };
 
 const AuthProvider = ({ children }) => {
@@ -23,6 +28,9 @@ const AuthProvider = ({ children }) => {
   const login = ({
     token = null,
     refreshToken = null,
+    name = null,
+    avatar = null,
+    userId = null,
   } = {}) => {
     if (!token || !refreshToken) {
       return;
@@ -31,7 +39,10 @@ const AuthProvider = ({ children }) => {
     const newAuth = {
       token,
       refreshToken,
-      expirationTimestamp: Date.now() + 3_600_000,
+      expirationTimestamp: Date.now() + expirationTimeoutDelta,
+      name,
+      avatar,
+      userId,
     };
 
     setLocalStorageItem('auth', newAuth);
@@ -39,23 +50,37 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setAuth(null);
+    setAuth(initialAuth);
     removeLocalStorageItem('auth');
   };
 
   React.useEffect(() => {
-    const { token, refreshToken, expirationTimestamp } = getLocalStorageItem('auth', initialAuth);
+    const {
+      token,
+      refreshToken,
+      expirationTimestamp,
+      name,
+      avatar,
+      userId,
+    } = getLocalStorageItem('auth', initialAuth);
     const isTokenValid = token && expirationTimestamp && expirationTimestamp > Date.now();
 
     if (isTokenValid) {
-      setAuth({ token, refreshToken, expirationTimestamp });
+      setAuth({
+        token,
+        refreshToken,
+        expirationTimestamp,
+        name,
+        avatar,
+        userId,
+      });
     } else {
       removeLocalStorageItem('auth');
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuth: !!auth.token }}>
+    <AuthContext.Provider value={{ isAuth: !!auth.token, auth }}>
       <AuthChangeContext.Provider value={{ login, logout }}>
         {children}
       </AuthChangeContext.Provider>

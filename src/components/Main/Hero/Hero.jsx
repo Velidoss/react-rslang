@@ -15,28 +15,53 @@ const {
   },
 } = images;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: '90vh',
+    height: '80vh',
+    minHeight: '80vh',
     color: '#fff',
     backgroundImage: `url(${heroBackground})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundAttachment: 'fixed',
     backgroundPosition: 'center',
+
+    [theme.breakpoints.down('xs')]: {
+      height: '60vh',
+      minHeight: '60vh',
+    },
   },
-});
+  container: {
+    maxWidth: '100%',
+    height: '100%',
+    paddingBottom: '3vw',
+
+    [theme.breakpoints.down('xs')]: {
+      paddingBottom: '0',
+    },
+  },
+  textContainer: {
+    height: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+    },
+  },
+}));
 
 const Hero = () => {
   const classes = useStyles();
 
   return (
     <Box className={classes.root}>
-      <Container maxWidth="xl">
+      <Container className={classes.container}>
         <Grid container className={classes.textContainer}>
           <Grid item xl={4} md={6} sm={10}>
-            <Typography variant="h1" gutterBottom>React RSLang</Typography>
+            <Typography variant="h1" gutterBottom className={classes.heading}>React RSLang</Typography>
             <Typography variant="body1" gutterBottom>Lorem ipsum dolor sit amet, ubique eirmod scaevola nec ne, no antiopam temporibus neglegentur cum. Pri facete epicurei platonem ea, an alii accusamus est.</Typography>
           </Grid>
         </Grid>

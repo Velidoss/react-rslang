@@ -5,17 +5,37 @@ import {
   AppBar,
   Toolbar,
   Grid,
+  makeStyles,
 } from '@material-ui/core';
 //
 import HeaderNav from './HeaderNav/HeaderNav';
 import HeaderAuth from './HeaderAuth/HeaderAuth';
 
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+    borderBottom: '1px solid #fff',
+
+    '& .MuiButton-root': {
+      backgroundColor: 'transparent',
+
+      '& :hover': {
+        textShadow: '0 0 10px #fff',
+      },
+    },
+  },
+});
+
 const Header = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
+  const classes = useStyles();
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position={pathname === '/' ? 'absolute' : 'static'}
+      className={pathname === '/' ? classes.root : null}
+    >
       <Toolbar>
         <Grid
           container

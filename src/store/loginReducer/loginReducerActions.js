@@ -1,5 +1,11 @@
 import axios from 'axios';
+//
 import DataAccessConstants from '../../constants/DataAccessContants';
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from './loginReducerActionTypes';
 
 const {
   ApiUrl,
@@ -8,15 +14,16 @@ const {
   },
 } = DataAccessConstants;
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-
 const request = () => ({ type: LOGIN_REQUEST });
 const success = () => ({ type: LOGIN_SUCCESS });
-const failure = () => ({ type: LOGIN_FAILURE });
+const failure = (message) => ({ type: LOGIN_FAILURE, payload: message });
 
-const sendData = (data) => axios.post(`${ApiUrl}${SIGN_IN}`, data);
+const sendData = (data) => axios({
+  data,
+  method: 'post',
+  url: `${ApiUrl}${SIGN_IN}`,
+  headers: { 'Content-Type': 'multipart/form-data' },
+});
 
 export const loginAC = (data) => (dispatch) => {
   dispatch(request());
@@ -27,14 +34,25 @@ export const loginAC = (data) => (dispatch) => {
         throw new Error();
       }
 
-      return res.json();
-    })
-    .then((json) => {
+      const {
+        data: {
+          token,
+          refreshToken,
+          name,
+          userId,
+        },
+      } = res;
+
       dispatch(success());
-      return json;
+
+      return {
+        token, refreshToken, name, userId,
+      };
     })
-    .catch(() => {
-      dispatch(failure());
-      return {};
+    .catch((err) => {
+      const message = err?.response?.data || err.message;
+
+      dispatch(failure(message));
+      return null;
     });
 };

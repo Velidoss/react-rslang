@@ -12,6 +12,7 @@ import Footer from './components/Footer/Footer';
 import SavannahControl from './components/MiniGames/Savannah/SavannahControl/SavannahControl';
 import SprintControl from './components/MiniGames/Sprint/SprintControl';
 import PuzzleControl from './components/MiniGames/Puzzle/PuzzleControl/PuzzleControl';
+import Account from './components/Account/Account';
 
 function App() {
   const useStyles = makeStyles({
@@ -35,6 +36,7 @@ function App() {
         <Route path="/savannah" component={SavannahControl} />
         <Route path="/sprint" component={SprintControl} />
         <Route path="/puzzle" component={PuzzleControl} />
+        <Route path="/account" component={Account} />
         <Route exact path="/" component={Main} />
         <Route path="*" component={Error404} />
       </Switch>
