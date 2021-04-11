@@ -34,7 +34,7 @@ const DifficultWords = ({
             {
         difficultWords.map((word) => (
           <DifficultWordItem
-            word={word.optional.wordData}
+            word={word}
             userWords={userWords}
             showControls={showControls}
             showTranslation={showTranslation}

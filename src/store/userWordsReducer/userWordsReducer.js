@@ -1,5 +1,11 @@
+import userWordsConstants from '../../constants/userWordsConstants';
 import {
-  GET_USER_WORDS, ADD_USER_WORD, CHANGE_USER_WORD_ATTRIBUTE, GET_DELETED_WORDS, GET_DIFFICULT_WORDS,
+  GET_USER_WORDS, ADD_USER_WORD,
+  UNSET_WORD_AS_DIFFICULT,
+  CHANGE_USER_WORD_ATTRIBUTE,
+  GET_DELETED_WORDS,
+  GET_DIFFICULT_WORDS,
+  SET_WORD_AS_DIFFICULT,
 } from './userWordsActions';
 
 const initialState = {
@@ -7,6 +13,8 @@ const initialState = {
   deletedWords: [],
   difficultWords: [],
 };
+
+const { WORD_HARD, WORD_EASY } = userWordsConstants;
 
 const userWordsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -18,6 +26,26 @@ const userWordsReducer = (state = initialState, { type, payload }) => {
       return { ...state, deletedWords: [...payload] };
     case ADD_USER_WORD:
       return { ...state, userWords: [...state.userWords, payload] };
+    case SET_WORD_AS_DIFFICULT:
+      return {
+        ...state,
+        userWords: state.userWords.map((word) => {
+          if (word.wordId === payload.wordId) {
+            return { ...word, difficulty: WORD_HARD };
+          }
+          return word;
+        }),
+      };
+    case UNSET_WORD_AS_DIFFICULT:
+      return {
+        ...state,
+        userWords: state.userWords.map((word) => {
+          if (word.wordId === payload.wordId) {
+            return { ...word, difficulty: WORD_EASY };
+          }
+          return word;
+        }),
+      };
     case CHANGE_USER_WORD_ATTRIBUTE:
       return {
         ...state,

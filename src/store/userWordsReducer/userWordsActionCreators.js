@@ -1,13 +1,22 @@
 import {
-  GET_USER_WORDS, ADD_USER_WORD, CHANGE_USER_WORD_ATTRIBUTE, GET_DELETED_WORDS, GET_DIFFICULT_WORDS,
+  GET_USER_WORDS,
+  ADD_USER_WORD,
+  CHANGE_USER_WORD_ATTRIBUTE,
+  GET_DELETED_WORDS,
+  GET_DIFFICULT_WORDS,
+  SET_WORD_AS_DIFFICULT,
+  UNSET_WORD_AS_DIFFICULT,
 } from './userWordsActions';
 import getUserWords from '../../api/getUserWords';
 import sendWordToDifficult from '../../api/sendWordToDifficult';
 import removeWordFromDifficult from '../../api/removeWordFromDifficult';
-import getOneUserWord from '../../api/getOneUserWord';
 import sendWordToDeleted from '../../api/sendWordToDeleted';
 import sendRemoveWordFromDeleted from '../../api/sendRemoveWordFromDeleted';
 import getDeletedWords from '../../api/getDeletedWords';
+import getDifficultWords from '../../api/getDifficultWords';
+import userWordsConstants from '../../constants/userWordsConstants';
+
+const { WORD_HARD } = userWordsConstants;
 
 export const setUserWords = (wordsList) => ({
   type: GET_USER_WORDS,
@@ -34,51 +43,60 @@ export const changeUserWordData = (wordId, newData) => ({
   payload: { wordId, newData },
 });
 
+export const setUserWordDifficult = (wordId) => ({
+  type: SET_WORD_AS_DIFFICULT,
+  payload: { wordId },
+});
+
+export const unsetUserWordDifficult = (wordId) => ({
+  type: UNSET_WORD_AS_DIFFICULT,
+  payload: { wordId },
+});
+
 export const fetchUserWords = (userId, authToken) => async (dispatch) => {
   const words = await getUserWords(userId, authToken);
-  return words && words.length > 0 && dispatch(setUserWords(words));
+  return words && words.length > 0
+  && dispatch(setUserWords(words));
 };
 
 export const fetchUserDeletedWords = (userId, authToken, page) => async (dispatch) => {
   const words = await getDeletedWords(userId, authToken, page);
-  return words && words.length > 0 && dispatch(setUserDeletedWords(words));
+  return words && words[0].paginatedResults.length > 0
+  && dispatch(setUserDeletedWords(words[0].paginatedResults));
 };
 
 export const fetchUserDifficultWords = (userId, authToken, page) => async (dispatch) => {
-  const words = await getUserWords(userId, authToken, page);
-  return words && words.length > 0 && dispatch(setUserDifficultWords(words));
+  const words = await getDifficultWords(userId, authToken, page);
+  return words && words[0].paginatedResults.length > 0
+  && dispatch(setUserDifficultWords(words[0].paginatedResults));
 };
 
 export const addWordToDifficult = (wordId, userId, authToken) => async (dispatch) => {
   const response = await sendWordToDifficult(userId, authToken, wordId);
-  const newWord = await getOneUserWord(userId, authToken, wordId);
   if (response === 200) {
-    dispatch(changeUserWordData(wordId, newWord.data));
+    dispatch(setUserWordDifficult(wordId));
   } else {
-    dispatch(addUserWord(newWord.data));
+    dispatch(addUserWord({ difficulty: WORD_HARD, wordId }));
   }
 };
 
 export const deleteWordFromDifficult = (wordId, userId, authToken) => async (dispatch) => {
   const response = await removeWordFromDifficult(userId, authToken, wordId);
-  const newWord = await getOneUserWord(userId, authToken, wordId);
   if (response.status === 200) {
-    dispatch(changeUserWordData(wordId, newWord.data));
+    dispatch(unsetUserWordDifficult(wordId));
   }
 };
 
-export const addWordToDeleted = (wordId, userId, authToken) => async (dispatch) => {
+export const addWordToDeleted = (wordId, userId, authToken, newWord) => async (dispatch) => {
   const response = await sendWordToDeleted(userId, authToken, wordId);
-  const newWord = await getOneUserWord(userId, authToken, wordId);
   if (response.status === 200) {
-    dispatch(changeUserWordData(wordId, newWord.data));
+    dispatch(changeUserWordData(wordId, newWord));
   }
 };
 
-export const removeWordFromDeleted = (wordId, userId, authToken) => async (dispatch) => {
+export const removeWordFromDeleted = (wordId, userId, authToken, newWord) => async (dispatch) => {
   const response = await sendRemoveWordFromDeleted(userId, authToken, wordId);
-  const newWord = await getOneUserWord(userId, authToken, wordId);
   if (response.status === 200) {
-    dispatch(changeUserWordData(wordId, newWord.data));
+    dispatch(changeUserWordData(wordId, newWord));
   }
 };

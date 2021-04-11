@@ -16,7 +16,6 @@ const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
           {`Раздел ${groupNumber + 1}`}
         </Typography>
       </Grid>
-
     </Grid>
   );
 };

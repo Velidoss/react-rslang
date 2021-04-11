@@ -51,14 +51,13 @@ const DifficultWordItem = ({
                     <Grid>
                       <DifficultWordDeleteButton
                         deleteWordFromDifficult={
-                          () => dispatch(deleteWordFromDifficult(word.id, userId, token))
+                          () => dispatch(deleteWordFromDifficult(word._id, userId, token))
                         }
                       />
                     </Grid>
                   )
                   : <div />
               }
-
               <IconButton onClick={() => toggleOpenStats((prev) => !prev)}>
                 {
                   openStats
@@ -114,7 +113,7 @@ DifficultWordItem.defaultProps = {
 
 DifficultWordItem.propTypes = {
   word: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     audio: PropTypes.string.isRequired,
     audioMeaning: PropTypes.string.isRequired,
