@@ -71,10 +71,7 @@ const Feature = ({
             <Typography variant="body2">{text}</Typography>
           </Grid>
           <Grid item xs={4} md={6} lg={4}>
-            <Box
-              style={{ backgroundImage: `url(${image})` }}
-              className={classes.img}
-            />
+            <Box className={classes.img} />
           </Grid>
         </Grid>
       </Grid>

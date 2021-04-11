@@ -10,7 +10,6 @@ import { useAuth } from '../../../contexts/AuthContext';
 
 const HeaderAuth = () => {
   const { isAuth } = useAuth();
-  console.log(useAuth());
 
   return isAuth
     ? <HeaderProfile />

@@ -9,6 +9,7 @@ import useTextBookStyles from './useTextBookStyles';
 import TextBookPagination from './TextBookPagination/TextBookPagination';
 import WordItem from './WordItem/WordItem';
 import TextBookHeader from './TextBookHeader/TextBookHeader';
+import MiniGameLinks from './MiniGameLinks/MiniGameLinks';
 
 const TextBook = () => {
   const classes = useTextBookStyles();
@@ -57,6 +58,7 @@ const TextBook = () => {
           changePage={changePage}
         />
       </Grid>
+      <MiniGameLinks />
     </Grid>
 
   );
