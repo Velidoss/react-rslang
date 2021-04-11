@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Grid, ListItem, Avatar, IconButton, Typography, Divider, Collapse,
@@ -11,24 +11,15 @@ import WordStats from '../WordStats/WordStats';
 import useTextBookStyles from '../useTextBookStyles';
 import DataAccessContants from '../../../constants/DataAccessContants';
 import WordPlayButton from './WordPlayButton/WordPlayButton';
-import { addWordToDifficult, deleteWordFromDifficult, addWordToDeleted } from '../../../store/userWordsReducer/userWordsActionCreators';
-import WordInDifficultsButton from './WordInDifficultsButton/WordInDifficultsButton';
-import checkIfWordInDifficult from '../../../store/userWordsReducer/checkIfWordInDifficult';
-import WordDeleteButton from './WordDeleteButton/WordDeleteButton';
+import { deleteWordFromDifficult } from '../../../store/userWordsReducer/userWordsActionCreators';
+import DifficultWordDeleteButton from './DifficultWordDeleteButton/DifficultWordRestoreButton';
 
-const WordItem = ({
-  word, userWords, showControls, showTranslation, userId, token, isAuth,
+const DifficultWordItem = ({
+  word, showControls, showTranslation, userId, token, isAuth,
 }) => {
   const dispatch = useDispatch();
-  const [isDifficult, toggleIsDifficult] = useState(false);
-  const [isLoading, toggleIsLoading] = useState(false);
   const [openStats, toggleOpenStats] = useState(false);
   const { ApiUrl } = DataAccessContants;
-
-  useEffect(() => (
-    userId && checkIfWordInDifficult(word, userWords)
-      ? toggleIsDifficult(true)
-      : toggleIsDifficult(false)), [userWords]);
 
   const classes = useTextBookStyles();
 
@@ -58,26 +49,10 @@ const WordItem = ({
                 showControls && isAuth
                   ? (
                     <Grid>
-                      <WordInDifficultsButton
-                        isDifficult={isDifficult}
-                        isLoading={isLoading}
-                        addWordToDifficult={
-                          () => {
-                            toggleIsLoading(true);
-                            dispatch(addWordToDifficult(word.id, userId, token));
-                            toggleIsLoading(false);
-                          }
+                      <DifficultWordDeleteButton
+                        deleteWordFromDifficult={
+                          () => dispatch(deleteWordFromDifficult(word.id, userId, token))
                         }
-                        removeWordFromDifficult={
-                          () => {
-                            toggleIsLoading(true);
-                            dispatch(deleteWordFromDifficult(word.id, userId, token));
-                            toggleIsLoading(false);
-                          }
-                        }
-                      />
-                      <WordDeleteButton
-                        deleteWord={() => dispatch(addWordToDeleted(word.id, userId, token))}
                       />
                     </Grid>
                   )
@@ -132,12 +107,12 @@ const WordItem = ({
   );
 };
 
-WordItem.defaultProps = {
+DifficultWordItem.defaultProps = {
   userId: null,
   token: null,
 };
 
-WordItem.propTypes = {
+DifficultWordItem.propTypes = {
   word: PropTypes.shape({
     id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
@@ -152,10 +127,9 @@ WordItem.propTypes = {
   }).isRequired,
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
-  userWords: PropTypes.arrayOf({}).isRequired,
   isAuth: PropTypes.bool.isRequired,
   userId: PropTypes.string,
   token: PropTypes.string,
 };
 
-export default WordItem;
+export default DifficultWordItem;
