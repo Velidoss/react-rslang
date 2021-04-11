@@ -8,6 +8,9 @@ const MiniGames = () => (
       <NavLink to="/savannah">
         Саванна
       </NavLink>
+      <NavLink to="/sprint">
+        Спринт
+      </NavLink>
       <NavLink to="/puzzle">
         Пазл
       </NavLink>
