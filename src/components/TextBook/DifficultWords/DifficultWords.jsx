@@ -24,7 +24,6 @@ const DifficultWords = ({
   useEffect(() => {
     dispatch(fetchUserDifficultWords(userId, token, pageNumber));
   }, [userId, token]);
-  console.log(difficultWords);
 
   if (!difficultWords && difficultWords.length < 1) {
     return <CircularProgress />;

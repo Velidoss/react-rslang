@@ -3,7 +3,7 @@ import {
   Grid, CircularProgress,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import textBookSelector from '../../store/selectors/textBookSelector';
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
 import TextBookHeader from './TextBookHeader/TextBookHeader';
@@ -17,6 +17,7 @@ import DeletedWords from './DeletedWords/DeletedWords';
 
 const TextBook = () => {
   const dispatch = useDispatch();
+  const match = useRouteMatch();
   const { userWords } = useSelector(userWordsSelector);
   const { auth: { userId, token } } = useAuth();
 
@@ -44,7 +45,7 @@ const TextBook = () => {
       <TextBookHeader groupNumber={groupNumber} setGroupNumber={setGroupNumber} />
       <Switch>
         <Route
-          path="/textbook/deleted"
+          path={`${match.url}/deleted`}
           render={() => (
             <DeletedWords
               showControls={showControls}
@@ -53,7 +54,7 @@ const TextBook = () => {
           )}
         />
         <Route
-          path="/textbook/difficult"
+          path={`${match.url}/difficult`}
           render={() => (
             <DifficultWords
               showControls={showControls}
@@ -62,7 +63,7 @@ const TextBook = () => {
           )}
         />
         <Route
-          path="/textbook/learning"
+          path={`${match.url}/learning`}
           render={() => (
             <LearningWords
               showControls={showControls}
@@ -72,7 +73,7 @@ const TextBook = () => {
         />
         <Route
           exact
-          path="/textbook"
+          path={match.url}
           render={() => (
             <Dictionary
               words={words}

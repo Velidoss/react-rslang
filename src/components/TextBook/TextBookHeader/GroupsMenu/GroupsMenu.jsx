@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import { Bookmark } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useTextBookHeaderStyles from '../useTextBookHeaderStyles';
 import textBookContants from '../../../../constants/textBookContants';
 
@@ -13,7 +13,7 @@ const GroupsMenu = ({ setGroupNumber, setTextBookHeaderTitle }) => {
 
   const classes = useTextBookHeaderStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const history = useHistory();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -40,11 +40,10 @@ const GroupsMenu = ({ setGroupNumber, setTextBookHeaderTitle }) => {
               onClick={() => {
                 item.onClickAction();
                 setTextBookHeaderTitle(item.text);
+                history.push(item.link);
               }}
             >
-              <NavLink to={item.link} className={classes.menuItemLink}>
-                {item.text}
-              </NavLink>
+              {item.text}
             </MenuItem>
           ))
         }
