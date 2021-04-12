@@ -44,17 +44,22 @@ const renderTime = ({ remainingTime }) => {
   );
 };
 
+const pointsStep1 = 10;
+const pointsStep2 = 20;
+const pointsStep3 = 40;
+const pointsStep4 = 80;
+
 const showBatteryIcon = (pointsPerAnswer) => {
-  if (pointsPerAnswer === 80) {
-    return <span className="span-battery span--80p"><BatteryFullIcon /></span>;
+  if (pointsPerAnswer === pointsStep4) {
+    return <span className="span-battery span--step4"><BatteryFullIcon /></span>;
   }
-  if (pointsPerAnswer === 40) {
-    return <span className="span-battery span--40p"><BatteryCharging80Icon /></span>;
+  if (pointsPerAnswer === pointsStep3) {
+    return <span className="span-battery span--step3"><BatteryCharging80Icon /></span>;
   }
-  if (pointsPerAnswer === 20) {
-    return <span className="span-battery span--20p"><BatteryCharging50Icon /></span>;
+  if (pointsPerAnswer === pointsStep2) {
+    return <span className="span-battery span--step2"><BatteryCharging50Icon /></span>;
   }
-  return <span className="span-battery span--10p"><BatteryCharging20Icon /></span>;
+  return <span className="span-battery span--step1"><BatteryCharging20Icon /></span>;
 };
 
 const SprintActive = ({
@@ -62,7 +67,7 @@ const SprintActive = ({
   points, setPoints, finishGame,
 }) => {
   const [streak, setStreak] = useState(1);
-  const [pointsPerAnswer, setPointsPerAnswer] = useState(10);
+  const [pointsPerAnswer, setPointsPerAnswer] = useState(pointsStep1);
   const [lastAnswerState, setLastAnswerState] = useState('none');
 
   let mainBgClassName = 'sprint-active__main';
@@ -98,11 +103,11 @@ const SprintActive = ({
         right: [...answersState.right, questionsArr[questionNum].word],
       });
       if (streak >= 9) {
-        setPointsPerAnswer(80);
+        setPointsPerAnswer(pointsStep4);
       } else if (streak >= 6) {
-        setPointsPerAnswer(40);
+        setPointsPerAnswer(pointsStep3);
       } else if (streak >= 3) {
-        setPointsPerAnswer(20);
+        setPointsPerAnswer(pointsStep2);
       }
       setPoints(points + pointsPerAnswer);
       setStreak(streak + 1);
@@ -113,7 +118,7 @@ const SprintActive = ({
         wrong: [...answersState.wrong, questionsArr[questionNum].word],
       });
       setStreak(1);
-      setPointsPerAnswer(10);
+      setPointsPerAnswer(pointsStep1);
       setLastAnswerState('wrong');
     }
 

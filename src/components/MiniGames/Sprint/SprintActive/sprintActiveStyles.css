@@ -25,19 +25,19 @@
   padding-top: 1px;
 }
 
-.span--10p {
+.span--step1 {
   color: #e70303;
 }
 
-.span--20p {
+.span--step2 {
   color: #e78c03;
 }
 
-.span--40p {
+.span--step3 {
   color: #e7d003;
 }
 
-.span--80p {
+.span--step4 {
   color: #03e729;
 }
 
