@@ -13,6 +13,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import Dictionary from './Dictionary/Dictionary';
 import DifficultWords from './DifficultWords/DifficultWords';
 import LearningWords from './LearningWords/LearningWords';
+import DeletedWords from './DeletedWords/DeletedWords';
 
 const TextBook = () => {
   const dispatch = useDispatch();
@@ -26,9 +27,7 @@ const TextBook = () => {
 
   const changePage = (event, number) => setPageNumber(number - 1);
 
-  useEffect(() => {
-    dispatch(fetchUserWords(userId, token));
-  }, [userId, token]);
+  useEffect(() => userId && dispatch(fetchUserWords(userId, token)), [userId, token]);
 
   useEffect(() => {
     dispatch(getTextBookWords(groupNumber, pageNumber));
@@ -44,6 +43,15 @@ const TextBook = () => {
     <Grid container>
       <TextBookHeader groupNumber={groupNumber} setGroupNumber={setGroupNumber} />
       <Switch>
+        <Route
+          path="/textbook/deleted"
+          render={() => (
+            <DeletedWords
+              showControls={showControls}
+              showTranslation={showTranslation}
+            />
+          )}
+        />
         <Route
           path="/textbook/difficult"
           render={() => (

@@ -43,7 +43,7 @@ const textBookContants = {
     },
     {
       link: '/textbook/deleted',
-      text: 'Сложные слова',
+      text: 'Удаленные слова',
       onClickAction: () => {},
     },
   ]),

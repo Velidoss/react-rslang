@@ -6,7 +6,7 @@ const { WORD_HARD } = userWordsConstants;
 
 const { ApiUrl } = DataAccessContants;
 
-const getDifficultWords = async (userId, authToken, page) => {
+const getDifficultWords = async (userId, authToken, page = 0) => {
   const response = await axios({
     method: 'get',
     url: `${ApiUrl}/users/${userId}/aggregatedWords`,

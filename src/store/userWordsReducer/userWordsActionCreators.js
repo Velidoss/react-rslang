@@ -78,13 +78,13 @@ export const fetchUserWords = (userId, authToken) => async (dispatch) => {
   && dispatch(setUserWords(words));
 };
 
-export const fetchLearningDeletedWords = (userId, authToken, page = 0) => async (dispatch) => {
+export const fetchLearningWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getUserLearningWords(userId, authToken, page);
   return words && words[0].paginatedResults.length > 0
   && dispatch(setUserDeletedWords(words[0].paginatedResults));
 };
 
-export const fetchUserDeletedWords = (userId, authToken, page) => async (dispatch) => {
+export const fetchUserDeletedWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getDeletedWords(userId, authToken, page);
   return words && words[0].paginatedResults.length > 0
   && dispatch(setUserDeletedWords(words[0].paginatedResults));

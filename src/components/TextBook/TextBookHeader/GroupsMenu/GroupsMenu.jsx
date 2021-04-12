@@ -36,12 +36,13 @@ const GroupsMenu = ({ setGroupNumber, setTextBookHeaderTitle }) => {
       >
         {
           menuItems.map((item) => (
-            <MenuItem onClick={() => {
-              item.onClickAction();
-              setTextBookHeaderTitle(item.text);
-            }}
+            <MenuItem
+              onClick={() => {
+                item.onClickAction();
+                setTextBookHeaderTitle(item.text);
+              }}
             >
-              <NavLink to={item.link}>
+              <NavLink to={item.link} className={classes.menuItemLink}>
                 {item.text}
               </NavLink>
             </MenuItem>

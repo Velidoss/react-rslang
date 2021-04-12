@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Grid, List } from '@material-ui/core';
+import { Grid, List, CircularProgress } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import useTextBookStyles from '../useTextBookStyles';
 import userWordsSelector from '../../../store/selectors/userWordsSelector';
 import DifficultWordsPagination from '../TextBookPagination/TextBookPagination';
 import { useAuth } from '../../../contexts/AuthContext';
-import { fetchUserDifficultWords } from '../../../store/userWordsReducer/userWordsActionCreators';
-import DifficultWordItem from './DifficultWordItem/DifficultWordItem';
+import { fetchUserDeletedWords } from '../../../store/userWordsReducer/userWordsActionCreators';
+import DeletedWordItem from './DeletedWordItem/DeletedWordItem';
 
-const DifficultWords = ({
+const DeletedWords = ({
   showControls, showTranslation,
 }) => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
   const classes = useTextBookStyles();
-  const { difficultWords, userWords } = useSelector(userWordsSelector);
+  const { deletedWords, userWords } = useSelector(userWordsSelector);
 
   const { auth: { userId, token }, isAuth } = useAuth();
 
   const changePage = (event, number) => setPageNumber(number - 1);
 
   useEffect(() => {
-    dispatch(fetchUserDifficultWords(userId, token, pageNumber));
+    dispatch(fetchUserDeletedWords(userId, token, pageNumber));
   }, [userId, token]);
-  console.log(difficultWords);
 
-  if (!difficultWords && difficultWords.length < 1) {
+  if (deletedWords.length < 1) {
     return <CircularProgress />;
   }
 
@@ -36,8 +35,8 @@ const DifficultWords = ({
         <Grid item xs={12}>
           <List>
             {
-        difficultWords.map((word) => (
-          <DifficultWordItem
+        deletedWords.map((word) => (
+          <DeletedWordItem
             word={word}
             userWords={userWords}
             showControls={showControls}
@@ -53,11 +52,11 @@ const DifficultWords = ({
         </Grid>
       </Grid>
       {
-        difficultWords.length > 20
+        deletedWords.length > 20
           && (
           <Grid item container className={classes.paginationContainer}>
             <DifficultWordsPagination
-              wordsCount={difficultWords.length}
+              wordsCount={deletedWords.length}
               currentPage={pageNumber}
               changePage={changePage}
             />
@@ -68,9 +67,9 @@ const DifficultWords = ({
   );
 };
 
-DifficultWords.propTypes = {
+DeletedWords.propTypes = {
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
 };
 
-export default DifficultWords;
+export default DeletedWords;

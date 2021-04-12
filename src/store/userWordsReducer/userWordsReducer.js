@@ -51,6 +51,11 @@ const userWordsReducer = (state = initialState, { type, payload }) => {
           }
           return word;
         }),
+        difficultWords: [
+          ...state.difficultWords.filter(
+            (word) => word._id !== payload.wordId && word,
+          ),
+        ],
       };
     case SET_WORD_AS_DELETED:
       return {
@@ -71,6 +76,11 @@ const userWordsReducer = (state = initialState, { type, payload }) => {
           }
           return word;
         }),
+        deletedWords: [
+          ...state.deletedWords.filter(
+            (word) => word._id !== payload.wordId && word,
+          ),
+        ],
       };
     case CHANGE_USER_WORD_ATTRIBUTE:
       return {

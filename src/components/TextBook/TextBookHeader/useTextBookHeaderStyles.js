@@ -11,6 +11,10 @@ const useTextBookHeaderStyles = makeStyles({
     height: 40,
     width: 40,
   },
+  menuItemLink: {
+    color: 'black',
+    textDecoration: 'none',
+  },
 });
 
 export default useTextBookHeaderStyles;
