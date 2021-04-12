@@ -12,6 +12,7 @@ import userWordsSelector from '../../store/selectors/userWordsSelector';
 import { useAuth } from '../../contexts/AuthContext';
 import Dictionary from './Dictionary/Dictionary';
 import DifficultWords from './DifficultWords/DifficultWords';
+import LearningWords from './LearningWords/LearningWords';
 
 const TextBook = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,15 @@ const TextBook = () => {
           path="/textbook/difficult"
           render={() => (
             <DifficultWords
+              showControls={showControls}
+              showTranslation={showTranslation}
+            />
+          )}
+        />
+        <Route
+          path="/textbook/learning"
+          render={() => (
+            <LearningWords
               showControls={showControls}
               showTranslation={showTranslation}
             />

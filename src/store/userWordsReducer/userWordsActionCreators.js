@@ -8,6 +8,7 @@ import {
   UNSET_WORD_AS_DIFFICULT,
   SET_WORD_AS_DELETED,
   UNSET_WORD_AS_DELETED,
+  GET_USER_LEARNING_WORDS,
 } from './userWordsActions';
 import getUserWords from '../../api/getUserWords';
 import sendWordToDifficult from '../../api/sendWordToDifficult';
@@ -17,6 +18,7 @@ import sendRemoveWordFromDeleted from '../../api/sendRemoveWordFromDeleted';
 import getDeletedWords from '../../api/getDeletedWords';
 import getDifficultWords from '../../api/getDifficultWords';
 import userWordsConstants from '../../constants/userWordsConstants';
+import getUserLearningWords from '../../api/getUserLearningWords';
 
 const { WORD_HARD } = userWordsConstants;
 
@@ -32,6 +34,11 @@ export const setUserDeletedWords = (wordsList) => ({
 
 export const setUserDifficultWords = (wordsList) => ({
   type: GET_DIFFICULT_WORDS,
+  payload: wordsList,
+});
+
+export const setUserLearningWords = (wordsList) => ({
+  type: GET_USER_LEARNING_WORDS,
   payload: wordsList,
 });
 
@@ -69,6 +76,12 @@ export const fetchUserWords = (userId, authToken) => async (dispatch) => {
   const words = await getUserWords(userId, authToken);
   return words && words.length > 0
   && dispatch(setUserWords(words));
+};
+
+export const fetchLearningDeletedWords = (userId, authToken, page = 0) => async (dispatch) => {
+  const words = await getUserLearningWords(userId, authToken, page);
+  return words && words[0].paginatedResults.length > 0
+  && dispatch(setUserDeletedWords(words[0].paginatedResults));
 };
 
 export const fetchUserDeletedWords = (userId, authToken, page) => async (dispatch) => {

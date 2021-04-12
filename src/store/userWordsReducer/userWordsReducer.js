@@ -2,6 +2,7 @@ import userWordsConstants from '../../constants/userWordsConstants';
 import {
   GET_USER_WORDS, ADD_USER_WORD,
   UNSET_WORD_AS_DIFFICULT,
+  GET_USER_LEARNING_WORDS,
   CHANGE_USER_WORD_ATTRIBUTE,
   GET_DELETED_WORDS,
   GET_DIFFICULT_WORDS,
@@ -12,6 +13,7 @@ import {
 
 const initialState = {
   userWords: [],
+  learningWords: [],
   deletedWords: [],
   difficultWords: [],
 };
@@ -28,6 +30,8 @@ const userWordsReducer = (state = initialState, { type, payload }) => {
       return { ...state, deletedWords: [...payload] };
     case ADD_USER_WORD:
       return { ...state, userWords: [...state.userWords, payload] };
+    case GET_USER_LEARNING_WORDS:
+      return { ...state, learningWords: [...state.learningWords, payload] };
     case SET_WORD_AS_DIFFICULT:
       return {
         ...state,

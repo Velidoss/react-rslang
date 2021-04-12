@@ -7,9 +7,9 @@ import userWordsSelector from '../../../store/selectors/userWordsSelector';
 import DifficultWordsPagination from '../TextBookPagination/TextBookPagination';
 import { useAuth } from '../../../contexts/AuthContext';
 import { fetchUserDifficultWords } from '../../../store/userWordsReducer/userWordsActionCreators';
-import DifficultWordItem from './DifficultWordItem/DifficultWordItem';
+import LearningWordItem from './LearningWordItem/LearningWordItem';
 
-const DifficultWords = ({
+const LearningWords = ({
   showControls, showTranslation,
 }) => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const DifficultWords = ({
           <List>
             {
         difficultWords.map((word) => (
-          <DifficultWordItem
+          <LearningWordItem
             word={word}
             userWords={userWords}
             showControls={showControls}
@@ -64,9 +64,9 @@ const DifficultWords = ({
   );
 };
 
-DifficultWords.propTypes = {
+LearningWords.propTypes = {
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
 };
 
-export default DifficultWords;
+export default LearningWords;

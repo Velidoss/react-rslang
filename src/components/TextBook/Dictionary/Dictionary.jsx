@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import useTextBookStyles from '../useTextBookStyles';
 import WordItem from '../WordItem/WordItem';
 import userWordsSelector from '../../../store/selectors/userWordsSelector';
-import TextBookPagination from '../TextBookPagination/TextBookPagination';
+import DifficultWordsPagination from '../TextBookPagination/TextBookPagination';
 import { useAuth } from '../../../contexts/AuthContext';
 
 const Dictionary = ({
@@ -16,8 +16,6 @@ const Dictionary = ({
   const { auth: { userId, token }, isAuth } = useAuth();
 
   const { userWords } = useSelector(userWordsSelector);
-
-  if (userWords.length)
 
   return (
     <Grid container>
@@ -42,7 +40,7 @@ const Dictionary = ({
         </Grid>
       </Grid>
       <Grid item container className={classes.paginationContainer}>
-        <TextBookPagination
+        <DifficultWordsPagination
           currentPage={pageNumber}
           changePage={changePage}
         />

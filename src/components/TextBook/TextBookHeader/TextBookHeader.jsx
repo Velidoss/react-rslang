@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import SettingsMenu from './SettingsMenu/SettingsMenu';
 import GroupsMenu from './GroupsMenu/GroupsMenu';
 import useTextBookHeaderStyles from './useTextBookHeaderStyles';
 
-const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
+const TextBookHeader = ({ setGroupNumber }) => {
+  const [textBookHeaderTitle, setTextBookHeaderTitle] = useState('');
   const classes = useTextBookHeaderStyles();
   return (
     <Grid container className={classes.textBookHeaderContainer}>
-      <GroupsMenu setGroupNumber={setGroupNumber} />
+      <GroupsMenu
+        setGroupNumber={setGroupNumber}
+        setTextBookHeaderTitle={setTextBookHeaderTitle}
+      />
       <SettingsMenu />
       <Grid container item xs={10}>
         <Typography variant="h3" className={classes.groupName}>
-          {`Раздел ${groupNumber + 1}`}
+          {textBookHeaderTitle}
         </Typography>
       </Grid>
     </Grid>
@@ -22,7 +26,6 @@ const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
 
 TextBookHeader.propTypes = {
   setGroupNumber: PropTypes.func.isRequired,
-  groupNumber: PropTypes.number.isRequired,
 };
 
 export default TextBookHeader;

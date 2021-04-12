@@ -6,18 +6,14 @@ import {
 import {
   KeyboardArrowDown, KeyboardArrowUp,
 } from '@material-ui/icons';
-import { useDispatch } from 'react-redux';
-import WordStats from '../WordStats/WordStats';
-import useTextBookStyles from '../useTextBookStyles';
-import DataAccessContants from '../../../constants/DataAccessContants';
+import WordStats from '../../WordStats/WordStats';
+import useTextBookStyles from '../../useTextBookStyles';
+import DataAccessContants from '../../../../constants/DataAccessContants';
 import WordPlayButton from './WordPlayButton/WordPlayButton';
-import { deleteWordFromDifficult } from '../../../store/userWordsReducer/userWordsActionCreators';
-import DifficultWordDeleteButton from './DifficultWordDeleteButton/DifficultWordRestoreButton';
 
-const DifficultWordItem = ({
-  word, showControls, showTranslation, userId, token, isAuth,
+const LearningWordItem = ({
+  word, showTranslation,
 }) => {
-  const dispatch = useDispatch();
   const [openStats, toggleOpenStats] = useState(false);
   const { ApiUrl } = DataAccessContants;
 
@@ -45,19 +41,6 @@ const DifficultWordItem = ({
               </Typography>
             </Grid>
             <Grid item className={classes.wordControlsItem}>
-              {
-                showControls && isAuth
-                  ? (
-                    <Grid>
-                      <DifficultWordDeleteButton
-                        deleteWordFromDifficult={
-                          () => dispatch(deleteWordFromDifficult(word._id, userId, token))
-                        }
-                      />
-                    </Grid>
-                  )
-                  : <div />
-              }
               <IconButton onClick={() => toggleOpenStats((prev) => !prev)}>
                 {
                   openStats
@@ -106,12 +89,7 @@ const DifficultWordItem = ({
   );
 };
 
-DifficultWordItem.defaultProps = {
-  userId: null,
-  token: null,
-};
-
-DifficultWordItem.propTypes = {
+LearningWordItem.propTypes = {
   word: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
@@ -124,11 +102,7 @@ DifficultWordItem.propTypes = {
     textExample: PropTypes.string.isRequired,
     textExampleTranslate: PropTypes.string.isRequired,
   }).isRequired,
-  showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
-  isAuth: PropTypes.bool.isRequired,
-  userId: PropTypes.string,
-  token: PropTypes.string,
 };
 
-export default DifficultWordItem;
+export default LearningWordItem;

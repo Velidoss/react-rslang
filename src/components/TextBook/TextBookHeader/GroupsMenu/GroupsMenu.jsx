@@ -6,8 +6,11 @@ import { Bookmark } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import useTextBookHeaderStyles from '../useTextBookHeaderStyles';
+import textBookContants from '../../../../constants/textBookContants';
 
-const GroupsMenu = ({ setGroupNumber }) => {
+const GroupsMenu = ({ setGroupNumber, setTextBookHeaderTitle }) => {
+  const { getTextBookLinks } = textBookContants;
+
   const classes = useTextBookHeaderStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -18,6 +21,7 @@ const GroupsMenu = ({ setGroupNumber }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const menuItems = getTextBookLinks(setGroupNumber);
 
   return (
     <Grid container item xs={1}>
@@ -30,49 +34,19 @@ const GroupsMenu = ({ setGroupNumber }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => setGroupNumber(0)}>
-          <NavLink to="/textbook">
-            Раздел 1
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={() => setGroupNumber(1)}>
-          <NavLink to="/textbook">
-            Раздел 2
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={() => setGroupNumber(2)}>
-          <NavLink to="/textbook">
-            Раздел 3
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={() => setGroupNumber(3)}>
-          <NavLink to="/textbook">
-            Раздел 4
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={() => setGroupNumber(4)}>
-          <NavLink to="/textbook">
-            Раздел 5
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={() => setGroupNumber(5)}>
-          <NavLink to="/textbook">
-            Раздел 6
-          </NavLink>
-        </MenuItem>
-        <MenuItem>
-          <NavLink to="/textbook/learning">
-            Изучаемые слова
-          </NavLink>
-        </MenuItem>
-        <MenuItem>
-          <NavLink to="/textbook/difficult">
-            Сложные слова
-          </NavLink>
-        </MenuItem>
-        <MenuItem>
-          Удаленные слова
-        </MenuItem>
+        {
+          menuItems.map((item) => (
+            <MenuItem onClick={() => {
+              item.onClickAction();
+              setTextBookHeaderTitle(item.text);
+            }}
+            >
+              <NavLink to={item.link}>
+                {item.text}
+              </NavLink>
+            </MenuItem>
+          ))
+        }
       </Menu>
     </Grid>
   );
@@ -80,6 +54,7 @@ const GroupsMenu = ({ setGroupNumber }) => {
 
 GroupsMenu.propTypes = {
   setGroupNumber: PropTypes.func.isRequired,
+  setTextBookHeaderTitle: PropTypes.func.isRequired,
 };
 
 export default GroupsMenu;
