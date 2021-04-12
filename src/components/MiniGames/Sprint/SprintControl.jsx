@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SprintActive from './SprintActive/SprintActive';
 import SprintResult from './SprintResult/SprintResult';
 import { getAllWordsCurrPrevPages, createQnAArrays } from './sprintUtils';
+import miniGamesConstants from '../../../constants/miniGamesConstants';
 
 const useStyles = makeStyles(() => ({
   sprintResultP: {
@@ -34,7 +35,9 @@ const SprintControl = () => {
   const classes = useStyles();
 
   const getWordsArray = async () => {
-    const data = await getAllWordsCurrPrevPages();
+    const randomGroupNum = Math.floor(Math.random() * miniGamesConstants.groupsNum);
+    const randomPageNum = Math.floor(Math.random() * miniGamesConstants.pagesNum);
+    const data = await getAllWordsCurrPrevPages(randomGroupNum, randomPageNum);
     setWordsArray(data);
   };
 
