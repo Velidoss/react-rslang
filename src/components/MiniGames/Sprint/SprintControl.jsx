@@ -5,7 +5,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import SprintActive from './SprintActive/SprintActive';
 import SprintResult from './SprintResult/SprintResult';
-import getWords from '../../../api/getWords';
+import { getAllWordsCurrPrevPages, createQnAArrays } from './sprintUtils';
 
 const useStyles = makeStyles(() => ({
   sprintResultP: {
@@ -22,29 +22,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const shuffle = (array) => {
-  const shuffledArray = [...array];
-  for (let i = 0; i < array.length; i += 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const tmp = shuffledArray[i];
-    shuffledArray[i] = shuffledArray[j];
-    shuffledArray[j] = tmp;
-  }
-  return shuffledArray;
-};
-
-const createQnAArrays = (array) => {
-  const qArray = shuffle([...array]);
-  const shuffledQArray = shuffle([...qArray]);
-  const aArray = [];
-  qArray.map((el, i) => {
-    const num = Math.round(Math.random());
-    aArray.push(num ? qArray[i] : shuffledQArray[i]);
-    return el;
-  });
-  return { qArray, aArray };
-};
-
 const SprintControl = () => {
   const [gameState, setGameState] = useState('GAME_STATE_LOADING');
   const [wordsArray, setWordsArray] = useState([]);
@@ -57,7 +34,7 @@ const SprintControl = () => {
   const classes = useStyles();
 
   const getWordsArray = async () => {
-    const data = await getWords();
+    const data = await getAllWordsCurrPrevPages();
     setWordsArray(data);
   };
 
@@ -71,9 +48,7 @@ const SprintControl = () => {
   }, [wordsArray]);
 
   const setQnA = () => {
-    const tmpArr = [];
-    wordsArray.map((el) => tmpArr.push({ word: el.word, translation: el.wordTranslate }));
-    const { qArray, aArray } = createQnAArrays(tmpArr);
+    const { qArray, aArray } = createQnAArrays(wordsArray);
     setQuestionsArr(qArray);
     setMixedAnswersArr(aArray);
   };
