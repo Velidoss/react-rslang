@@ -6,6 +6,8 @@ import {
   GET_DIFFICULT_WORDS,
   SET_WORD_AS_DIFFICULT,
   UNSET_WORD_AS_DIFFICULT,
+  SET_WORD_AS_DELETED,
+  UNSET_WORD_AS_DELETED,
 } from './userWordsActions';
 import getUserWords from '../../api/getUserWords';
 import sendWordToDifficult from '../../api/sendWordToDifficult';
@@ -53,6 +55,16 @@ export const unsetUserWordDifficult = (wordId) => ({
   payload: { wordId },
 });
 
+export const setUserWordDeleted = (wordId) => ({
+  type: SET_WORD_AS_DELETED,
+  payload: { wordId },
+});
+
+export const unsetUserWordDeleted = (wordId) => ({
+  type: UNSET_WORD_AS_DELETED,
+  payload: { wordId },
+});
+
 export const fetchUserWords = (userId, authToken) => async (dispatch) => {
   const words = await getUserWords(userId, authToken);
   return words && words.length > 0
@@ -87,16 +99,16 @@ export const deleteWordFromDifficult = (wordId, userId, authToken) => async (dis
   }
 };
 
-export const addWordToDeleted = (wordId, userId, authToken, newWord) => async (dispatch) => {
+export const addWordToDeleted = (wordId, userId, authToken) => async (dispatch) => {
   const response = await sendWordToDeleted(userId, authToken, wordId);
   if (response.status === 200) {
-    dispatch(changeUserWordData(wordId, newWord));
+    dispatch(setUserWordDeleted(wordId));
   }
 };
 
-export const removeWordFromDeleted = (wordId, userId, authToken, newWord) => async (dispatch) => {
+export const removeWordFromDeleted = (wordId, userId, authToken) => async (dispatch) => {
   const response = await sendRemoveWordFromDeleted(userId, authToken, wordId);
   if (response.status === 200) {
-    dispatch(changeUserWordData(wordId, newWord));
+    dispatch(unsetUserWordDeleted(wordId));
   }
 };

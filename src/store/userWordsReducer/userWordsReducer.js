@@ -6,6 +6,8 @@ import {
   GET_DELETED_WORDS,
   GET_DIFFICULT_WORDS,
   SET_WORD_AS_DIFFICULT,
+  SET_WORD_AS_DELETED,
+  UNSET_WORD_AS_DELETED,
 } from './userWordsActions';
 
 const initialState = {
@@ -14,7 +16,7 @@ const initialState = {
   difficultWords: [],
 };
 
-const { WORD_HARD, WORD_EASY } = userWordsConstants;
+const { WORD_HARD, WORD_EASY, WORD_DELETED } = userWordsConstants;
 
 const userWordsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -42,6 +44,26 @@ const userWordsReducer = (state = initialState, { type, payload }) => {
         userWords: state.userWords.map((word) => {
           if (word.wordId === payload.wordId) {
             return { ...word, difficulty: WORD_EASY };
+          }
+          return word;
+        }),
+      };
+    case SET_WORD_AS_DELETED:
+      return {
+        ...state,
+        userWords: state.userWords.map((word) => {
+          if (word.wordId === payload.wordId) {
+            return { ...word, optional: { ...word.optional, deleted: WORD_DELETED } };
+          }
+          return word;
+        }),
+      };
+    case UNSET_WORD_AS_DELETED:
+      return {
+        ...state,
+        userWords: state.userWords.map((word) => {
+          if (word.wordId === payload.wordId) {
+            return { ...word, optional: { ...word.optional, deleted: false } };
           }
           return word;
         }),

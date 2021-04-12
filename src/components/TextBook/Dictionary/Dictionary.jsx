@@ -17,6 +17,8 @@ const Dictionary = ({
 
   const { userWords } = useSelector(userWordsSelector);
 
+  if (userWords.length)
+
   return (
     <Grid container>
       <Grid container item className={classes.container}>
