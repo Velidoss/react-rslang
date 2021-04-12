@@ -5,7 +5,8 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import SprintActive from './SprintActive/SprintActive';
 import SprintResult from './SprintResult/SprintResult';
-import { getAllWordsCurrPrevPages, createQnAArrays } from './sprintUtils';
+import createQnAArrays from './sprintUtils';
+import getAllWordsCurrPrevPages from '../../../utils/getAllWordsCurrPrevPages';
 import miniGamesConstants from '../../../constants/miniGamesConstants';
 
 const useStyles = makeStyles(() => ({

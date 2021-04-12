@@ -1,5 +1,3 @@
-import getWords from '../../../api/getWords';
-
 const shuffle = (array) => {
   const shuffledArray = [...array];
   for (let i = 0; i < array.length; i += 1) {
@@ -31,7 +29,7 @@ const createQnAArraysForPage = (array) => {
   return { qArrayForPage, aArrayForPage };
 };
 
-export const createQnAArrays = (initArray) => {
+const createQnAArrays = (initArray) => {
   const array = createSprintWordsArr(initArray);
   const qArray = [];
   const aArray = [];
@@ -43,17 +41,4 @@ export const createQnAArrays = (initArray) => {
   return { qArray, aArray };
 };
 
-const allWordsCurrPrevPagesArray = [];
-
-export const getAllWordsCurrPrevPages = async (group = 0, page = 0) => {
-  let currPage = page;
-  if (currPage >= 0) {
-    const data = await getWords(group, page);
-    allWordsCurrPrevPagesArray.push(data);
-    if (currPage > 0) {
-      currPage -= 1;
-      await getAllWordsCurrPrevPages(group, currPage);
-    }
-  }
-  return allWordsCurrPrevPagesArray;
-};
+export default createQnAArrays;
