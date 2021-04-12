@@ -3,50 +3,12 @@ import PropTypes from 'prop-types';
 import {
   Grid,
   Typography,
-  makeStyles,
 } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: '0 2vw',
-
-    [theme.breakpoints.down('xl')]: {
-      padding: '0 1vw',
-    },
-
-    [theme.breakpoints.down('lg')]: {
-      padding: '3vw',
-    },
-  },
-
-  imageContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: '2vw',
-  },
-
-  image: {
-    borderRadius: '100%',
-    width: '60%',
-    height: 'auto',
-  },
-
-  textContainer: {
-    textAlign: 'center',
-
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'left',
-    },
-  },
-
-  name: {
-    fontWeight: 'bold',
-  },
-}));
+//
+import styles from './Developer.style';
 
 const Developer = ({ name, text, image }) => {
-  const classes = useStyles();
+  const classes = styles();
 
   return (
     <Grid container className={classes.root}>
@@ -67,4 +29,4 @@ Developer.propTypes = {
   image: PropTypes.string.isRequired,
 };
 
-export default React.memo(Developer);
+export { Developer };

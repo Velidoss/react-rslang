@@ -68,4 +68,4 @@ NavListMenu.propTypes = {
   })).isRequired,
 };
 
-export default React.memo(NavListMenu);
+export { NavListMenu };

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
 //
-import Feature from './Feature/Feature';
+import { Feature } from './Feature';
 //
 import { features } from '../../../constants/mainConstants';
 
@@ -22,4 +22,4 @@ const Features = () => (
   </Grid>
 );
 
-export default React.memo(Features);
+export { Features };

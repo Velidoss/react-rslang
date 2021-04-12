@@ -13,4 +13,4 @@ const Error404 = () => (
   </Typography>
 );
 
-export default Error404;
+export { Error404 };

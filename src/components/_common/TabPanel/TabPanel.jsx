@@ -29,4 +29,4 @@ TabPanel.propTypes = {
   tabId: PropTypes.string.isRequired,
 };
 
-export default React.memo(TabPanel);
+export { TabPanel };

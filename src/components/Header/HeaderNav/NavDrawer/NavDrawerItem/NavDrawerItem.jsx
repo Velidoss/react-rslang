@@ -29,4 +29,4 @@ NavDrawerItem.propTypes = {
   icon: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default React.memo(NavDrawerItem);
+export { NavDrawerItem };

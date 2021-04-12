@@ -3,34 +3,14 @@ import PropTypes from 'prop-types';
 import {
   Tab,
   Tabs,
-  makeStyles,
 } from '@material-ui/core';
 //
-import TabPanel from './TabPanel';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexGrow: '1',
-  },
-  tabs: {
-    minWidth: '140px',
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
-  content: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-  panel: {
-    width: '100%',
-    height: '100%',
-  },
-}));
+import { TabPanel } from '..';
+//
+import styles from './VerticalTabPage.style';
 
 const VerticalTabPage = ({ ariaLabel, config }) => {
-  const classes = useStyles();
+  const classes = styles();
   const [value, setValue] = React.useState(0);
   const handleTabChange = (_, newValue) => { setValue(newValue); };
 
@@ -39,9 +19,9 @@ const VerticalTabPage = ({ ariaLabel, config }) => {
       <Tabs
         value={value}
         onChange={handleTabChange}
-        orientation="vertical"
         aria-label={ariaLabel}
         className={classes.tabs}
+        orientation="vertical"
       >
         {
           config.map(({ label, tabId, tabPanelId }) => (
@@ -86,4 +66,4 @@ VerticalTabPage.propTypes = {
   })).isRequired,
 };
 
-export default React.memo(VerticalTabPage);
+export { VerticalTabPage };

@@ -4,31 +4,16 @@ import {
   Button,
   Typography,
   IconButton,
-  makeStyles,
 } from '@material-ui/core';
 //
 import { Cancel } from '@material-ui/icons';
+//
+import style from './AvatarUploadInput.style';
 
-const useStyles = makeStyles({
-  input: {
-    display: 'none',
-  },
-  image: {
-    height: '5rem',
-    width: '5rem',
-    objectFit: 'cover',
-  },
-  imageName: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    width: '5rem',
-  },
-});
-
-const ImageUploadInput = () => {
+const AvatarUploadInput = () => {
   const [currentFile, setCurrentFile] = React.useState(null);
   const [previewImage, setPreviewImage] = React.useState(null);
-  const classes = useStyles();
+  const classes = style();
 
   const selectFile = (event) => {
     const img = event.target.files[0];
@@ -94,4 +79,4 @@ const ImageUploadInput = () => {
   );
 };
 
-export default ImageUploadInput;
+export { AvatarUploadInput };

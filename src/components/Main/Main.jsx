@@ -1,9 +1,9 @@
 import React from 'react';
 //
-import Hero from './Hero/Hero';
-import Features from './Features/Features';
-import Video from './Video/Video';
-import Team from './Team/Team';
+import { Hero } from './Hero';
+import { Features } from './Features';
+import { Video } from './Video';
+import { Team } from './Team';
 
 const Main = () => (
   <>
@@ -14,4 +14,4 @@ const Main = () => (
   </>
 );
 
-export default Main;
+export { Main };

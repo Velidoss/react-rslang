@@ -4,7 +4,7 @@ import { IconButton } from '@material-ui/core';
 //
 import { Person } from '@material-ui/icons';
 //
-import HeaderProfile from './HeaderProfile/HeaderProfile';
+import { HeaderProfile } from './HeaderProfile';
 //
 import { useAuth } from '../../../contexts/AuthContext';
 
@@ -29,4 +29,4 @@ const HeaderAuth = () => {
     );
 };
 
-export default React.memo(HeaderAuth);
+export { HeaderAuth };

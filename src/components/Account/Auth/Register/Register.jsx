@@ -13,9 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 //
-import AvatarUploadInput from '../../../_common/AvatarUploadInput';
-import FormCard from '../../../_common/FormCard';
-import Loader from '../../../_common/Loader';
+import { AvatarUploadInput, FormCard, Loader } from '../../../_common';
 //
 import { registerAC } from '../../../../store/registerReducer/registerReducerActions';
 import { registerSelector } from '../../../../store/selectors/registerSelector';
@@ -142,4 +140,4 @@ const Register = () => {
     );
 };
 
-export default React.memo(Register);
+export { Register };
