@@ -19,7 +19,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    'no-underscore-dangle': ['error', { allowAfterThis: true }],
+    'no-underscore-dangle': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/jsx-curly-newline': 'off',
     'react/jsx-props-no-spreading': 'off',

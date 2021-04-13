@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Grid,
@@ -10,22 +11,32 @@ import {
 } from '@material-ui/core';
 //
 import {
-  Star,
-  Delete,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
+  KeyboardArrowDown, KeyboardArrowUp,
 } from '@material-ui/icons';
-//
+import { addWordToDifficult, deleteWordFromDifficult, addWordToDeleted } from '../../../../store/textBookReducer/userWordsActionCreators';
 import { WordStats } from './WordStats';
 import { WordPlayButton } from './WordPlayButton';
 import { WordImage } from './WordImage';
 //
 import styles from './WordItem.style';
+import checkIfWordInDifficult from '../../../../store/textBookReducer/checkIfWordInDifficult';
+import WordInDifficultsButton from '../../WordItem/WordInDifficultsButton/WordInDifficultsButton';
+import WordDeleteButton from '../../WordItem/WordDeleteButton/WordDeleteButton';
 
-const WordItem = ({ word, showControls, showTranslation }) => {
-  const classes = styles();
+const WordItem = ({
+  word, userWords, showControls, showTranslation, userId, token, isAuth,
+}) => {
+  const dispatch = useDispatch();
+  const [isDifficult, toggleIsDifficult] = useState(false);
+  const [isLoading, toggleIsLoading] = useState(false);
   const [openStats, toggleOpenStats] = useState(false);
 
+  useEffect(() => (
+    userId && checkIfWordInDifficult(word, userWords)
+      ? toggleIsDifficult(true)
+      : toggleIsDifficult(false)), [userWords]);
+
+  const classes = styles();
   return (
     <ListItem className={classes.root}>
       <Grid container direction="row" spacing={2}>
@@ -49,16 +60,33 @@ const WordItem = ({ word, showControls, showTranslation }) => {
             </Grid>
             <Grid item className={classes.wordControlsItem}>
               {
-                showControls && (
-                  <Grid>
-                    <IconButton>
-                      <Star />
-                    </IconButton>
-                    <IconButton>
-                      <Delete />
-                    </IconButton>
-                  </Grid>
-                )
+                showControls && isAuth
+                  ? (
+                    <Grid>
+                      <WordInDifficultsButton
+                        isDifficult={isDifficult}
+                        isLoading={isLoading}
+                        addWordToDifficult={
+                          () => {
+                            toggleIsLoading(true);
+                            dispatch(addWordToDifficult(word.id, userId, token));
+                            toggleIsLoading(false);
+                          }
+                        }
+                        removeWordFromDifficult={
+                          () => {
+                            toggleIsLoading(true);
+                            dispatch(deleteWordFromDifficult(word.id, userId, token));
+                            toggleIsLoading(false);
+                          }
+                        }
+                      />
+                      <WordDeleteButton
+                        deleteWord={() => dispatch(addWordToDeleted(word.id, userId, token))}
+                      />
+                    </Grid>
+                  )
+                  : <div />
               }
               <IconButton onClick={() => toggleOpenStats((prev) => !prev)}>
                 {
@@ -120,8 +148,14 @@ const WordItem = ({ word, showControls, showTranslation }) => {
   );
 };
 
+WordItem.defaultProps = {
+  userId: null,
+  token: null,
+};
+
 WordItem.propTypes = {
   word: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     audio: PropTypes.string.isRequired,
     audioMeaning: PropTypes.string.isRequired,
@@ -136,6 +170,12 @@ WordItem.propTypes = {
   }).isRequired,
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
+  userWords: PropTypes.arrayOf({
+    _id: PropTypes.number.isRequired,
+  }).isRequired,
+  isAuth: PropTypes.bool.isRequired,
+  userId: PropTypes.string,
+  token: PropTypes.string,
 };
 
 export { WordItem };

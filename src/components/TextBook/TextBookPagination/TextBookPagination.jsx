@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Pagination } from '@material-ui/lab';
 //
-import { TEXTBOOK_PAGES_QUANTITY } from '../../../constants/textBookContants';
+import { TEXTBOOK_PAGES_QUANTITY } from '../../../constants/textBookConstants';
 
 const TextBookPagination = ({ currentPage, changePage }) => (
   <Pagination

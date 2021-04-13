@@ -1,6 +1,6 @@
 import axios from 'axios';
 //
-import DataAccessConstants from '../../constants/DataAccessContants';
+import DataAccessConstants from '../../constants/DataAccessConstants';
 import {
   AVATAR_REQUEST,
   AVATAR_SUCCESS,

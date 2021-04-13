@@ -11,13 +11,16 @@ import { CustomThemeProvider } from './contexts/CustomThemeContext';
 import '@fontsource/roboto';
 import '@fontsource/roboto/100.css';
 import '@fontsource/lobster';
+import AudioContextState from './context/AudioContextState';
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
       <AuthProvider>
         <CustomThemeProvider>
-          <App />
+          <AudioContextState>
+            <App />
+          </AudioContextState>
         </CustomThemeProvider>
       </AuthProvider>
     </Provider>

@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import {
   IconButton,
   Menu,
   MenuItem,
 } from '@material-ui/core';
-//
 import { Bookmark } from '@material-ui/icons';
+import { textBookConstants } from '../../../../constants/textBookConstants';
 
-const GroupsMenu = React.memo(({ className, setGroupNumber }) => {
+const GroupsMenu = React.memo(({ className, setGroupNumber, setTextBookHeaderTitle }) => {
+  const { getTextBookLinks } = textBookConstants;
   const [anchorEl, setAnchorEl] = useState(null);
+  const history = useHistory();
 
   const handleClick = (event) => { setAnchorEl(event.currentTarget); };
   const handleClose = () => { setAnchorEl(null); };
+  const menuItems = getTextBookLinks(setGroupNumber);
 
   return (
     <>
@@ -33,9 +37,17 @@ const GroupsMenu = React.memo(({ className, setGroupNumber }) => {
         onClose={handleClose}
       >
         {
-          [0, 1, 2, 3, 4, 5].map((num) => (
-            <MenuItem key={num} onClick={() => { setGroupNumber(num); }}>
-              {`Раздел ${num + 1}`}
+          menuItems.map((item) => (
+            <MenuItem
+              key={item.id}
+              onClick={() => {
+                item.onClickAction();
+                setTextBookHeaderTitle(item.text);
+                setAnchorEl(null);
+                history.push(item.link);
+              }}
+            >
+              {item.text}
             </MenuItem>
           ))
         }
@@ -51,6 +63,7 @@ GroupsMenu.defaultProps = {
 GroupsMenu.propTypes = {
   className: PropTypes.string,
   setGroupNumber: PropTypes.func.isRequired,
+  setTextBookHeaderTitle: PropTypes.func.isRequired,
 };
 
 export { GroupsMenu };

@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 //
 import { ImageLink } from '../../_common';
 //
-import { miniGameLinksConfig } from '../../../constants/textBookContants';
+import { miniGameLinksConfig } from '../../../constants/textBookConstants';
 //
 import styles from './MiniGameLinks.style';
 

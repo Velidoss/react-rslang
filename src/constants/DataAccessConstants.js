@@ -1,4 +1,4 @@
-const DataAccessContants = {
+const DataAccessConstants = {
   ApiUrl: 'https://react-rslang-back-48.herokuapp.com',
   ApiEndPoints: {
     GET_WORDS_ENDPOINT: '/words',
@@ -11,4 +11,4 @@ const DataAccessContants = {
   PAGES_QUANTITY: 30,
 };
 
-export default DataAccessContants;
+export default DataAccessConstants;

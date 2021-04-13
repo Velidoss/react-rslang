@@ -2,11 +2,11 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'material-ui-image';
 //
-import DataAccessContants from '../../../../../constants/DataAccessContants';
+import DataAccessConstants from '../../../../../constants/DataAccessConstants';
 //
 import styles from './WordImage.style';
 
-const { ApiUrl } = DataAccessContants;
+const { ApiUrl } = DataAccessConstants;
 
 const WordImage = ({ imgSrc }) => {
   const classes = styles();

@@ -1,7 +1,7 @@
 import wordAudio from '../../../../../common/wordAudio';
-import DataAccessContants from '../../../../../constants/DataAccessContants';
+import DataAccessConstants from '../../../../../constants/DataAccessConstants';
 
-const { ApiUrl } = DataAccessContants;
+const { ApiUrl } = DataAccessConstants;
 
 const readFewAudios = (...audios) => {
   let audioIndex = 0;
