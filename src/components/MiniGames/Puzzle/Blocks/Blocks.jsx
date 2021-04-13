@@ -16,6 +16,7 @@ const Blocks = ({ blocks, action }) => {
             color="inherit"
             key={id}
             onClick={action}
+            className="button"
           >
             {word}
           </Button>
