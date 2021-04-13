@@ -10,8 +10,9 @@ import Statistics from './components/Statistics/Statistics';
 import Error404 from './components/Error404/Error404';
 import Footer from './components/Footer/Footer';
 import SavannahControl from './components/MiniGames/Savannah/SavannahControl/SavannahControl';
-import Account from './components/Account/Account';
+import SprintControl from './components/MiniGames/Sprint/SprintControl';
 import PuzzleControl from './components/MiniGames/Puzzle/PuzzleControl/PuzzleControl';
+import Account from './components/Account/Account';
 
 function App() {
   const useStyles = makeStyles({
@@ -33,8 +34,9 @@ function App() {
         <Route path="/minigames" component={MiniGames} />
         <Route path="/statistics" component={Statistics} />
         <Route path="/savannah" component={SavannahControl} />
-        <Route path="/account" component={Account} />
+        <Route path="/sprint" component={SprintControl} />
         <Route path="/puzzle" component={PuzzleControl} />
+        <Route path="/account" component={Account} />
         <Route exact path="/" component={Main} />
         <Route path="*" component={Error404} />
       </Switch>
