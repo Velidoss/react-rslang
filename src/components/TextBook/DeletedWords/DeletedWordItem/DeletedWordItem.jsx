@@ -12,7 +12,7 @@ import useTextBookStyles from '../../useTextBookStyles';
 import DataAccessContants from '../../../../constants/DataAccessContants';
 import WordPlayButton from './WordPlayButton/WordPlayButton';
 import { removeWordFromDeleted } from '../../../../store/userWordsReducer/userWordsActionCreators';
-import DeletedWordDeleteButton from './DeletedWordDeleteButton/DeletedWordRestoreButton';
+import DeletedWordButton from './DeletedWordButton/DeletedWordButton';
 
 const DeletedWordItem = ({
   word, showControls, showTranslation, userId, token, isAuth,
@@ -49,7 +49,7 @@ const DeletedWordItem = ({
                 showControls && isAuth
                   ? (
                     <Grid>
-                      <DeletedWordDeleteButton
+                      <DeletedWordButton
                         deleteWordFromDifficult={
                           () => dispatch(removeWordFromDeleted(word._id, userId, token))
                         }

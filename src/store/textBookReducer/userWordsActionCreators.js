@@ -19,7 +19,7 @@ import getDeletedWords from '../../api/getDeletedWords';
 import getDifficultWords from '../../api/getDifficultWords';
 import userWordsConstants from '../../constants/userWordsConstants';
 import getUserLearningWords from '../../api/getUserLearningWords';
-import { removeWord } from '../textBookReducer/TextBookActionCreators';
+import { removeWord } from './TextBookActionCreators';
 
 const { WORD_HARD } = userWordsConstants;
 
@@ -91,7 +91,7 @@ export const fetchUserDeletedWords = (userId, authToken, page = 0) => async (dis
   && dispatch(setUserDeletedWords(words[0].paginatedResults));
 };
 
-export const fetchUserDifficultWords = (userId, authToken, page) => async (dispatch) => {
+export const fetchUserDifficultWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getDifficultWords(userId, authToken, page);
   return words && words[0].paginatedResults.length > 0
   && dispatch(setUserDifficultWords(words[0].paginatedResults));

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Grid, List, CircularProgress } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import useTextBookStyles from '../useTextBookStyles';
-import userWordsSelector from '../../../store/selectors/userWordsSelector';
 import DifficultWordsPagination from '../TextBookPagination/TextBookPagination';
 import { useAuth } from '../../../contexts/AuthContext';
-import { fetchUserDeletedWords } from '../../../store/userWordsReducer/userWordsActionCreators';
-import DeletedWordItem from './DeletedWordItem/DeletedWordItem';
+import { fetchUserDeletedWords, removeWordFromDeleted } from '../../../store/textBookReducer/userWordsActionCreators';
+import UserWordItem from '../../_common/UserWordItem';
+import textBookSelector from '../../../store/selectors/textBookSelector';
 
 const DeletedWords = ({
   showControls, showTranslation,
@@ -15,7 +15,7 @@ const DeletedWords = ({
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
   const classes = useTextBookStyles();
-  const { deletedWords, userWords } = useSelector(userWordsSelector);
+  const { deletedWords, userWords } = useSelector(textBookSelector);
 
   const { auth: { userId, token }, isAuth } = useAuth();
 
@@ -36,15 +36,15 @@ const DeletedWords = ({
           <List>
             {
         deletedWords.map((word) => (
-          <DeletedWordItem
+          <UserWordItem
+            isAuth={isAuth}
             word={word}
             userWords={userWords}
             showControls={showControls}
             showTranslation={showTranslation}
             userId={userId}
-            isAuth={isAuth}
-            token={token}
-            key={word.id}
+            key={word._id}
+            restoreCallback={() => dispatch(removeWordFromDeleted(word._id, userId, token))}
           />
         ))
       }

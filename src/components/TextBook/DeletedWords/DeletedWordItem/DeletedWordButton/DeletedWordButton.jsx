@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
 import useWordInDifficultsStyles from '../../../WordItem/WordInDifficultsButton/useWordInDifficultsStyles';
 
-const DeletedWordDeleteButton = ({ deleteWordFromDifficult }) => {
+const DeletedWordButton = ({ deleteWordFromDifficult }) => {
   const classes = useWordInDifficultsStyles();
   return (
     <IconButton
@@ -16,8 +16,8 @@ const DeletedWordDeleteButton = ({ deleteWordFromDifficult }) => {
   );
 };
 
-DeletedWordDeleteButton.propTypes = {
+DeletedWordButton.propTypes = {
   deleteWordFromDifficult: PropTypes.func.isRequired,
 };
 
-export default DeletedWordDeleteButton;
+export default DeletedWordButton;

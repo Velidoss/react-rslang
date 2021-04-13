@@ -37,6 +37,7 @@ const GroupsMenu = ({ setGroupNumber, setTextBookHeaderTitle }) => {
         {
           menuItems.map((item) => (
             <MenuItem
+              key={item.id}
               onClick={() => {
                 item.onClickAction();
                 setTextBookHeaderTitle(item.text);

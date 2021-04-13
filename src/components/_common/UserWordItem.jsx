@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Grid, ListItem, Avatar, IconButton, Typography, Divider, Collapse,
@@ -6,29 +6,17 @@ import {
 import {
   KeyboardArrowDown, KeyboardArrowUp,
 } from '@material-ui/icons';
-import { useDispatch } from 'react-redux';
-import WordStats from '../WordStats/WordStats';
-import useTextBookStyles from '../useTextBookStyles';
-import DataAccessContants from '../../../constants/DataAccessContants';
-import WordPlayButton from './WordPlayButton/WordPlayButton';
-import { addWordToDifficult, deleteWordFromDifficult, addWordToDeleted } from '../../../store/textBookReducer/userWordsActionCreators';
-import WordInDifficultsButton from './WordInDifficultsButton/WordInDifficultsButton';
-import checkIfWordInDifficult from '../../../store/textBookReducer/checkIfWordInDifficult';
-import WordDeleteButton from './WordDeleteButton/WordDeleteButton';
+import DataAccessContants from '../../constants/DataAccessContants';
+import useTextBookStyles from '../TextBook/useTextBookStyles';
+import WordStats from '../TextBook/WordStats/WordStats';
+import WordPlayButton from './WordPlayButton';
+import DeletedWordButton from '../TextBook/DeletedWords/DeletedWordItem/DeletedWordButton/DeletedWordButton';
 
-const WordItem = ({
-  word, userWords, showControls, showTranslation, userId, token, isAuth,
+const UserWordItem = ({
+  word, showControls, showTranslation, isAuth, restoreCallback,
 }) => {
-  const dispatch = useDispatch();
-  const [isDifficult, toggleIsDifficult] = useState(false);
-  const [isLoading, toggleIsLoading] = useState(false);
   const [openStats, toggleOpenStats] = useState(false);
   const { ApiUrl } = DataAccessContants;
-
-  useEffect(() => (
-    userId && checkIfWordInDifficult(word, userWords)
-      ? toggleIsDifficult(true)
-      : toggleIsDifficult(false)), [userWords]);
 
   const classes = useTextBookStyles();
 
@@ -55,35 +43,16 @@ const WordItem = ({
             </Grid>
             <Grid item className={classes.wordControlsItem}>
               {
-                showControls && isAuth
+                showControls && isAuth && restoreCallback
                   ? (
                     <Grid>
-                      <WordInDifficultsButton
-                        isDifficult={isDifficult}
-                        isLoading={isLoading}
-                        addWordToDifficult={
-                          () => {
-                            toggleIsLoading(true);
-                            dispatch(addWordToDifficult(word.id, userId, token));
-                            toggleIsLoading(false);
-                          }
-                        }
-                        removeWordFromDifficult={
-                          () => {
-                            toggleIsLoading(true);
-                            dispatch(deleteWordFromDifficult(word.id, userId, token));
-                            toggleIsLoading(false);
-                          }
-                        }
-                      />
-                      <WordDeleteButton
-                        deleteWord={() => dispatch(addWordToDeleted(word.id, userId, token))}
+                      <DeletedWordButton
+                        deleteWordFromDifficult={restoreCallback}
                       />
                     </Grid>
                   )
                   : <div />
               }
-
               <IconButton onClick={() => toggleOpenStats((prev) => !prev)}>
                 {
                   openStats
@@ -122,22 +91,6 @@ const WordItem = ({
               )
               : <div />
           }
-          <Grid item>
-            <Typography className={classes.wordExplanation} variant="subtitle2">
-              <span dangerouslySetInnerHTML={{ __html: word.textMeaning }} />
-            </Typography>
-          </Grid>
-          {
-            showTranslation
-              ? (
-                <Grid item>
-                  <Typography className={classes.wordTranslatedExplanation} variant="subtitle2">
-                    {word.textMeaningTranslate}
-                  </Typography>
-                </Grid>
-              )
-              : <div />
-          }
           <Collapse in={openStats}>
             <Divider />
             <WordStats />
@@ -148,14 +101,13 @@ const WordItem = ({
   );
 };
 
-WordItem.defaultProps = {
-  userId: null,
-  token: null,
+UserWordItem.defaultProps = {
+  restoreCallback: null,
 };
 
-WordItem.propTypes = {
+UserWordItem.propTypes = {
   word: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     audio: PropTypes.string.isRequired,
     audioMeaning: PropTypes.string.isRequired,
@@ -165,17 +117,11 @@ WordItem.propTypes = {
     transcription: PropTypes.string.isRequired,
     textExample: PropTypes.string.isRequired,
     textExampleTranslate: PropTypes.string.isRequired,
-    textMeaning: PropTypes.string.isRequired,
-    textMeaningTranslate: PropTypes.string.isRequired,
   }).isRequired,
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
-  userWords: PropTypes.arrayOf({
-    _id: PropTypes.number.isRequired,
-  }).isRequired,
   isAuth: PropTypes.bool.isRequired,
-  userId: PropTypes.string,
-  token: PropTypes.string,
+  restoreCallback: PropTypes.func,
 };
 
-export default WordItem;
+export default UserWordItem;

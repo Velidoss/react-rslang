@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Grid, List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import useTextBookStyles from '../useTextBookStyles';
-import userWordsSelector from '../../../store/selectors/userWordsSelector';
 import DifficultWordsPagination from '../TextBookPagination/TextBookPagination';
 import { useAuth } from '../../../contexts/AuthContext';
-import { fetchUserDifficultWords } from '../../../store/userWordsReducer/userWordsActionCreators';
-import LearningWordItem from './LearningWordItem/LearningWordItem';
+import { fetchUserDifficultWords } from '../../../store/textBookReducer/userWordsActionCreators';
+import UserWordItem from '../../_common/UserWordItem';
+import textBookSelector from '../../../store/selectors/textBookSelector';
 
 const LearningWords = ({
   showControls, showTranslation,
@@ -15,7 +15,7 @@ const LearningWords = ({
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
   const classes = useTextBookStyles();
-  const { difficultWords, userWords } = useSelector(userWordsSelector);
+  const { difficultWords, userWords } = useSelector(textBookSelector);
 
   const { auth: { userId, token }, isAuth } = useAuth();
 
@@ -32,7 +32,7 @@ const LearningWords = ({
           <List>
             {
         difficultWords.map((word) => (
-          <LearningWordItem
+          <UserWordItem
             word={word}
             userWords={userWords}
             showControls={showControls}
@@ -40,7 +40,7 @@ const LearningWords = ({
             userId={userId}
             isAuth={isAuth}
             token={token}
-            key={word.id}
+            key={word._id}
           />
         ))
       }

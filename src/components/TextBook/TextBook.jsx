@@ -7,25 +7,24 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import textBookSelector from '../../store/selectors/textBookSelector';
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
 import TextBookHeader from './TextBookHeader/TextBookHeader';
-import { fetchUserDeletedWords, fetchUserWords } from '../../store/userWordsReducer/userWordsActionCreators';
-import userWordsSelector from '../../store/selectors/userWordsSelector';
+import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
 import { useAuth } from '../../contexts/AuthContext';
 import Dictionary from './Dictionary/Dictionary';
 import DifficultWords from './DifficultWords/DifficultWords';
 import LearningWords from './LearningWords/LearningWords';
 import DeletedWords from './DeletedWords/DeletedWords';
-import filterTextBookWords from '../../utils/filterTextBookWords';
 
 const TextBook = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  const { userWords, deletedWords } = useSelector(userWordsSelector);
   const { auth: { userId, token } } = useAuth();
 
   const [pageNumber, setPageNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(0);
 
-  const { words, showControls, showTranslation } = useSelector(textBookSelector);
+  const {
+    words, showControls, showTranslation, userWords,
+  } = useSelector(textBookSelector);
 
   const changePage = (event, number) => setPageNumber(number - 1);
 
@@ -82,7 +81,7 @@ const TextBook = () => {
           path={match.url}
           render={() => (
             <Dictionary
-              words={filterTextBookWords(words, deletedWords)}
+              words={words}
               showControls={showControls}
               showTranslation={showTranslation}
               pageNumber={pageNumber}

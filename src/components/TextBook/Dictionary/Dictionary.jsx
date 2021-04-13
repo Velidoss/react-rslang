@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Grid, List } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import useTextBookStyles from '../useTextBookStyles';
-import WordItem from '../WordItem/WordItem';
-import userWordsSelector from '../../../store/selectors/userWordsSelector';
 import DifficultWordsPagination from '../TextBookPagination/TextBookPagination';
 import { useAuth } from '../../../contexts/AuthContext';
+import WordItem from '../WordItem/WordItem';
+import textBookSelector from '../../../store/selectors/textBookSelector';
 
 const Dictionary = ({
   words, showControls, showTranslation, pageNumber, changePage,
@@ -15,7 +15,7 @@ const Dictionary = ({
 
   const { auth: { userId, token }, isAuth } = useAuth();
 
-  const { userWords } = useSelector(userWordsSelector);
+  const { userWords } = useSelector(textBookSelector);
 
   return (
     <Grid container>
@@ -51,7 +51,9 @@ const Dictionary = ({
 };
 
 Dictionary.propTypes = {
-  words: PropTypes.arrayOf({}).isRequired,
+  words: PropTypes.arrayOf({
+    id: PropTypes.number.isRequired,
+  }).isRequired,
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
   pageNumber: PropTypes.number.isRequired,
