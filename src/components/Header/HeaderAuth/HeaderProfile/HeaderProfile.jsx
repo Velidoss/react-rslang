@@ -4,25 +4,11 @@ import {
   Link,
   Avatar,
   Typography,
-  makeStyles,
 } from '@material-ui/core';
 //
 import { useAuth } from '../../../../contexts/AuthContext';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  text: {
-    color: theme.palette.primary.contrastText,
-    paddingRight: '1rem',
-    width: '7rem',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-}));
+//
+import styles from './HeaderProfile.style';
 
 const HeaderProfile = () => {
   const {
@@ -30,7 +16,7 @@ const HeaderProfile = () => {
       name, avatar,
     },
   } = useAuth();
-  const classes = useStyles();
+  const classes = styles();
 
   return (
     <Link className={classes.root} component={RouterLink} to="/account">
@@ -46,4 +32,4 @@ const HeaderProfile = () => {
   );
 };
 
-export default React.memo(HeaderProfile);
+export { HeaderProfile };

@@ -4,45 +4,14 @@ import {
   Box,
   Typography,
   Hidden,
-  makeStyles,
 } from '@material-ui/core';
 //
 import { youTubeVideoId } from '../../../constants/mainConstants';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: '5vw 0',
-
-    [theme.breakpoints.down('sm')]: {
-      padding: '5vw 0 0',
-    },
-  },
-
-  heading: {
-    paddingBottom: '3vw',
-  },
-
-  iframeContainer: {
-    margin: 'auto',
-    paddingBottom: '56.25%', // resolution 16:9
-    position: 'relative',
-    overflow: 'hidden',
-    width: '100%',
-    height: '0',
-  },
-
-  iframe: {
-    position: 'absolute',
-    left: '0',
-    top: '0',
-
-    width: '100%',
-    height: '100%',
-  },
-}));
+//
+import styles from './Video.style';
 
 const Video = () => {
-  const classes = useStyles();
+  const classes = styles();
 
   return (
     <Grid container justify="center">
@@ -65,4 +34,4 @@ const Video = () => {
   );
 };
 
-export default React.memo(Video);
+export { Video };

@@ -17,4 +17,4 @@ NavListLink.propTypes = {
   label: PropTypes.string.isRequired,
 };
 
-export default React.memo(NavListLink);
+export { NavListLink };

@@ -1,12 +1,20 @@
 import * as React from 'react';
+import { Box } from '@material-ui/core';
 //
-import * as images from '../../../assets/images';
+import { ImageLink } from '../../_common';
+//
+import { miniGameLinksConfig } from '../../../constants/textBookContants';
+//
+import styles from './MiniGameLinks.style';
 
-const {
-  minigames: {
-    sprint,
-    savanna,
-    audioChallange,
-    puzzle,
-  },
-} = images;
+const MiniGameLinks = () => {
+  const classes = styles();
+
+  return (
+    <Box className={classes.root}>
+      {miniGameLinksConfig.map((obj) => <ImageLink {...obj} key={obj.title} />)}
+    </Box>
+  );
+};
+
+export { MiniGameLinks };

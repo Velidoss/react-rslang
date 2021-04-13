@@ -5,31 +5,16 @@ import {
   AppBar,
   Toolbar,
   Grid,
-  makeStyles,
 } from '@material-ui/core';
 //
-import HeaderNav from './HeaderNav/HeaderNav';
-import HeaderAuth from './HeaderAuth/HeaderAuth';
-
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: 'transparent',
-    boxShadow: 'none',
-    borderBottom: '1px solid #fff',
-
-    '& .MuiButton-root': {
-      backgroundColor: 'transparent',
-
-      '& :hover': {
-        textShadow: '0 0 10px #fff',
-      },
-    },
-  },
-});
+import { HeaderNav } from './HeaderNav';
+import { HeaderAuth } from './HeaderAuth';
+//
+import styles from './Header.style';
 
 const Header = () => {
   const { pathname } = useLocation();
-  const classes = useStyles();
+  const classes = styles();
 
   return (
     <AppBar

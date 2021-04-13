@@ -40,13 +40,14 @@ export const loginAC = (data) => (dispatch) => {
           refreshToken,
           name,
           userId,
+          avatar,
         },
       } = res;
 
       dispatch(success());
 
       return {
-        token, refreshToken, name, userId,
+        token, refreshToken, name, userId, avatar,
       };
     })
     .catch((err) => {

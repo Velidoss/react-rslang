@@ -1,65 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Grid, CircularProgress, List,
-} from '@material-ui/core';
+import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Container } from '@material-ui/core';
+//
 import textBookSelector from '../../store/selectors/textBookSelector';
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
-import useTextBookStyles from './useTextBookStyles';
-import TextBookPagination from './TextBookPagination/TextBookPagination';
-import WordItem from './WordItem/WordItem';
-import TextBookHeader from './TextBookHeader/TextBookHeader';
+//
+import { WordList } from './WordList';
+import { TextBookPagination } from './TextBookPagination';
+import { TextBookHeader } from './TextBookHeader';
+import { MiniGameLinks } from './MiniGameLinks';
+import { Loader } from '../_common';
+//
+import styles from './TextBook.style';
 
 const TextBook = () => {
-  const classes = useTextBookStyles();
-
-  const [pageNumber, setPageNumber] = useState(0);
-
-  const [groupNumber, setGroupNumber] = useState(0);
-
+  const classes = styles();
   const dispatch = useDispatch();
+  const [pageNumber, setPageNumber] = React.useState(0);
+  const [groupNumber, setGroupNumber] = React.useState(0);
   const { words, showControls, showTranslation } = useSelector(textBookSelector);
 
-  const changePage = (event, number) => setPageNumber(number - 1);
+  const changePage = (_, number) => {
+    setPageNumber(number - 1);
+  };
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(getTextBookWords(groupNumber, pageNumber));
   }, [groupNumber, pageNumber]);
 
-  if (words.length === 0) {
-    return (
-      <CircularProgress />
-    );
-  }
-
   return (
-    <Grid container>
-      <TextBookHeader groupNumber={groupNumber} setGroupNumber={setGroupNumber} />
-      <Grid container item className={classes.container}>
-        <Grid item xs={12}>
-          <List>
-            {
-            words.map((word) => (
-              <WordItem
-                word={word}
-                showControls={showControls}
-                showTranslation={showTranslation}
-                key={word.id}
-              />
-            ))
-          }
-          </List>
-        </Grid>
-      </Grid>
-      <Grid item container className={classes.paginationContainer}>
+    <Container maxWidth="xl">
+      {words.length === 0 && <Loader color="secondary" />}
+      <div className={classes.headerWrapper}>
+        <TextBookHeader
+          groupNumber={groupNumber}
+          setGroupNumber={setGroupNumber}
+        />
+      </div>
+      <div className={classes.listWrapper}>
+        <WordList
+          words={words}
+          showControls={showControls}
+          showTranslation={showTranslation}
+        />
+      </div>
+      <div className={classes.paginationWrapper}>
         <TextBookPagination
           currentPage={pageNumber}
           changePage={changePage}
         />
-      </Grid>
-    </Grid>
-
+      </div>
+      <div className={classes.linksWrapper}>
+        <MiniGameLinks />
+      </div>
+    </Container>
   );
 };
 
-export default TextBook;
+export { TextBook };

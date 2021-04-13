@@ -1,7 +1,7 @@
 import * as React from 'react';
 //
-import Auth from './Auth/Auth';
-import Profile from './Profile/Profile';
+import { Auth } from './Auth/Auth';
+import { Profile } from './Profile/Profile';
 //
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -13,4 +13,4 @@ const Account = () => {
     : <Auth />;
 };
 
-export default React.memo(Account);
+export { Account };

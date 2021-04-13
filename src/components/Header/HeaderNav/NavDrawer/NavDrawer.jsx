@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   IconButton,
   Drawer,
-  makeStyles,
   List,
   ListSubheader,
   ListItemText,
@@ -13,21 +12,11 @@ import {
 //
 import { Menu, MenuOpen } from '@material-ui/icons';
 //
-import NavDrawerItem from './NavDrawerItem/NavDrawerItem';
+import { NavDrawerItem } from './NavDrawerItem';
 //
 import { navLinks } from '../../../../config/navLinks';
-
-const styles = makeStyles((theme) => ({
-  button: {
-    color: theme.palette.primary.contrastText,
-  },
-  list: {
-    width: 360,
-  },
-  nested: {
-    paddingLeft: theme.spacing(2),
-  },
-}));
+//
+import styles from './NavDrawer.style';
 
 const NavDrawer = () => {
   const classes = styles();
@@ -98,4 +87,4 @@ const NavDrawer = () => {
   );
 };
 
-export default NavDrawer;
+export { NavDrawer };

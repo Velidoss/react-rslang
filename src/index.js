@@ -13,16 +13,14 @@ import '@fontsource/roboto/100.css';
 import '@fontsource/lobster';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <AuthProvider>
-          <CustomThemeProvider>
-            <App />
-          </CustomThemeProvider>
-        </AuthProvider>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <AuthProvider>
+        <CustomThemeProvider>
+          <App />
+        </CustomThemeProvider>
+      </AuthProvider>
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
