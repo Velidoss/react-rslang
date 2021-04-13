@@ -7,18 +7,19 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import textBookSelector from '../../store/selectors/textBookSelector';
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
 import TextBookHeader from './TextBookHeader/TextBookHeader';
-import { fetchUserWords } from '../../store/userWordsReducer/userWordsActionCreators';
+import { fetchUserDeletedWords, fetchUserWords } from '../../store/userWordsReducer/userWordsActionCreators';
 import userWordsSelector from '../../store/selectors/userWordsSelector';
 import { useAuth } from '../../contexts/AuthContext';
 import Dictionary from './Dictionary/Dictionary';
 import DifficultWords from './DifficultWords/DifficultWords';
 import LearningWords from './LearningWords/LearningWords';
 import DeletedWords from './DeletedWords/DeletedWords';
+import filterTextBookWords from '../../utils/filterTextBookWords';
 
 const TextBook = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  const { userWords } = useSelector(userWordsSelector);
+  const { userWords, deletedWords } = useSelector(userWordsSelector);
   const { auth: { userId, token } } = useAuth();
 
   const [pageNumber, setPageNumber] = useState(0);
@@ -28,7 +29,12 @@ const TextBook = () => {
 
   const changePage = (event, number) => setPageNumber(number - 1);
 
-  useEffect(() => userId && dispatch(fetchUserWords(userId, token)), [userId, token]);
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchUserWords(userId, token));
+      dispatch(fetchUserDeletedWords(userId, token));
+    }
+  }, [userId, token]);
 
   useEffect(() => {
     dispatch(getTextBookWords(groupNumber, pageNumber));
@@ -76,7 +82,7 @@ const TextBook = () => {
           path={match.url}
           render={() => (
             <Dictionary
-              words={words}
+              words={filterTextBookWords(words, deletedWords)}
               showControls={showControls}
               showTranslation={showTranslation}
               pageNumber={pageNumber}
