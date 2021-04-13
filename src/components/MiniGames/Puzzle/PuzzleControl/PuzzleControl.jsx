@@ -33,7 +33,7 @@ const PuzzleControl = () => {
                   color="secondary"
                   className="button"
                 >
-                  {index}
+                  {index + 1}
                 </Button>
               ))}
             </>

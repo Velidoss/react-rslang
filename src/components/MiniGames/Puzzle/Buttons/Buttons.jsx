@@ -44,7 +44,7 @@ const Buttons = ({
 Buttons.propTypes = {
   isGameActive: PropTypes.bool.isRequired,
   checkIsAnswerRight: PropTypes.func.isRequired,
-  checkButton: PropTypes.func.isRequired,
+  checkButton: PropTypes.instanceOf(Object).isRequired,
   selectDifficulty: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
 };
