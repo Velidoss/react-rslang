@@ -6,28 +6,32 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 //
-import * as themes from '../themes/index';
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from '../utils/loсalStorage';
+//
+import * as themes from '../themes';
 
 const CustomThemeContext = React.createContext();
 const useCustomTheme = () => React.useContext(CustomThemeContext);
 
 const CustomThemeProvider = ({ children }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [themeParams, setThemeParams] = React.useState({
-    theme: prefersDarkMode ? themes.dark : themes.light,
-    themeName: prefersDarkMode ? 'dark' : 'ligth',
-  });
+  const preferredTheme = prefersDarkMode ? 'dark' : 'light';
+  const currentThemeName = getLocalStorageItem('theme', preferredTheme);
+  const [theme, setTheme] = React.useState(themes[currentThemeName]);
+  const [themeName, setThemeName] = React.useState(currentThemeName);
 
   const changeTheme = (value) => {
-    setThemeParams({
-      themeName: value,
-      theme: themes[value],
-    });
+    setTheme(themes[value]);
+    setThemeName(value);
+    setLocalStorageItem('theme', value);
   };
 
   return (
-    <ThemeProvider theme={themeParams.theme}>
-      <CustomThemeContext.Provider value={changeTheme}>
+    <ThemeProvider theme={theme}>
+      <CustomThemeContext.Provider value={{ changeTheme, isDark: themeName === 'dark' }}>
         <CssBaseline />
         {children}
       </CustomThemeContext.Provider>

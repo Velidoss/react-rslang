@@ -1,57 +1,16 @@
 import React from 'react';
-import {
-  makeStyles, Box, Typography,
-} from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 //
-import DevIcon from './DevIcon/DevIcon';
+import { DevIcon } from './DevIcon';
 //
 import { ReactComponent as LogoRssWhite } from '../../assets/logo-rss-white.svg';
+//
+import styles from './Footer.style';
 
 const developers = ['Velidoss', 'arumirinka', 'va-z', 'reagentjs'];
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: 'auto',
-    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  },
-  wrapper: {
-    width: '100%',
-    display: 'grid',
-    gridTemplate: 'auto / 25% 1fr 25%',
-    justifyContent: 'center',
-    justifyItems: 'center',
-    alignItems: 'center',
-    [theme.breakpoints.down('md')]: {
-      gridTemplate: 'auto / 17% 1fr 10%',
-    },
-  },
-  rss: {
-    justifySelf: 'left',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  logoRss: {
-    width: 'auto',
-    height: theme.mixins.toolbar.minHeight * 0.65,
-    [theme.breakpoints.down('md')]: {
-      height: theme.mixins.toolbar.minHeight * 0.40,
-    },
-  },
-  devs: {
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    width: '100%',
-  },
-  year: {
-    justifySelf: 'right',
-  },
-}
-));
-
 const Footer = () => {
-  const classes = useStyles();
+  const classes = styles();
 
   return (
     <footer className={classes.root}>
@@ -73,4 +32,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export { Footer };

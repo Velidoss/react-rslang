@@ -9,19 +9,21 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CustomThemeProvider } from './contexts/CustomThemeContext';
 //
 import '@fontsource/roboto';
+import '@fontsource/roboto/100.css';
 import '@fontsource/lobster';
+import AudioContextState from './context/AudioContextState';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <AuthProvider>
-          <CustomThemeProvider>
+  <BrowserRouter>
+    <Provider store={store}>
+      <AuthProvider>
+        <CustomThemeProvider>
+          <AudioContextState>
             <App />
-          </CustomThemeProvider>
-        </AuthProvider>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+          </AudioContextState>
+        </CustomThemeProvider>
+      </AuthProvider>
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
