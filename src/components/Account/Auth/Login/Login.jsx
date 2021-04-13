@@ -40,8 +40,6 @@ const Login = () => {
   } = useSelector(loginSelector, shallowEqual);
   const { login } = useAuthChange();
 
-  console.log(Loader);
-
   const onSubmit = () => {
     const data = new FormData(formRef.current);
 
@@ -53,12 +51,9 @@ const Login = () => {
       });
   };
 
-  if (isLoading) {
-    return <Loader color="secondary" />;
-  }
-
   return (
     <FormCard>
+      { isLoading && <Loader />}
       <form
         onSubmit={handleSubmit(onSubmit)}
         ref={formRef}

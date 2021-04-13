@@ -7,9 +7,8 @@ import {
   Footer,
   Account,
   Main,
+  TextBook,
 } from './components';
-import TextBook from './components/TextBook/TextBook';
-import MiniGames from './components/MiniGames/MiniGames';
 import Statistics from './components/Statistics/Statistics';
 import SavannahControl from './components/MiniGames/Savannah/SavannahControl/SavannahControl';
 import SprintControl from './components/MiniGames/Sprint/SprintControl';
@@ -33,7 +32,6 @@ function App() {
       <Header />
       <Switch>
         <Route path="/textbook" component={TextBook} />
-        <Route path="/minigames" component={MiniGames} />
         <Route path="/statistics" component={Statistics} />
         <Route path="/savannah" component={SavannahControl} />
         <Route path="/sprint" component={SprintControl} />

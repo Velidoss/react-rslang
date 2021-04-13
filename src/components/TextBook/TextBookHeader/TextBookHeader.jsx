@@ -1,23 +1,23 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import SettingsMenu from './SettingsMenu/SettingsMenu';
-import GroupsMenu from './GroupsMenu/GroupsMenu';
-import useTextBookHeaderStyles from './useTextBookHeaderStyles';
+import { Box, Typography } from '@material-ui/core';
+//
+import { SettingsMenu } from './SettingsMenu';
+import { GroupsMenu } from './GroupsMenu';
+//
+import styles from './TextBookHeader.style';
 
 const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
-  const classes = useTextBookHeaderStyles();
-  return (
-    <Grid container className={classes.textBookHeaderContainer}>
-      <GroupsMenu setGroupNumber={setGroupNumber} />
-      <SettingsMenu />
-      <Grid container item xs={10}>
-        <Typography variant="h3" className={classes.groupName}>
-          {`Раздел ${groupNumber + 1}`}
-        </Typography>
-      </Grid>
+  const classes = styles();
 
-    </Grid>
+  return (
+    <Box container className={classes.root}>
+      <GroupsMenu setGroupNumber={setGroupNumber} className={classes.settingsButton} />
+      <SettingsMenu className={classes.groupButton} />
+      <Typography variant="h5">
+        {`Раздел ${groupNumber + 1}`}
+      </Typography>
+    </Box>
   );
 };
 
@@ -26,4 +26,4 @@ TextBookHeader.propTypes = {
   groupNumber: PropTypes.number.isRequired,
 };
 
-export default TextBookHeader;
+export { TextBookHeader };

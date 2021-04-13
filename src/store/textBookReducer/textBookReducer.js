@@ -1,4 +1,8 @@
-import { FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS } from './textBookReducerActions';
+import {
+  FETCH_TEXTBOOK_WORDS,
+  TOGGLE_TRANSLATION,
+  TOGGLE_CONTROLS,
+} from './textBookReducerActions';
 
 const initialState = {
   words: [],

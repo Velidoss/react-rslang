@@ -1,3 +1,10 @@
+import {
+  Pets,
+  DirectionsRun,
+  Headset,
+  Extension,
+} from '@material-ui/icons';
+//
 import * as images from '../assets/images';
 
 const {
@@ -35,5 +42,23 @@ export const miniGameLinksConfig = [
     className: 'mini-game-link__puzzle',
   },
 ];
+
+export const statChipConfig = [
+  {
+    title: 'Спринт',
+    icon: DirectionsRun,
+  },
+  {
+    title: 'Саванна',
+    icon: Pets,
+  },
+  {
+    title: 'Аудиовызов',
+    icon: Headset,
+  },
+  {
+    title: 'Паззл',
+    icon: Extension,
+  }];
 
 export const TEXTBOOK_PAGES_QUANTITY = 30;

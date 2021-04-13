@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { Box, CircularProgress } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+//
+import { ReactComponent as IconLoader } from '../../../assets/icon-loader.svg';
 //
 import styles from './Loader.style';
 
-const Loader = (loaderProps) => {
+const Loader = () => {
   const classes = styles();
 
   return (
     <Box className={classes.root}>
-      <CircularProgress {...loaderProps} />
+      <IconLoader />
     </Box>
   );
 };

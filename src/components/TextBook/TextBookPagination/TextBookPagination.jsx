@@ -5,7 +5,12 @@ import { Pagination } from '@material-ui/lab';
 import { TEXTBOOK_PAGES_QUANTITY } from '../../../constants/textBookContants';
 
 const TextBookPagination = ({ currentPage, changePage }) => (
-  <Pagination shape="rounded" page={currentPage + 1} count={TEXTBOOK_PAGES_QUANTITY} onChange={changePage} />
+  <Pagination
+    shape="rounded"
+    page={currentPage + 1}
+    count={TEXTBOOK_PAGES_QUANTITY}
+    onChange={changePage}
+  />
 );
 
 TextBookPagination.propTypes = {
@@ -13,4 +18,4 @@ TextBookPagination.propTypes = {
   changePage: PropTypes.func.isRequired,
 };
 
-export default TextBookPagination;
+export { TextBookPagination };

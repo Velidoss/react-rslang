@@ -1,36 +1,42 @@
-import {
-  Menu, MenuItem, Grid, IconButton, Checkbox, Typography,
-} from '@material-ui/core';
-import { SettingsApplications } from '@material-ui/icons';
-import React, { useState } from 'react';
+import * as React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import useTextBookHeaderStyles from '../useTextBookHeaderStyles';
+import {
+  Menu,
+  MenuItem,
+  IconButton,
+  Checkbox,
+  Typography,
+} from '@material-ui/core';
+//
+import { SettingsApplications } from '@material-ui/icons';
+//
 import textBookSelector from '../../../../store/selectors/textBookSelector';
 import { changeTranslationStateAC, fetchControlsStateAC } from '../../../../store/textBookReducer/TextBookActionCreators';
 
-const SettingsMenu = () => {
-  const classes = useTextBookHeaderStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const { showTranslation, showControls } = useSelector(textBookSelector);
+const SettingsMenu = ({ className }) => {
   const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { showTranslation, showControls } = useSelector(textBookSelector);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClick = (event) => { setAnchorEl(event.currentTarget); };
+  const handleClose = () => { setAnchorEl(null); };
 
   return (
-    <Grid container item xs={1}>
-      <IconButton onClick={handleClick} disableRipple className={classes.button}>
-        <SettingsApplications className={classes.buttonIcon} />
+    <>
+      <IconButton
+        disableRipple
+        onClick={handleClick}
+        className={className}
+        aria-controls="textbook-options-menu"
+        aria-haspopup="true"
+      >
+        <SettingsApplications />
       </IconButton>
       <Menu
-        anchorEl={anchorEl}
         keepMounted
+        id="textbook-options-menu"
+        anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
@@ -55,9 +61,16 @@ const SettingsMenu = () => {
           </Typography>
         </MenuItem>
       </Menu>
-    </Grid>
-
+    </>
   );
 };
 
-export default SettingsMenu;
+SettingsMenu.defaultProps = {
+  className: null,
+};
+
+SettingsMenu.propTypes = {
+  className: PropTypes.string,
+};
+
+export { SettingsMenu };
