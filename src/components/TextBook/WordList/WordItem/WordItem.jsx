@@ -138,22 +138,6 @@ const WordItem = ({
               </Grid>
             )
           }
-          <Grid item>
-            <Typography className={classes.wordExplanation} variant="subtitle2">
-              <span dangerouslySetInnerHTML={{ __html: word.textMeaning }} />
-            </Typography>
-          </Grid>
-          {
-            showTranslation
-              ? (
-                <Grid item>
-                  <Typography className={classes.wordTranslatedExplanation} variant="subtitle2">
-                    {word.textMeaningTranslate}
-                  </Typography>
-                </Grid>
-              )
-              : <div />
-          }
           <Collapse in={openStats}>
             <Divider />
             <WordStats />

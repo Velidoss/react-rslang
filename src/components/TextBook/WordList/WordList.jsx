@@ -14,7 +14,7 @@ const WordList = React.memo(({
 }) => {
   const classes = styles();
 
-  const { userWords } = useSelector(textBookSelector());
+  const { userWords } = useSelector(textBookSelector);
 
   const { auth: { userId, token }, isAuth } = useAuth();
 

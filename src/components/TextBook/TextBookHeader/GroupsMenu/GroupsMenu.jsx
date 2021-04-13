@@ -43,6 +43,7 @@ const GroupsMenu = React.memo(({ className, setGroupNumber, setTextBookHeaderTit
               onClick={() => {
                 item.onClickAction();
                 setTextBookHeaderTitle(item.text);
+                setAnchorEl(null);
                 history.push(item.link);
               }}
             >

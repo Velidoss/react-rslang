@@ -20,7 +20,11 @@ const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
 
   return (
     <Box container className={classes.root}>
-      <GroupsMenu setGroupNumber={setGroupNumber} className={classes.settingsButton} />
+      <GroupsMenu
+        setGroupNumber={setGroupNumber}
+        className={classes.settingsButton}
+        setTextBookHeaderTitle={setTextBookHeaderTitle}
+      />
       <SettingsMenu className={classes.groupButton} />
       <Typography variant="h5">
         {textBookHeaderTitle}

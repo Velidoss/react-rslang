@@ -14,16 +14,16 @@ import '@fontsource/lobster';
 import AudioContextState from './context/AudioContextState';
 
 ReactDOM.render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <AuthProvider>
-          <CustomThemeProvider>
-            <AudioContextState>
-              <App />
-            </AudioContextState>
-          </CustomThemeProvider>
-        </AuthProvider>
-      </Provider>
-    </BrowserRouter>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <AuthProvider>
+        <CustomThemeProvider>
+          <AudioContextState>
+            <App />
+          </AudioContextState>
+        </CustomThemeProvider>
+      </AuthProvider>
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
