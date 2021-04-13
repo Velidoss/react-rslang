@@ -1,12 +1,13 @@
 import axios from 'axios';
-import DataAccessContants from '../constants/DataAccessContants';
+import DataAccessConstants from '../constants/DataAccessConstants';
 
-const { ApiUrl } = DataAccessContants;
+const { ApiUrl } = DataAccessConstants;
 
-const createInstance = (url = '', params = {}, headers = {}) => axios.create({
+const createInstance = (url = '', params = {}, headers = {}, body) => axios.create({
   baseURL: `${ApiUrl}${url}`,
   params: { ...params },
   headers: { ...headers },
+  data: { ...body },
 });
 
 export default createInstance;

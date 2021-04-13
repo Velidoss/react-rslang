@@ -1,65 +1,105 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Grid, CircularProgress, List,
+  Container,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import textBookSelector from '../../store/selectors/textBookSelector';
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
-import useTextBookStyles from './useTextBookStyles';
-import TextBookPagination from './TextBookPagination/TextBookPagination';
-import WordItem from './WordItem/WordItem';
-import TextBookHeader from './TextBookHeader/TextBookHeader';
+import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
+import { useAuth } from '../../contexts/AuthContext';
+import Dictionary from './Dictionary/Dictionary';
+import DifficultWords from './DifficultWords/DifficultWords';
+import LearningWords from './LearningWords/LearningWords';
+import DeletedWords from './DeletedWords/DeletedWords';
+import { TextBookHeader } from './TextBookHeader';
+import { Loader } from '../_common';
+//
+import styles from './TextBook.style';
 
 const TextBook = () => {
-  const classes = useTextBookStyles();
+  const classes = styles();
+  const dispatch = useDispatch();
+  const match = useRouteMatch();
+  const { auth: { userId, token }, isAuth } = useAuth();
 
   const [pageNumber, setPageNumber] = useState(0);
-
   const [groupNumber, setGroupNumber] = useState(0);
 
-  const dispatch = useDispatch();
-  const { words, showControls, showTranslation } = useSelector(textBookSelector);
+  const {
+    words, showControls, showTranslation,
+  } = useSelector(textBookSelector);
 
-  const changePage = (event, number) => setPageNumber(number - 1);
+  const changePage = (_, number) => {
+    setPageNumber(number - 1);
+  };
 
   useEffect(() => {
-    dispatch(getTextBookWords(groupNumber, pageNumber));
-  }, [groupNumber, pageNumber]);
+    if (userId) {
+      dispatch(fetchUserWords(userId, token));
+      dispatch(fetchUserDeletedWords(userId, token));
+    }
+  }, [userId, token]);
 
-  if (words.length === 0) {
-    return (
-      <CircularProgress />
-    );
-  }
+  useEffect(() => (
+    isAuth
+      ? dispatch(getTextBookWords(groupNumber, pageNumber, userId, token))
+      : dispatch(getTextBookWords(groupNumber, pageNumber))
+  ), [groupNumber, pageNumber]);
 
   return (
-    <Grid container>
-      <TextBookHeader groupNumber={groupNumber} setGroupNumber={setGroupNumber} />
-      <Grid container item className={classes.container}>
-        <Grid item xs={12}>
-          <List>
-            {
-            words.map((word) => (
-              <WordItem
-                word={word}
-                showControls={showControls}
-                showTranslation={showTranslation}
-                key={word.id}
-              />
-            ))
-          }
-          </List>
-        </Grid>
-      </Grid>
-      <Grid item container className={classes.paginationContainer}>
-        <TextBookPagination
-          currentPage={pageNumber}
-          changePage={changePage}
+    <Container maxWidth="xl">
+      {words.length === 0 && <Loader />}
+      <div className={classes.headerWrapper}>
+        <TextBookHeader
+          groupNumber={groupNumber}
+          setGroupNumber={setGroupNumber}
         />
-      </Grid>
-    </Grid>
-
+      </div>
+      <Switch>
+        <Route
+          path={`${match.url}/deleted`}
+          render={() => (
+            <DeletedWords
+              showControls={showControls}
+              showTranslation={showTranslation}
+            />
+          )}
+        />
+        <Route
+          path={`${match.url}/difficult`}
+          render={() => (
+            <DifficultWords
+              showControls={showControls}
+              showTranslation={showTranslation}
+            />
+          )}
+        />
+        <Route
+          path={`${match.url}/learning`}
+          render={() => (
+            <LearningWords
+              showControls={showControls}
+              showTranslation={showTranslation}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={match.url}
+          render={() => (
+            <Dictionary
+              words={words}
+              showControls={showControls}
+              showTranslation={showTranslation}
+              pageNumber={pageNumber}
+              changePage={changePage}
+            />
+          )}
+        />
+      </Switch>
+    </Container>
   );
 };
 
-export default TextBook;
+export { TextBook };

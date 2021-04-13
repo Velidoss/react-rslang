@@ -1,16 +1,11 @@
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core';
 //
 import logoRSLang from '../../../../assets/logo-rslang.svg';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: theme.mixins.toolbar.minHeight * 0.7,
-  },
-}));
+//
+import styles from './NavLogo.style';
 
 const NavLogo = () => {
-  const classes = useStyles();
+  const classes = styles();
 
   return (
     <img
@@ -21,4 +16,4 @@ const NavLogo = () => {
   );
 };
 
-export default NavLogo;
+export { NavLogo };

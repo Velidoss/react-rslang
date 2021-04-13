@@ -1,6 +1,6 @@
-import DataAccessContants from '../constants/DataAccessContants';
+import DataAccessConstants from '../constants/DataAccessConstants';
 
-const { ApiUrl } = DataAccessContants;
+const { ApiUrl } = DataAccessConstants;
 
 const wordAudio = (audioUrl) => new Audio(`${ApiUrl}/${audioUrl}`);
 

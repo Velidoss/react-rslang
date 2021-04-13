@@ -1,27 +1,25 @@
-import * as images from '../../../assets/images/index';
+import * as React from 'react';
+import { Grid } from '@material-ui/core';
+//
+import { Feature } from './Feature';
+//
+import { features } from '../../../constants/mainConstants';
 
-const {
-  main: {
-    featureAudio,
-    featureLearn,
-    featurePlay,
-  },
-} = images;
+const Features = () => (
+  <Grid container justify="center" alignItems="center">
+    {
+      features.map((feature, index) => (
+        <Grid
+          item
+          lg={8}
+          xs={10}
+          key={feature.title}
+        >
+          <Feature {...feature} reverse={!(index % 2)} />
+        </Grid>
+      ))
+    }
+  </Grid>
+);
 
-const featuresConfig = [
-  {
-    title: 'Изучайте новые слова',
-    text: 'Alii decore ex mel, nam vide munere quaestio ei, appareat iudicabit interesset id mel. Mel at summo gloriatur, eos agam epicuri ex. Per an natum salutatus, te mel posse salutandi consetetur. Congue adipisci signiferumque ad est, est te libris convenire. Eu mea erant essent.',
-    image: featureLearn,
-  },
-  {
-    title: 'Оттачивайте произношение',
-    text: 'Alii decore ex mel, nam vide munere quaestio ei, appareat iudicabit interesset id mel. Mel at summo gloriatur, eos agam epicuri ex. Per an natum salutatus, te mel posse salutandi consetetur. Congue adipisci signiferumque ad est, est te libris convenire. Eu mea erant essent.',
-    image: featureAudio,
-  },
-  {
-    title: 'Играйте',
-    text: 'Alii decore ex mel, nam vide munere quaestio ei, appareat iudicabit interesset id mel. Mel at summo gloriatur, eos agam epicuri ex. Per an natum salutatus, te mel posse salutandi consetetur. Congue adipisci signiferumque ad est, est te libris convenire. Eu mea erant essent.',
-    image: featurePlay,
-  },
-];
+export { Features };

@@ -29,6 +29,7 @@ const useTextBookStyles = makeStyles(() => ({
   },
   paginationContainer: {
     marginTop: 40,
+    marginBottom: 60,
     display: 'flex',
     justifyContent: 'center',
   },

@@ -7,15 +7,20 @@ import {
   Grid,
 } from '@material-ui/core';
 //
-import HeaderNav from './HeaderNav/HeaderNav';
-import HeaderAuth from './HeaderAuth/HeaderAuth';
+import { HeaderNav } from './HeaderNav';
+import { HeaderAuth } from './HeaderAuth';
+//
+import styles from './Header.style';
 
 const Header = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
+  const classes = styles();
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position={pathname === '/' ? 'absolute' : 'static'}
+      className={pathname === '/' ? classes.root : null}
+    >
       <Toolbar>
         <Grid
           container

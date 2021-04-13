@@ -8,10 +8,11 @@ import removeLast from '../../../../utils/removeLast';
 import Field from '../Field/Field';
 import Buttons from '../Buttons/Buttons';
 import Answers from '../Answers/Answers';
-import DataAccessContants from '../../../../constants/DataAccessContants';
+import useStyles from '../styles/styles';
+import DataAccessConstants from '../../../../constants/DataAccessConstants';
 import puzzleConstants from '../../../../constants/puzzleConstants';
 
-const { PAGES_QUANTITY } = DataAccessContants;
+const { GROUPS_QUANTITY, PAGES_QUANTITY } = DataAccessConstants;
 const { ANIMATION_DURATION } = puzzleConstants;
 
 const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {

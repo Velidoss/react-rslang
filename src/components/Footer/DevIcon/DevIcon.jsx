@@ -4,35 +4,27 @@ import {
   Box,
   Link,
   Typography,
-  makeStyles,
 } from '@material-ui/core';
 //
 import GitHubIcon from '@material-ui/icons/GitHub';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    textAlign: 'center',
-
-  },
-  icon: {
-    [theme.breakpoints.down('md')]: {
-      width: '16px',
-      height: '16px',
-    },
-  },
-}));
+//
+import styles from './DevIcon.style';
 
 const DevIcon = ({ name }) => {
-  const classes = useStyles();
+  const classes = styles();
 
   return (
     <Box className={classes.root}>
-      <Link href={`https://github.com/${name}`} color="inherit">
+      <Link
+        href={`https://github.com/${name}`}
+        className={classes.link}
+        color="inherit"
+      >
         <GitHubIcon className={classes.icon} />
+        <Typography variant="body2">
+          {`${name}`}
+        </Typography>
       </Link>
-      <Typography variant="body2">
-        {`${name}`}
-      </Typography>
     </Box>
   );
 };
@@ -41,4 +33,4 @@ DevIcon.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-export default DevIcon;
+export { DevIcon };
