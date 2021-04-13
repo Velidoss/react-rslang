@@ -1,9 +1,9 @@
 import axios from 'axios';
-import DataAccessContants from '../constants/DataAccessContants';
+import DataAccessConstants from '../constants/DataAccessConstants';
 import userWordsConstants from '../constants/userWordsConstants';
 
 const { WORD_DELETED } = userWordsConstants;
-const { ApiUrl } = DataAccessContants;
+const { ApiUrl } = DataAccessConstants;
 
 const getAllDeletedWords = async (userId, authToken) => {
   const response = await axios({

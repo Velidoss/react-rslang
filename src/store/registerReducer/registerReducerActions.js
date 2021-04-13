@@ -1,6 +1,6 @@
 import axios from 'axios';
 //
-import DataAccessConstants from '../../constants/DataAccessContants';
+import DataAccessConstants from '../../constants/DataAccessConstants';
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -35,12 +35,12 @@ export const registerAC = (data) => (dispatch) => {
       }
 
       const {
-        data: { email, name },
+        data: { email },
       } = res;
 
       dispatch(success());
 
-      return { email, name };
+      return email;
     })
     .catch((err) => {
       const message = err?.response?.data || err.message;

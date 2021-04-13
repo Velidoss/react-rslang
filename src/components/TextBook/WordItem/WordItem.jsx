@@ -13,8 +13,8 @@ import DataAccessContants from '../../../constants/DataAccessContants';
 import WordPlayButton from './WordPlayButton/WordPlayButton';
 import { addWordToDifficult, deleteWordFromDifficult, addWordToDeleted } from '../../../store/textBookReducer/userWordsActionCreators';
 import WordInDifficultsButton from './WordInDifficultsButton/WordInDifficultsButton';
-import checkIfWordInDifficult from '../../../store/textBookReducer/checkIfWordInDifficult';
 import WordDeleteButton from './WordDeleteButton/WordDeleteButton';
+import checkIfWordInDifficult from './../../../store/textBookReducer/checkIfWordInDifficult';
 
 const WordItem = ({
   word, userWords, showControls, showTranslation, userId, token, isAuth,

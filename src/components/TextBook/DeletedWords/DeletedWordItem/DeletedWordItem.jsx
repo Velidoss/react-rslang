@@ -9,7 +9,7 @@ import {
 import { useDispatch } from 'react-redux';
 import WordStats from '../../WordStats/WordStats';
 import useTextBookStyles from '../../useTextBookStyles';
-import DataAccessContants from '../../../../constants/DataAccessContants';
+import DataAccessConstants from '../../../../constants/DataAccessConstants';
 import WordPlayButton from './WordPlayButton/WordPlayButton';
 import { removeWordFromDeleted } from '../../../../store/userWordsReducer/userWordsActionCreators';
 import DeletedWordButton from './DeletedWordButton/DeletedWordButton';
@@ -19,7 +19,7 @@ const DeletedWordItem = ({
 }) => {
   const dispatch = useDispatch();
   const [openStats, toggleOpenStats] = useState(false);
-  const { ApiUrl } = DataAccessContants;
+  const { ApiUrl } = DataAccessConstants;
 
   const classes = useTextBookStyles();
 

@@ -8,14 +8,14 @@ import {
 } from '@material-ui/icons';
 import WordStats from '../../WordStats/WordStats';
 import useTextBookStyles from '../../useTextBookStyles';
-import DataAccessContants from '../../../../constants/DataAccessContants';
+import DataAccessConstants from '../../../../constants/DataAccessConstants';
 import WordPlayButton from './WordPlayButton/WordPlayButton';
 
 const LearningWordItem = ({
   word, showTranslation,
 }) => {
   const [openStats, toggleOpenStats] = useState(false);
-  const { ApiUrl } = DataAccessContants;
+  const { ApiUrl } = DataAccessConstants;
 
   const classes = useTextBookStyles();
 

@@ -14,7 +14,6 @@ import '@fontsource/lobster';
 import AudioContextState from './context/AudioContextState';
 
 ReactDOM.render(
-  <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
         <AuthProvider>
@@ -25,7 +24,6 @@ ReactDOM.render(
           </CustomThemeProvider>
         </AuthProvider>
       </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+    </BrowserRouter>,
   document.getElementById('root'),
 );

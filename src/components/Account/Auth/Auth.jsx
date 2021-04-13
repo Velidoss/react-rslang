@@ -1,8 +1,8 @@
 import * as React from 'react';
 //
-import Login from './Login/Login';
-import Register from './Register/Register';
-import VerticalTabPage from '../../_common/VertialTabPage';
+import { Login } from './Login';
+import { Register } from './Register';
+import { VerticalTabPage } from '../../_common';
 
 const tabsConfig = [
   {
@@ -26,4 +26,4 @@ const Auth = () => (
   />
 );
 
-export default React.memo(Auth);
+export { Auth };

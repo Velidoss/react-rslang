@@ -6,7 +6,7 @@ import {
   MenuItem,
 } from '@material-ui/core';
 //
-import { HeaderButton } from '../../../../_common/HeaderButton';
+import { HeaderButton } from '../../../../_common';
 
 const NavListMenu = ({ label, links }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -68,4 +68,4 @@ NavListMenu.propTypes = {
   })).isRequired,
 };
 
-export default React.memo(NavListMenu);
+export { NavListMenu };

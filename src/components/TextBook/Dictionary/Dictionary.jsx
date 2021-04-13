@@ -1,50 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, List } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { Grid } from '@material-ui/core';
 import useTextBookStyles from '../useTextBookStyles';
-import DifficultWordsPagination from '../TextBookPagination/TextBookPagination';
-import { useAuth } from '../../../contexts/AuthContext';
-import WordItem from '../WordItem/WordItem';
-import textBookSelector from '../../../store/selectors/textBookSelector';
+import { TextBookPagination } from '../TextBookPagination';
+import { WordList } from '../WordList/WordList';
+import { MiniGameLinks } from '../MiniGameLinks';
 
 const Dictionary = ({
   words, showControls, showTranslation, pageNumber, changePage,
 }) => {
   const classes = useTextBookStyles();
 
-  const { auth: { userId, token }, isAuth } = useAuth();
-
-  const { userWords } = useSelector(textBookSelector);
-
   return (
     <Grid container>
-      <Grid container item className={classes.container}>
-        <Grid item xs={12}>
-          <List>
-            {
-        words.map((word) => (
-          <WordItem
-            word={word}
-            userWords={userWords}
-            showControls={showControls}
-            showTranslation={showTranslation}
-            userId={userId}
-            isAuth={isAuth}
-            token={token}
-            key={word.id}
-          />
-        ))
-      }
-          </List>
-        </Grid>
-      </Grid>
-      <Grid item container className={classes.paginationContainer}>
-        <DifficultWordsPagination
+      <div className={classes.listWrapper}>
+        <WordList
+          words={words}
+          showControls={showControls}
+          showTranslation={showTranslation}
+        />
+      </div>
+      <div className={classes.paginationWrapper}>
+        <TextBookPagination
           currentPage={pageNumber}
           changePage={changePage}
         />
-      </Grid>
+      </div>
+      <div className={classes.linksWrapper}>
+        <MiniGameLinks />
+      </div>
     </Grid>
 
   );

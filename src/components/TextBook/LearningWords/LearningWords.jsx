@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import useTextBookStyles from '../useTextBookStyles';
-import DifficultWordsPagination from '../TextBookPagination/TextBookPagination';
+import { TextBookPagination } from '../TextBookPagination';
 import { useAuth } from '../../../contexts/AuthContext';
 import { fetchUserDifficultWords } from '../../../store/textBookReducer/userWordsActionCreators';
 import UserWordItem from '../../_common/UserWordItem';

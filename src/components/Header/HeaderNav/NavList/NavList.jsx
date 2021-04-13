@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
 //
-import NavListLink from './NavListLink/NavListLink';
-import NavListMenu from './NavListMenu/NavListMenu';
+import { NavListLink } from './NavListLink';
+import { NavListMenu } from './NavListMenu';
 //
 import { navLinks } from '../../../../config/navLinks';
 
@@ -20,4 +20,4 @@ const NavList = () => (
   </Grid>
 );
 
-export default React.memo(NavList);
+export { NavList };

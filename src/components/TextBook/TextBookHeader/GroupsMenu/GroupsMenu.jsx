@@ -1,36 +1,38 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 import {
-  Grid, IconButton, Menu, MenuItem,
+  IconButton,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 import { Bookmark } from '@material-ui/icons';
-import { PropTypes } from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import useTextBookHeaderStyles from '../useTextBookHeaderStyles';
-import textBookContants from '../../../../constants/textBookContants';
+import { textBookConstants } from '../../../../constants/textBookConstants';
 
-const GroupsMenu = ({ setGroupNumber, setTextBookHeaderTitle }) => {
-  const { getTextBookLinks } = textBookContants;
-
-  const classes = useTextBookHeaderStyles();
+const GroupsMenu = React.memo(({ className, setGroupNumber, setTextBookHeaderTitle }) => {
+  const { getTextBookLinks } = textBookConstants;
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClick = (event) => { setAnchorEl(event.currentTarget); };
+  const handleClose = () => { setAnchorEl(null); };
   const menuItems = getTextBookLinks(setGroupNumber);
 
   return (
-    <Grid container item xs={1}>
-      <IconButton onClick={handleClick} disableRipple className={classes.button}>
-        <Bookmark className={classes.buttonIcon} />
+    <>
+      <IconButton
+        disableRipple
+        className={className}
+        onClick={handleClick}
+        aria-controls="textbook-nav-menu"
+        aria-haspopup="true"
+      >
+        <Bookmark />
       </IconButton>
       <Menu
-        anchorEl={anchorEl}
         keepMounted
+        id="textbook-nav-menu"
+        anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
@@ -49,13 +51,18 @@ const GroupsMenu = ({ setGroupNumber, setTextBookHeaderTitle }) => {
           ))
         }
       </Menu>
-    </Grid>
+    </>
   );
+});
+
+GroupsMenu.defaultProps = {
+  className: null,
 };
 
 GroupsMenu.propTypes = {
+  className: PropTypes.string,
   setGroupNumber: PropTypes.func.isRequired,
   setTextBookHeaderTitle: PropTypes.func.isRequired,
 };
 
-export default GroupsMenu;
+export { GroupsMenu };

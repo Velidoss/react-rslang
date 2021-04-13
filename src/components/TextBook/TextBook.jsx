@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Grid, CircularProgress,
+  Container,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import textBookSelector from '../../store/selectors/textBookSelector';
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
-import TextBookHeader from './TextBookHeader/TextBookHeader';
 import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
 import { useAuth } from '../../contexts/AuthContext';
 import Dictionary from './Dictionary/Dictionary';
 import DifficultWords from './DifficultWords/DifficultWords';
 import LearningWords from './LearningWords/LearningWords';
 import DeletedWords from './DeletedWords/DeletedWords';
+import { TextBookHeader } from './TextBookHeader';
+import { Loader } from '../_common';
+//
+import styles from './TextBook.style';
 
 const TextBook = () => {
+  const classes = styles();
   const dispatch = useDispatch();
   const match = useRouteMatch();
   const { auth: { userId, token }, isAuth } = useAuth();
@@ -23,10 +27,12 @@ const TextBook = () => {
   const [groupNumber, setGroupNumber] = useState(0);
 
   const {
-    words, showControls, showTranslation, userWords,
+    words, showControls, showTranslation,
   } = useSelector(textBookSelector);
 
-  const changePage = (event, number) => setPageNumber(number - 1);
+  const changePage = (_, number) => {
+    setPageNumber(number - 1);
+  };
 
   useEffect(() => {
     if (userId) {
@@ -41,15 +47,15 @@ const TextBook = () => {
       : dispatch(getTextBookWords(groupNumber, pageNumber))
   ), [groupNumber, pageNumber]);
 
-  if (words.length === 0 && userWords.length === 0) {
-    return (
-      <CircularProgress />
-    );
-  }
-
   return (
-    <Grid container>
-      <TextBookHeader groupNumber={groupNumber} setGroupNumber={setGroupNumber} />
+    <Container maxWidth="xl">
+      {words.length === 0 && <Loader />}
+      <div className={classes.headerWrapper}>
+        <TextBookHeader
+          groupNumber={groupNumber}
+          setGroupNumber={setGroupNumber}
+        />
+      </div>
       <Switch>
         <Route
           path={`${match.url}/deleted`}
@@ -92,9 +98,8 @@ const TextBook = () => {
           )}
         />
       </Switch>
-    </Grid>
-
+    </Container>
   );
 };
 
-export default TextBook;
+export { TextBook };

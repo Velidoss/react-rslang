@@ -1,0 +1,1 @@
+export { TextBookPagination } from './TextBookPagination';

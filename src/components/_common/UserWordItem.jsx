@@ -6,17 +6,17 @@ import {
 import {
   KeyboardArrowDown, KeyboardArrowUp,
 } from '@material-ui/icons';
-import DataAccessContants from '../../constants/DataAccessContants';
+import DataAccessConstants from '../../constants/DataAccessConstants';
 import useTextBookStyles from '../TextBook/useTextBookStyles';
-import WordStats from '../TextBook/WordStats/WordStats';
 import WordPlayButton from './WordPlayButton';
 import DeletedWordButton from '../TextBook/DeletedWords/DeletedWordItem/DeletedWordButton/DeletedWordButton';
+import { WordStats } from '../TextBook/WordList/WordItem/WordStats';
 
 const UserWordItem = ({
   word, showControls, showTranslation, isAuth, restoreCallback,
 }) => {
   const [openStats, toggleOpenStats] = useState(false);
-  const { ApiUrl } = DataAccessContants;
+  const { ApiUrl } = DataAccessConstants;
 
   const classes = useTextBookStyles();
 

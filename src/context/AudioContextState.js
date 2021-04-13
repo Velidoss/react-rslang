@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AudioContext from './AudioContext';
-import DataAccessContants from '../constants/DataAccessContants';
+import DataAccessConstants from '../constants/DataAccessConstants';
 
-const { ApiUrl } = DataAccessContants;
+const { ApiUrl } = DataAccessConstants;
 
 const AudioContextState = ({ children }) => {
   const [audioUrl, changeAudioUrl] = useState('');

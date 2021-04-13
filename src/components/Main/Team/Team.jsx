@@ -3,26 +3,16 @@ import {
   Grid,
   Box,
   Typography,
-  makeStyles,
 } from '@material-ui/core';
 //
-import Developer from './Developer/Developer';
+import { Developer } from './Developer/Developer';
 //
 import { team } from '../../../constants/mainConstants';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.grey['200'],
-    padding: '6vw 0 5vw',
-  },
-
-  title: {
-    paddingBottom: '4vw',
-  },
-}));
+//
+import styles from './Team.style';
 
 const Team = () => {
-  const classes = useStyles();
+  const classes = styles();
 
   return (
     <Box className={classes.root}>
@@ -63,4 +53,4 @@ const Team = () => {
   );
 };
 
-export default React.memo(Team);
+export { Team };

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes, { arrayOf } from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import { Button, Typography, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -52,15 +51,13 @@ const SprintResult = ({ answersState, points, startGame }) => {
         <span>{`${points}.`}</span>
       </Typography>
       <Typography className={classes.sprintResultP}>
-        <NavLink to="/minigames">
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.sprintResultBtn}
-          >
-            Другие мини-игры
-          </Button>
-        </NavLink>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.sprintResultBtn}
+        >
+          Другие мини-игры
+        </Button>
         <Button
           onClick={startGame}
           variant="contained"

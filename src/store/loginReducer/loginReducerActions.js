@@ -1,6 +1,6 @@
 import axios from 'axios';
 //
-import DataAccessConstants from '../../constants/DataAccessContants';
+import DataAccessConstants from '../../constants/DataAccessConstants';
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -40,13 +40,14 @@ export const loginAC = (data) => (dispatch) => {
           refreshToken,
           name,
           userId,
+          avatar,
         },
       } = res;
 
       dispatch(success());
 
       return {
-        token, refreshToken, name, userId,
+        token, refreshToken, name, userId, avatar,
       };
     })
     .catch((err) => {

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import DataAccessContants from '../constants/DataAccessContants';
+import DataAccessConstants from '../constants/DataAccessConstants';
 
-const { ApiUrl } = DataAccessContants;
+const { ApiUrl } = DataAccessConstants;
 
 const getUserWords = async (userId, authToken) => {
   const response = await axios({

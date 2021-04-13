@@ -4,34 +4,9 @@ import {
   Grid,
   Box,
   Typography,
-  makeStyles,
 } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: '5vw 0 0',
-  },
-
-  title: {
-    paddingBottom: '5vw',
-  },
-
-  img: {
-    height: '651px',
-    width: '100%',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundImage: ({ image }) => `url(${image})`,
-
-    [theme.breakpoints.down('sm')]: {
-      height: '381px',
-    },
-
-    [theme.breakpoints.down('xs')]: {
-      height: '200px',
-    },
-  },
-}));
+//
+import styles from './Feature.style';
 
 const Feature = ({
   title,
@@ -39,7 +14,7 @@ const Feature = ({
   image,
   reverse,
 }) => {
-  const classes = useStyles({ image });
+  const classes = styles({ image });
 
   return (
     <Grid
@@ -71,10 +46,7 @@ const Feature = ({
             <Typography variant="body2">{text}</Typography>
           </Grid>
           <Grid item xs={4} md={6} lg={4}>
-            <Box
-              style={{ backgroundImage: `url(${image})` }}
-              className={classes.img}
-            />
+            <Box className={classes.img} />
           </Grid>
         </Grid>
       </Grid>
@@ -89,4 +61,4 @@ Feature.propTypes = {
   reverse: PropTypes.bool.isRequired,
 };
 
-export default React.memo(Feature);
+export { Feature };

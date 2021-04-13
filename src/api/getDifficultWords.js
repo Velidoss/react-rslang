@@ -1,10 +1,10 @@
 import axios from 'axios';
-import DataAccessContants from '../constants/DataAccessContants';
+import DataAccessConstants from '../constants/DataAccessConstants';
 import userWordsConstants from '../constants/userWordsConstants';
 
 const { WORD_HARD } = userWordsConstants;
 
-const { ApiUrl } = DataAccessContants;
+const { ApiUrl } = DataAccessConstants;
 
 const getDifficultWords = async (userId, authToken, page = 0) => {
   const response = await axios({
