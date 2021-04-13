@@ -23,7 +23,7 @@ const PuzzleControl = () => {
           ? (
             <>
               <Typography variant="h5">
-                Level difficulty:
+                Уровень сложности:
               </Typography>
               {Array(GROUPS_QUANTITY).fill(0).map((item, index) => (
                 <Button

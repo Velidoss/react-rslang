@@ -134,7 +134,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
           )
           : (
             <Typography variant="h5">
-              Game completed!
+              Игра завершена!
             </Typography>
           )
       }

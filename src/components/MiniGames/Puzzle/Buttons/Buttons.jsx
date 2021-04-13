@@ -15,7 +15,7 @@ const Buttons = ({
             color="secondary"
             ref={checkButton}
           >
-            check
+            Проверить
           </Button>
         ) : (
           <>
@@ -25,7 +25,7 @@ const Buttons = ({
               color="secondary"
               className="button"
             >
-              Select difficulty
+              Выбрать сложность
             </Button>
             <Button
               onClick={resetGame}
@@ -33,7 +33,7 @@ const Buttons = ({
               color="secondary"
               className="button"
             >
-              Reset game
+              Перезапустить игру
             </Button>
           </>
         )
