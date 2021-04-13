@@ -54,6 +54,11 @@ const AuthProvider = ({ children }) => {
     removeLocalStorageItem('auth');
   };
 
+  const updateAvatar = (avatar) => {
+    setAuth({ ...auth, avatar });
+    setLocalStorageItem('auth', { ...auth, avatar });
+  };
+
   React.useEffect(() => {
     const {
       token,
@@ -81,7 +86,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ isAuth: !!auth.token, auth }}>
-      <AuthChangeContext.Provider value={{ login, logout }}>
+      <AuthChangeContext.Provider value={{ login, logout, updateAvatar }}>
         {children}
       </AuthChangeContext.Provider>
     </AuthContext.Provider>

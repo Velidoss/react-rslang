@@ -19,8 +19,6 @@ const tabsConfig = [
   },
 ];
 
-console.log(Login, Register);
-
 const Auth = () => (
   <VerticalTabPage
     ariaLabel="auth-tabs"

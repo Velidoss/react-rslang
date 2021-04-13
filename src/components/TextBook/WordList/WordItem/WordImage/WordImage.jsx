@@ -16,7 +16,7 @@ const WordImage = ({ imgSrc }) => {
       <Image
         src={`${ApiUrl}/${imgSrc}`}
         alt="illustration"
-        cover
+        cover="true"
       />
     </div>
   );

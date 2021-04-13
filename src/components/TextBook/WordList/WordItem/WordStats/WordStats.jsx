@@ -14,7 +14,7 @@ const WordStats = () => {
     <Grid container spacing={1} className={classes.container}>
       {
         statChipConfig.map(({ title, icon }) => (
-          <Grid item>
+          <Grid item key={title}>
             <Chip
               avatar={React.createElement(icon)}
               label={`${title}: сыграно 11 | верно 12 | неверно 14`}

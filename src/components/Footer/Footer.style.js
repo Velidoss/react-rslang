@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   root: {
     marginTop: 'auto',
     padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
     color: theme.palette.primary.contrastText,
   },
 

@@ -18,7 +18,6 @@ import { AvatarUploadInput, FormCard, Loader } from '../../../_common';
 import { registerAC } from '../../../../store/registerReducer/registerReducerActions';
 import { registerSelector } from '../../../../store/selectors/registerSelector';
 //
-// import { useAuthChange } from '../../../../contexts/AuthContext';
 import {
   emailInputFieldRules,
   textInputFieldRules,
@@ -32,14 +31,15 @@ const Register = () => {
     control, errors, handleSubmit,
   } = useForm();
   const {
+    isReady,
     isLoading,
     isError,
     errorComponentProps,
   } = useSelector(registerSelector, shallowEqual);
-  // const login = { useAuthChange };
 
   const onSubmit = () => {
     const data = new FormData(formRef.current);
+
     dispatch(registerAC(data));
   };
 
@@ -54,9 +54,18 @@ const Register = () => {
           <Grid item xs={12}>
             <Typography variant="h6" align="center">Регистрация</Typography>
             {
-              isError
-                ? <Typography variant="subtitle2" align="center" color="error">{errorComponentProps.message}</Typography>
-                : null
+              isError && (
+              <Typography variant="subtitle2" align="center" color="error">
+                {errorComponentProps.message}
+              </Typography>
+              )
+            }
+            {
+              isReady && (
+              <Typography variant="subtitle2" align="center">
+                Теперь вы можете войти в профиль на вкладке Логин
+              </Typography>
+              )
             }
           </Grid>
           <Grid item xs={12}>
