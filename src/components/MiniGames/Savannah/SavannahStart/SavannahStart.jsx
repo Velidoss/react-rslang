@@ -1,10 +1,17 @@
 import React from 'react';
-import { Container, Button } from '@material-ui/core';
+import { Container, Typography, Button } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 
 const SavannahStart = ({ startGame }) => (
   <Container>
-    <Button onClick={startGame}>
+    <Typography variant="h4">
+      Саванна
+    </Typography>
+    <Button
+      onClick={startGame}
+      variant="contained"
+      color="secondary"
+    >
       Start
     </Button>
   </Container>

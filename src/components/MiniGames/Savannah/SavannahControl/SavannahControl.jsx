@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Container } from '@material-ui/core';
+
 import savannahConstants from '../../../../constants/savannahConstants';
 import SavannahStart from '../SavannahStart/SavannahStart';
 import {
@@ -9,8 +11,11 @@ import savannahSelector from '../../../../store/selectors/savannahSelector';
 import SavannahActive from '../SavannahActive/SavannahActive';
 import checkIfAnswerIsRight from '../../../../utils/checkIfAnswerIsRight';
 import SavannahResult from '../SavannahResult/SavannahResult';
+import useStyles from '../styles/styles';
 
 const SavannahControl = () => {
+  const styles = useStyles();
+
   const dispatch = useDispatch();
   const state = useSelector(savannahSelector);
 
@@ -29,28 +34,41 @@ const SavannahControl = () => {
     dispatch(setGameFinished());
   };
 
+  let component;
+
   switch (state.gameState) {
     case GAME_STATE_START:
-      return <SavannahStart startGame={startGame} />;
+      component = <SavannahStart startGame={startGame} />;
+      break;
     case GAME_STATE_ACTIVE:
-      return (
+      component = (
         <SavannahActive
           makeAnswer={makeAnswer}
           words={state.words}
           finishGame={finishGame}
         />
       );
+      break;
     case GAME_STATE_RESULT:
-      return (
+      component = (
         <SavannahResult
           eraseGameState={() => dispatch(eraseGameState())}
           right={state.rightAnswers}
           wrong={state.wrongAnswers}
         />
       );
+      break;
     default:
-      return <SavannahStart startGame={startGame} />;
+      component = <SavannahStart startGame={startGame} />;
   }
+
+  return (
+    <Container>
+      <div className={styles.root}>
+        {component}
+      </div>
+    </Container>
+  );
 };
 
 export default SavannahControl;

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Button, IconButton } from '@material-ui/core';
+import {
+  Container, Typography, Button, IconButton,
+} from '@material-ui/core';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import useCounter from '../hooks/useCounter';
 import wordAudio from '../../../../common/wordAudio';
@@ -30,23 +32,34 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
       {
         words[wordGroup].filter((word) => word.question)
           .map((question) => (
-            <div key={question.id}>
-              {question.word}
-              {' '}
+            <div key={question.id} className="container">
               <IconButton onClick={() => wordAudio(question.audio).play()}>
                 <VolumeUpIcon />
               </IconButton>
+              <Typography variant="h5">
+                {`${question.word} `}
+              </Typography>
             </div>
           ))
       }
-      {timeForAnswer}
-      {
-      words[wordGroup].map((word) => (
-        <Button key={word.id} onClick={() => onCLick(words[wordGroup], word.word)}>
-          {word.wordTranslate}
-        </Button>
-      ))
-    }
+      <div className="container">
+        <Typography variant="body1">
+          {timeForAnswer}
+        </Typography>
+        {
+          words[wordGroup].map((word) => (
+            <Button
+              key={word.id}
+              onClick={() => onCLick(words[wordGroup], word.word)}
+              color="secondary"
+              variant="contained"
+              className="button"
+            >
+              {word.wordTranslate}
+            </Button>
+          ))
+        }
+      </div>
     </Container>
   ) : <div />;
 };
