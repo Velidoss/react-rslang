@@ -30,7 +30,7 @@ const Buttons = ({
             <Button
               onClick={resetGame}
               variant="contained"
-              color="secondary"
+              color="primary"
               className="button"
             >
               Перезапустить игру
