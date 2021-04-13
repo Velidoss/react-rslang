@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
-
+import { CircularProgress, Typography } from '@material-ui/core';
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
@@ -15,6 +14,8 @@ const { PAGES_QUANTITY } = DataAccessContants;
 const { ANIMATION_DURATION } = puzzleConstants;
 
 const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const [data, setData] = useState([]);
   const [randomIndexes, setRandomIndexes] = useState([]);
   const [choice, setChoice] = useState([]);
@@ -61,6 +62,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
       const randomArr = createArrOfRandomIndexes(words.length);
       setRandomIndexes(randomArr);
       setMovesCounter(movesCounter + 1);
+      setIsLoaded(true);
     });
   }, []);
 
@@ -115,6 +117,10 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
       setChosen(chosen.concat(word));
     }
   };
+
+  if (!isLoaded) {
+    return <CircularProgress />;
+  }
 
   return (
     <>
