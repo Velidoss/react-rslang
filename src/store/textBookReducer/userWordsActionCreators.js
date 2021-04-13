@@ -1,7 +1,6 @@
 import {
   GET_USER_WORDS,
   ADD_USER_WORD,
-  CHANGE_USER_WORD_ATTRIBUTE,
   GET_DELETED_WORDS,
   GET_DIFFICULT_WORDS,
   SET_WORD_AS_DIFFICULT,
@@ -48,11 +47,6 @@ export const addUserWord = (wordToAdd) => ({
   payload: wordToAdd,
 });
 
-export const changeUserWordData = (wordId, newData) => ({
-  type: CHANGE_USER_WORD_ATTRIBUTE,
-  payload: { wordId, newData },
-});
-
 export const setUserWordDifficult = (wordId) => ({
   type: SET_WORD_AS_DIFFICULT,
   payload: { wordId },
@@ -86,9 +80,9 @@ export const fetchLearningWords = (userId, authToken, page = 0) => async (dispat
 };
 
 export const fetchUserDeletedWords = (userId, authToken, page = 0) => async (dispatch) => {
-  const words = await getDeletedWords(userId, authToken, page);
-  return words && words[0].paginatedResults.length > 0
-  && dispatch(setUserDeletedWords(words[0].paginatedResults));
+  const deletedWords = await getDeletedWords(userId, authToken, page);
+  return deletedWords && deletedWords[0].paginatedResults.length > 0
+  && dispatch(setUserDeletedWords(deletedWords[0].paginatedResults));
 };
 
 export const fetchUserDifficultWords = (userId, authToken, page = 0) => async (dispatch) => {

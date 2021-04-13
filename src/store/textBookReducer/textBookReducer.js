@@ -6,7 +6,6 @@ import {
   GET_USER_WORDS, ADD_USER_WORD,
   UNSET_WORD_AS_DIFFICULT,
   GET_USER_LEARNING_WORDS,
-  CHANGE_USER_WORD_ATTRIBUTE,
   GET_DELETED_WORDS,
   GET_DIFFICULT_WORDS,
   SET_WORD_AS_DIFFICULT,
@@ -25,6 +24,56 @@ const initialState = {
 };
 
 const { WORD_EASY, WORD_HARD, WORD_DELETED } = userWordsConstants;
+
+const setWordAsDifficult = (state, payload) => ({
+  ...state,
+  userWords: state.userWords.map((word) => {
+    if (word.wordId === payload.wordId) {
+      return { ...word, difficulty: WORD_HARD };
+    }
+    return word;
+  }),
+});
+
+const unsetWordAsDifficult = (state, payload) => ({
+  ...state,
+  userWords: state.userWords.map((word) => {
+    if (word.wordId === payload.wordId) {
+      return { ...word, difficulty: WORD_EASY };
+    }
+    return word;
+  }),
+  difficultWords: [
+    ...state.difficultWords.filter(
+      (word) => word._id !== payload.wordId && word,
+    ),
+  ],
+});
+
+const setWordAsDeleted = (state, payload) => ({
+  ...state,
+  userWords: state.userWords.map((word) => {
+    if (word.wordId === payload.wordId) {
+      return { ...word, optional: { ...word.optional, deleted: WORD_DELETED } };
+    }
+    return word;
+  }),
+});
+
+const unsetWordAsDeleted = (state, payload) => ({
+  ...state,
+  userWords: state.userWords.map((word) => {
+    if (word.wordId === payload.wordId) {
+      return { ...word, optional: { ...word.optional, deleted: false } };
+    }
+    return word;
+  }),
+  deletedWords: [
+    ...state.deletedWords.filter(
+      (word) => word._id !== payload.wordId && word,
+    ),
+  ],
+});
 
 const textBookReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -59,65 +108,13 @@ const textBookReducer = (state = initialState, { type, payload }) => {
     case GET_USER_LEARNING_WORDS:
       return { ...state, learningWords: [...state.learningWords, payload] };
     case SET_WORD_AS_DIFFICULT:
-      return {
-        ...state,
-        userWords: state.userWords.map((word) => {
-          if (word.wordId === payload.wordId) {
-            return { ...word, difficulty: WORD_HARD };
-          }
-          return word;
-        }),
-      };
+      return setWordAsDifficult(state, payload);
     case UNSET_WORD_AS_DIFFICULT:
-      return {
-        ...state,
-        userWords: state.userWords.map((word) => {
-          if (word.wordId === payload.wordId) {
-            return { ...word, difficulty: WORD_EASY };
-          }
-          return word;
-        }),
-        difficultWords: [
-          ...state.difficultWords.filter(
-            (word) => word._id !== payload.wordId && word,
-          ),
-        ],
-      };
+      return unsetWordAsDifficult(state, payload);
     case SET_WORD_AS_DELETED:
-      return {
-        ...state,
-        userWords: state.userWords.map((word) => {
-          if (word.wordId === payload.wordId) {
-            return { ...word, optional: { ...word.optional, deleted: WORD_DELETED } };
-          }
-          return word;
-        }),
-      };
+      return setWordAsDeleted(state, payload);
     case UNSET_WORD_AS_DELETED:
-      return {
-        ...state,
-        userWords: state.userWords.map((word) => {
-          if (word.wordId === payload.wordId) {
-            return { ...word, optional: { ...word.optional, deleted: false } };
-          }
-          return word;
-        }),
-        deletedWords: [
-          ...state.deletedWords.filter(
-            (word) => word._id !== payload.wordId && word,
-          ),
-        ],
-      };
-    case CHANGE_USER_WORD_ATTRIBUTE:
-      return {
-        ...state,
-        userWords: state.userWords.map((word) => {
-          if (word.wordId === payload.wordId) {
-            return payload.newData;
-          }
-          return word;
-        }),
-      };
+      return unsetWordAsDeleted(state, payload);
     default:
       return { ...state };
   }

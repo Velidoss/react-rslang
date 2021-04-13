@@ -17,7 +17,7 @@ import DeletedWords from './DeletedWords/DeletedWords';
 const TextBook = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  const { auth: { userId, token } } = useAuth();
+  const { auth: { userId, token }, isAuth } = useAuth();
 
   const [pageNumber, setPageNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(0);
@@ -35,9 +35,11 @@ const TextBook = () => {
     }
   }, [userId, token]);
 
-  useEffect(() => {
-    dispatch(getTextBookWords(groupNumber, pageNumber));
-  }, [groupNumber, pageNumber]);
+  useEffect(() => (
+    isAuth
+      ? dispatch(getTextBookWords(groupNumber, pageNumber, userId, token))
+      : dispatch(getTextBookWords(groupNumber, pageNumber))
+  ), [groupNumber, pageNumber]);
 
   if (words.length === 0 && userWords.length === 0) {
     return (

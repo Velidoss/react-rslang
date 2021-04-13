@@ -91,6 +91,22 @@ const UserWordItem = ({
               )
               : <div />
           }
+          <Grid item>
+            <Typography className={classes.wordExplanation} variant="subtitle2">
+              <span dangerouslySetInnerHTML={{ __html: word.textMeaning }} />
+            </Typography>
+          </Grid>
+          {
+            showTranslation
+              ? (
+                <Grid item>
+                  <Typography className={classes.wordTranslatedExplanation} variant="subtitle2">
+                    {word.textMeaningTranslate}
+                  </Typography>
+                </Grid>
+              )
+              : <div />
+          }
           <Collapse in={openStats}>
             <Divider />
             <WordStats />
@@ -117,6 +133,8 @@ UserWordItem.propTypes = {
     transcription: PropTypes.string.isRequired,
     textExample: PropTypes.string.isRequired,
     textExampleTranslate: PropTypes.string.isRequired,
+    textMeaning: PropTypes.string.isRequired,
+    textMeaningTranslate: PropTypes.string.isRequired,
   }).isRequired,
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
