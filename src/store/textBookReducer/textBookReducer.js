@@ -1,4 +1,6 @@
-import { FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS } from './textBookReducerActions';
+import {
+  FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS, DELETE_WORD,
+} from './textBookReducerActions';
 
 const initialState = {
   words: [],
@@ -22,6 +24,11 @@ const textBookReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         showControls: payload,
+      };
+    case DELETE_WORD:
+      return {
+        ...state,
+        words: [...state.words.filter((word) => word.id !== payload)],
       };
     default:
       return { ...state };

@@ -19,6 +19,7 @@ import getDeletedWords from '../../api/getDeletedWords';
 import getDifficultWords from '../../api/getDifficultWords';
 import userWordsConstants from '../../constants/userWordsConstants';
 import getUserLearningWords from '../../api/getUserLearningWords';
+import { removeWord } from '../textBookReducer/TextBookActionCreators';
 
 const { WORD_HARD } = userWordsConstants;
 
@@ -117,6 +118,7 @@ export const addWordToDeleted = (wordId, userId, authToken) => async (dispatch) 
   if (response.status === 200) {
     dispatch(setUserWordDeleted(wordId));
   }
+  dispatch(removeWord(wordId));
 };
 
 export const removeWordFromDeleted = (wordId, userId, authToken) => async (dispatch) => {

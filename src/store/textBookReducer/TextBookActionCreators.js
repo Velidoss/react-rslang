@@ -1,5 +1,7 @@
 import getWords from '../../api/getWords';
-import { FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS } from './textBookReducerActions';
+import {
+  FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS, DELETE_WORD,
+} from './textBookReducerActions';
 
 export const fetchWordsAC = (words) => ({
   type: FETCH_TEXTBOOK_WORDS,
@@ -14,6 +16,11 @@ export const changeTranslationStateAC = (state) => ({
 export const fetchControlsStateAC = (state) => ({
   type: TOGGLE_CONTROLS,
   payload: state,
+});
+
+export const removeWord = (wordId) => ({
+  type: DELETE_WORD,
+  payload: wordId,
 });
 
 export const getTextBookWords = (group = 0, page = 0) => async (dispatch) => {
