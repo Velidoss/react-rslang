@@ -1,6 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
 import { Switch, Route } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
 //
 import {
   Header,
@@ -15,16 +15,16 @@ import SprintControl from './components/MiniGames/Sprint/SprintControl';
 import PuzzleControl from './components/MiniGames/Puzzle/PuzzleControl/PuzzleControl';
 import { Error404 } from './components/_common';
 
-function App() {
-  const useStyles = makeStyles({
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '100vh',
-      fontFamily: 'Roboto',
-    },
-  });
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    fontFamily: 'Roboto',
+  },
+});
 
+function App() {
   const classes = useStyles();
 
   return (

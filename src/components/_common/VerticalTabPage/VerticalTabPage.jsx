@@ -5,7 +5,7 @@ import {
   Tabs,
 } from '@material-ui/core';
 //
-import { TabPanel } from '..';
+import { TabPanel } from './TabPanel';
 //
 import styles from './VerticalTabPage.style';
 

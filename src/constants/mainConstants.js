@@ -37,22 +37,33 @@ export const team = [
     name: 'Юрий Велидченко',
     text: 'Duo dicam tempor denique eu, qui in vidit conceptam, ad eum wisi patrioque reprehendunt.',
     image: velidoss,
+    github: 'Velidoss',
   },
   {
     name: 'Ирина Степанова',
     text: 'Duo dicam tempor denique eu, qui in vidit conceptam, ad eum wisi patrioque reprehendunt.',
     image: arumirinka,
+    github: 'arumirinka',
   },
   {
     name: 'Василий Задорожнюк',
     text: 'Duo dicam tempor denique eu, qui in vidit conceptam, ad eum wisi patrioque reprehendunt.',
     image: vaz,
+    github: 'va-z',
   },
   {
     name: 'Виктор Башинчеев',
     text: 'Duo dicam tempor denique eu, qui in vidit conceptam, ad eum wisi patrioque reprehendunt.',
     image: reagentjs,
+    github: 'reagentjs',
   },
+];
+
+export const miniGameLocations = [
+  '/savannah',
+  '/puzzle',
+  '/audiochallange',
+  '/sprint',
 ];
 
 export const youTubeVideoId = 'dQw4w9WgXcQ';
