@@ -13,7 +13,9 @@ const sendWordGameStatistics = async (userId, authToken, wordId, gameName, answe
   const wordData = {};
   switch (answer) {
     case WORD_ANSWER_RIGHT:
-      if (!isWordInUserWords.data.optional[gameName]) {
+      if (!isWordInUserWords.data
+        || !isWordInUserWords.data.optional
+        || !isWordInUserWords.data.optional[gameName]) {
         wordData.optional = {
           [gameName]: {
             wrong: 0, right: 1, metInGame: 1,
@@ -29,7 +31,9 @@ const sendWordGameStatistics = async (userId, authToken, wordId, gameName, answe
       };
       break;
     case WORD_ANSWER_WRONG:
-      if (!isWordInUserWords.data.optional[gameName]) {
+      if (!isWordInUserWords.data
+        || !isWordInUserWords.data.optional
+        || !isWordInUserWords.data.optional[gameName]) {
         wordData.optional = {
           [gameName]: {
             wrong: 1, right: 0, metInGame: 1,
@@ -45,7 +49,9 @@ const sendWordGameStatistics = async (userId, authToken, wordId, gameName, answe
       };
       break;
     default:
-      if (!isWordInUserWords.data.optional[gameName]) {
+      if (!isWordInUserWords.data
+        || !isWordInUserWords.data.optional
+        || !isWordInUserWords.data.optional[gameName]) {
         wordData.optional = {
           [gameName]: {
             wrong: 0, right: 0, metInGame: 1,

@@ -1,5 +1,6 @@
 import {
   SET_GAME_STATE, FETCH_WORDS, SET_RIGHT_ANSWER, SET_WRONG_ANSWER, ERASE_GAME_STATE,
+  FETCH_MORE_WORDS,
 } from './savannahReducerActions';
 import savannahConstants from '../../constants/savannahConstants';
 import createWordsForSavannah from '../../utils/createWordsForSavannah';
@@ -36,6 +37,8 @@ const savannahReducer = (state = initialState, { type, payload }) => {
       };
     case FETCH_WORDS:
       return { ...state, words: createWordsForSavannah([...payload]) };
+    case FETCH_MORE_WORDS:
+      return { ...state, words: [...state.words, ...createWordsForSavannah([...payload])] };
     default:
       return { ...state };
   }

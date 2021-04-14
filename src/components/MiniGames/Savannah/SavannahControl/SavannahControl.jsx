@@ -25,7 +25,7 @@ const SavannahControl = () => {
   const getRandomNumber = (maxNumber) => Math.round(Math.random() * maxNumber);
 
   const startGame = () => dispatch(
-    setGameActive(getRandomNumber(5), getRandomNumber(30), userId, token),
+    setGameActive(getRandomNumber(5), getRandomNumber(30), userId, token, 40),
   );
 
   const dipatchRightAnswer = (wordId, answer) => {

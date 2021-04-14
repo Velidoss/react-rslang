@@ -1,9 +1,15 @@
 import {
-  SET_GAME_STATE, FETCH_WORDS, SET_RIGHT_ANSWER, SET_WRONG_ANSWER, ERASE_GAME_STATE,
+  SET_GAME_STATE,
+  FETCH_WORDS,
+  SET_RIGHT_ANSWER,
+  SET_WRONG_ANSWER,
+  ERASE_GAME_STATE,
+  FETCH_MORE_WORDS,
 } from './savannahReducerActions';
 import savannahConstants from '../../constants/savannahConstants';
-import getWordsForTextBookGame from '../../api/getWordsForTextBookGame';
-import getAllDeletedWords from '../../api/getAllDeletedWords';
+import getWordsForGame from '../../api/getWordsForGame';
+import getRegisteredGameWords from '../../api/getRegisteredGameWords';
+import addAggregatedWordId from '../textBookReducer/addAggregatedWordId';
 
 const {
   gameStates:
@@ -15,6 +21,11 @@ const {
 
 export const fetchWordsAC = (words) => ({
   type: FETCH_WORDS,
+  payload: words,
+});
+
+export const fetchMoreWordsAC = (words) => ({
+  type: FETCH_MORE_WORDS,
   payload: words,
 });
 
@@ -36,14 +47,16 @@ export const eraseGameState = () => ({
 });
 
 export const setGameActive = (
-  group, page, userId, authToken,
+  group, page, userId, authToken, wordsQuantity,
 ) => async (dispatch) => {
-  let deletedWords = null;
-  deletedWords = await getAllDeletedWords(userId, authToken);
-
-  const data = await getWordsForTextBookGame(group, page, deletedWords);
-  dispatch(fetchWordsAC(data));
-  dispatch(setGameState(GAME_STATE_ACTIVE));
+  if (userId && authToken) {
+    const response = await getRegisteredGameWords(userId, authToken, group, wordsQuantity);
+    dispatch(fetchWordsAC(addAggregatedWordId(response)));
+    return dispatch(setGameState(GAME_STATE_ACTIVE));
+  }
+  const response = await getWordsForGame(group, page);
+  dispatch(fetchWordsAC(response));
+  return dispatch(setGameState(GAME_STATE_ACTIVE));
 };
 
 export const setGameFinished = () => (dispatch) => {
