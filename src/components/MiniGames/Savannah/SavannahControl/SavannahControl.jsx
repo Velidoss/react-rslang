@@ -9,20 +9,45 @@ import savannahSelector from '../../../../store/selectors/savannahSelector';
 import SavannahActive from '../SavannahActive/SavannahActive';
 import checkIfAnswerIsRight from '../../../../utils/checkIfAnswerIsRight';
 import SavannahResult from '../SavannahResult/SavannahResult';
+import { setWordGameStatistics } from '../../../../store/textBookReducer/userWordsActionCreators';
+import { useAuth } from '../../../../contexts/AuthContext';
+import userWordsConstants from '../../../../constants/userWordsConstants';
+
+const { WORD_ANSWER_RIGHT, WORD_ANSWER_WRONG } = userWordsConstants;
 
 const SavannahControl = () => {
   const dispatch = useDispatch();
+  const { auth: { token, userId }, isAuth } = useAuth();
   const state = useSelector(savannahSelector);
 
   const { GAME_STATE_START, GAME_STATE_ACTIVE, GAME_STATE_RESULT } = savannahConstants.gameStates;
 
-  const startGame = () => dispatch(setGameActive());
+  const getRandomNumber = (maxNumber) => Math.round(Math.random() * maxNumber);
 
-  const makeAnswer = (wordGroup, answer) => {
+  const startGame = () => dispatch(
+    setGameActive(getRandomNumber(5), getRandomNumber(30), userId, token),
+  );
+
+  const dipatchRightAnswer = (wordId, answer) => {
+    dispatch(setRightAnswer());
+    if (isAuth) {
+      dispatch(setWordGameStatistics(userId, token, wordId, 'savannah', answer));
+    }
+  };
+
+  const dipatchWrongAnswer = (wordId, answer) => {
+    dispatch(setWrongAnswer());
+    if (isAuth) {
+      dispatch(setWordGameStatistics(userId, token, wordId, 'savannah', answer));
+    }
+  };
+
+  const makeAnswer = (wordGroup, wordId, answer) => {
     const result = checkIfAnswerIsRight(wordGroup, answer);
+
     return result
-      ? dispatch(setRightAnswer())
-      : dispatch(setWrongAnswer());
+      ? dipatchRightAnswer(wordId, WORD_ANSWER_RIGHT)
+      : dipatchWrongAnswer(wordId, WORD_ANSWER_WRONG);
   };
 
   const finishGame = () => {

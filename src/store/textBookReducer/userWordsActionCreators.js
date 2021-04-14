@@ -10,7 +10,7 @@ import {
   GET_USER_LEARNING_WORDS,
 } from './userWordsActions';
 import getUserWords from '../../api/getUserWords';
-import sendWordToDifficult from '../../api/sendWordToDifficult';
+import sendWordGameStatistics from '../../api/sendWordGameStatistics';
 import removeWordFromDifficult from '../../api/removeWordFromDifficult';
 import sendWordToDeleted from '../../api/sendWordToDeleted';
 import sendRemoveWordFromDeleted from '../../api/sendRemoveWordFromDeleted';
@@ -92,7 +92,7 @@ export const fetchUserDifficultWords = (userId, authToken, page = 0) => async (d
 };
 
 export const addWordToDifficult = (wordId, userId, authToken) => async (dispatch) => {
-  const response = await sendWordToDifficult(userId, authToken, wordId);
+  const response = await sendWordGameStatistics(userId, authToken, wordId);
   if (response === 200) {
     dispatch(setUserWordDifficult(wordId));
   } else {
@@ -120,4 +120,10 @@ export const removeWordFromDeleted = (wordId, userId, authToken) => async (dispa
   if (response.status === 200) {
     dispatch(unsetUserWordDeleted(wordId));
   }
+};
+
+export const setWordGameStatistics = (
+  userId, authToken, wordId, gameName, answer,
+) => async () => {
+  await sendWordGameStatistics(userId, authToken, wordId, gameName, answer);
 };

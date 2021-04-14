@@ -1,8 +1,9 @@
-import getWords from '../../api/getWords';
 import {
   SET_GAME_STATE, FETCH_WORDS, SET_RIGHT_ANSWER, SET_WRONG_ANSWER, ERASE_GAME_STATE,
 } from './savannahReducerActions';
 import savannahConstants from '../../constants/savannahConstants';
+import getWordsForTextBookGame from '../../api/getWordsForTextBookGame';
+import getAllDeletedWords from '../../api/getAllDeletedWords';
 
 const {
   gameStates:
@@ -34,8 +35,13 @@ export const eraseGameState = () => ({
   type: ERASE_GAME_STATE,
 });
 
-export const setGameActive = () => async (dispatch) => {
-  const data = await getWords();
+export const setGameActive = (
+  group, page, userId, authToken,
+) => async (dispatch) => {
+  let deletedWords = null;
+  deletedWords = await getAllDeletedWords(userId, authToken);
+
+  const data = await getWordsForTextBookGame(group, page, deletedWords);
   dispatch(fetchWordsAC(data));
   dispatch(setGameState(GAME_STATE_ACTIVE));
 };

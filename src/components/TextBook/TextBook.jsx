@@ -3,7 +3,9 @@ import {
   Container,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import {
+  Route, Switch, useParams, useRouteMatch,
+} from 'react-router-dom';
 import textBookSelector from '../../store/selectors/textBookSelector';
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
 import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
@@ -22,7 +24,8 @@ const TextBook = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch();
   const { auth: { userId, token }, isAuth } = useAuth();
-
+  const { slug } = useParams();
+  console.log(slug);
   const [pageNumber, setPageNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(0);
 
