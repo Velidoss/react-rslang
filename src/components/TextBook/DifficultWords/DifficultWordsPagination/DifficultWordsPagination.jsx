@@ -4,7 +4,7 @@ import { Pagination } from '@material-ui/lab';
 
 const DifficultWordsPagination = ({ currentPage, changePage, wordsCount }) => (
   <Pagination
-    hape="rounded"
+    shape="rounded"
     page={currentPage + 1}
     count={Math.ceil(wordsCount / 20)}
     onChange={changePage}
