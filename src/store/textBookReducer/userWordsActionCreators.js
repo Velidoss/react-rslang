@@ -19,6 +19,7 @@ import getDifficultWords from '../../api/getDifficultWords';
 import userWordsConstants from '../../constants/userWordsConstants';
 import getUserLearningWords from '../../api/getUserLearningWords';
 import { removeWord } from './TextBookActionCreators';
+import sendWordToDifficult from '../../api/sendWordToDifficult';
 
 const { WORD_HARD } = userWordsConstants;
 
@@ -92,7 +93,7 @@ export const fetchUserDifficultWords = (userId, authToken, page = 0) => async (d
 };
 
 export const addWordToDifficult = (wordId, userId, authToken) => async (dispatch) => {
-  const response = await sendWordGameStatistics(userId, authToken, wordId);
+  const response = await sendWordToDifficult(userId, authToken, wordId);
   if (response === 200) {
     dispatch(setUserWordDifficult(wordId));
   } else {
