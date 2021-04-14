@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { List } from '@material-ui/core';
 //
@@ -15,6 +16,7 @@ const Dictionary = ({
   showControls,
   showTranslation,
   pageNumber,
+  groupNumber,
   changePage,
 }) => {
   const { userWords } = useSelector(textBookSelector);
@@ -29,7 +31,7 @@ const Dictionary = ({
   return (
     <>
       <div className="list-wrapper">
-        <List className="list">
+        <List className={clsx('list', `list--${groupNumber}`)}>
           {words.map((word) => (
             <WordItem
               key={word._id}
@@ -64,6 +66,7 @@ Dictionary.propTypes = {
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
   pageNumber: PropTypes.number.isRequired,
+  groupNumber: PropTypes.number.isRequired,
   changePage: PropTypes.func.isRequired,
 };
 

@@ -98,6 +98,7 @@ const TextBook = () => {
               showControls={showControls}
               showTranslation={showTranslation}
               pageNumber={pageNumber}
+              groupNumber={groupNumber}
               changePage={changePage}
             />
           )}
