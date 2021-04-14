@@ -6,7 +6,7 @@ import { List } from '@material-ui/core';
 import { MiniGameLinks } from '../MiniGameLinks';
 import DeletedWordsPagination from './DeletedWordsPagination/DeletedWordsPagination';
 //
-import { WordItem } from '../../_common';
+import { WordItem, NoAuthPlaceholder } from '../../_common';
 //
 import {
   fetchUserDeletedWords,
@@ -36,44 +36,46 @@ const DeletedWords = ({
     dispatch(fetchUserDeletedWords(userId, token, pageNumber));
   }, [userId, token]);
 
-  return (
-    <>
-      <div className="list-wrapper">
-        <List className="list">
-          {
-            deletedWords.map((word) => (
-              <WordItem
-                key={word._id}
-                word={word}
-                userWords={userWords}
-                showControls={showControls}
-                showTranslation={showTranslation}
-                userId={userId}
-                isAuth={isAuth}
-                token={token}
-                restoreCallback={removeWordFromDeleted}
-              />
-            ))
-          }
-        </List>
-      </div>
-      {
-        deletedWords.length > 20
-          && (
-            <div className="pagination-wrapper">
-              <DeletedWordsPagination
-                wordsCount={deletedWords.length}
-                currentPage={pageNumber}
-                changePage={changePage}
-              />
-            </div>
-          )
-      }
-      <div className="links-wrapper">
-        <MiniGameLinks />
-      </div>
-    </>
-  );
+  return !isAuth
+    ? <NoAuthPlaceholder />
+    : (
+      <>
+        <div className="list-wrapper">
+          <List className="list">
+            {
+              deletedWords.map((word) => (
+                <WordItem
+                  key={word._id}
+                  word={word}
+                  userWords={userWords}
+                  showControls={showControls}
+                  showTranslation={showTranslation}
+                  userId={userId}
+                  isAuth={isAuth}
+                  token={token}
+                  restoreCallback={removeWordFromDeleted}
+                />
+              ))
+            }
+          </List>
+        </div>
+        {
+          deletedWords.length > 20
+            && (
+              <div className="pagination-wrapper">
+                <DeletedWordsPagination
+                  wordsCount={deletedWords.length}
+                  currentPage={pageNumber}
+                  changePage={changePage}
+                />
+              </div>
+            )
+        }
+        <div className="links-wrapper">
+          <MiniGameLinks />
+        </div>
+      </>
+    );
 };
 
 DeletedWords.propTypes = {

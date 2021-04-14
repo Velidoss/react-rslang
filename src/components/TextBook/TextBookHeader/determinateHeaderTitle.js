@@ -6,6 +6,8 @@ const determinateHeaderTitle = (pathname, groupNumber) => {
       return 'Удаленные слова';
     case '/textbook/difficult':
       return 'Сложные слова';
+    case '/textbook/stats':
+      return 'Статистика по словарю';
     default:
       return `Раздел ${groupNumber + 1}`;
   }

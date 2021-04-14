@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { List } from '@material-ui/core';
 //
 import LearningWordsPagination from './LearningWordsPagination/LearningWordsPagination';
-import { WordItem } from '../../_common';
+import { WordItem, NoAuthPlaceholder } from '../../_common';
 //
 import { fetchLearningWords } from '../../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../../store/selectors/textBookSelector';
@@ -31,11 +31,13 @@ const LearningWords = ({
     dispatch(fetchLearningWords(userId, token, pageNumber));
   }, [userId, token]);
 
-  return (
-    <>
-      <div className="list-wrapper">
-        <List className="list">
-          {
+  return !isAuth
+    ? <NoAuthPlaceholder />
+    : (
+      <>
+        <div className="list-wrapper">
+          <List className="list">
+            {
             learningWords.map((word) => (
               <WordItem
                 key={word._id}
@@ -49,9 +51,9 @@ const LearningWords = ({
               />
             ))
           }
-        </List>
-      </div>
-      {
+          </List>
+        </div>
+        {
         learningWords.length > 20
           && (
             <div className="pagination-wrapper">
@@ -63,8 +65,8 @@ const LearningWords = ({
             </div>
           )
       }
-    </>
-  );
+      </>
+    );
 };
 
 LearningWords.propTypes = {

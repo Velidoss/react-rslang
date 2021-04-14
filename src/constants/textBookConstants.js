@@ -67,7 +67,7 @@ export const textBookConstants = {
     {
       id: 9,
       link: '/textbook/stats',
-      text: 'Статистика по разделам',
+      text: 'Статистика по словарю',
       onClickAction: () => {},
     },
   ]),
