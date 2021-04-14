@@ -34,11 +34,19 @@ const SprintResult = ({ answersState, points, startGame }) => {
   return (
     <>
       <Typography className={`${classes.sprintResultMT} ${classes.sprintResultP}`}>
-        <span className={classes.sprintResultSpanR}>Верные ответы:</span>
+        <span className={classes.sprintResultSpanR}>
+          Верные ответы (
+          {answersState.right.length}
+          ):
+        </span>
         <span>{` ${answersState.right.join(', ') || 'нет'}.`}</span>
       </Typography>
       <Typography className={classes.sprintResultP}>
-        <span className={classes.sprintResultSpanW}>Неверные ответы:</span>
+        <span className={classes.sprintResultSpanW}>
+          Неверные ответы (
+          {answersState.wrong.length}
+          ):
+        </span>
         <span>{` ${answersState.wrong.join(', ') || 'нет'}.`}</span>
       </Typography>
       <Divider className={classes.sprintResultHr} />
@@ -51,13 +59,6 @@ const SprintResult = ({ answersState, points, startGame }) => {
         <span>{`${points}.`}</span>
       </Typography>
       <Typography className={classes.sprintResultP}>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.sprintResultBtn}
-        >
-          Другие мини-игры
-        </Button>
         <Button
           onClick={startGame}
           variant="contained"

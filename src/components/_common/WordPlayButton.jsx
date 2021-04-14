@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
-import readFewAudios from './../TextBook/WordList/WordItem/WordPlayButton/readFewAudios';
+import readFewAudios from '../TextBook/WordList/WordItem/WordPlayButton/readFewAudios';
 
 const WordPlayButton = ({ audio, audioMeaning, audioExample }) => (
   <IconButton

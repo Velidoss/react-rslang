@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 const SavannahStart = ({ startGame }) => (
   <Container>
     <Button onClick={startGame}>
-      Start
+      Начать игру
     </Button>
   </Container>
 );

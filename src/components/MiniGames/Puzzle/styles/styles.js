@@ -5,26 +5,32 @@ const { ANIMATION_DURATION } = puzzleConstants;
 
 const useStyles = makeStyles({
   root: {
-    paddingTop: '10vh',
+    paddingTop: '8vh',
+    paddingBottom: '8vh',
 
-    '& .task': {
-      marginBottom: '5vh',
+    '& h5': {
+      marginBottom: '2rem',
+    },
+
+    '& .button:not(:last-child)': {
+      marginRight: '2vw',
     },
 
     '& .blocks': {
       minHeight: '14vh',
+      marginBottom: '2rem',
+
+      '&:first-of-type': {
+        borderBottom: '2px solid #2f2f2f',
+      },
 
       '& button': {
         marginBottom: '2vh',
         textTransform: 'none',
-
-        '&:not(:last-child)': {
-          marginRight: '2vw',
-        },
       },
     },
 
-    '& .check__button': {
+    '& .buttons__block': {
       marginBottom: '2rem',
     },
 
