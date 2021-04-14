@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 //
 import {
@@ -24,16 +24,8 @@ const useStyles = makeStyles({
   },
 });
 
-const isNotMiniGame = (location) => (
-  location !== '/savannah'
-    && location !== '/puzzle'
-    && location !== '/audiochallange'
-    && location !== '/sprint'
-);
-
 function App() {
   const classes = useStyles();
-  const { location } = useLocation();
 
   return (
     <div className={classes.root}>
@@ -48,7 +40,7 @@ function App() {
         <Route exact path="/" component={Main} />
         <Route path="*" component={Error404} />
       </Switch>
-      {isNotMiniGame(location) && <Footer /> }
+      <Footer />
     </div>
   );
 }
