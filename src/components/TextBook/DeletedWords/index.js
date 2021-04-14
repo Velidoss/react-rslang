@@ -1,1 +1,0 @@
-export { DeletedWords } from './DeletedWords';

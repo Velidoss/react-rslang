@@ -1,1 +1,0 @@
-export { LearningWords } from './LearningWords';

@@ -1,1 +1,0 @@
-export { DevIcon } from './DevIcon';

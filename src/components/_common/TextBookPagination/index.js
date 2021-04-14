@@ -1,1 +1,0 @@
-export { TextBookPagination } from './TextBookPagination';

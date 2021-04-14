@@ -1,1 +1,0 @@
-export { AvatarUploadInput } from './AvatarUploadInput';
