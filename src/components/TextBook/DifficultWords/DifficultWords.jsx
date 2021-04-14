@@ -34,9 +34,9 @@ const DifficultWords = ({
 
   const changePage = (_, number) => setPageNumber(number - 1);
 
-  useEffect(() => {
-    dispatch(fetchUserDifficultWords(userId, token, pageNumber));
-  }, [userId, token]);
+  useEffect(() => userId && token && dispatch(
+    fetchUserDifficultWords(userId, token, pageNumber),
+  ), [userId, token]);
 
   return (
     <>

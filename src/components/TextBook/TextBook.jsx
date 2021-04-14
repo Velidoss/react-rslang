@@ -9,7 +9,7 @@ import { DifficultWords } from './DifficultWords';
 import { LearningWords } from './LearningWords';
 import { DeletedWords } from './DeletedWords';
 import { Loader } from '../_common';
-//
+
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
 import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../store/selectors/textBookSelector';

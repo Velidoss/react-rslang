@@ -27,9 +27,9 @@ const LearningWords = ({
 
   const changePage = (_, number) => { setPageNumber(number - 1); };
 
-  useEffect(() => {
-    dispatch(fetchLearningWords(userId, token, pageNumber));
-  }, [userId, token]);
+  useEffect(() => userId && token && dispatch(
+    fetchLearningWords(userId, token, pageNumber),
+  ), [userId, token]);
 
   return (
     <>

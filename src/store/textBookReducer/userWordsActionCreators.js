@@ -10,7 +10,7 @@ import {
   GET_USER_LEARNING_WORDS,
 } from './userWordsActions';
 import getUserWords from '../../api/getUserWords';
-import sendWordToDifficult from '../../api/sendWordToDifficult';
+import sendWordGameStatistics from '../../api/sendWordGameStatistics';
 import removeWordFromDifficult from '../../api/removeWordFromDifficult';
 import sendWordToDeleted from '../../api/sendWordToDeleted';
 import sendRemoveWordFromDeleted from '../../api/sendRemoveWordFromDeleted';
@@ -19,6 +19,7 @@ import getDifficultWords from '../../api/getDifficultWords';
 import userWordsConstants from '../../constants/userWordsConstants';
 import getUserLearningWords from '../../api/getUserLearningWords';
 import { removeWord } from './TextBookActionCreators';
+import sendWordToDifficult from '../../api/sendWordToDifficult';
 
 const { WORD_HARD } = userWordsConstants;
 
@@ -76,7 +77,7 @@ export const fetchUserWords = (userId, authToken) => async (dispatch) => {
 export const fetchLearningWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getUserLearningWords(userId, authToken, page);
   return words && words[0].paginatedResults.length > 0
-  && dispatch(setUserDeletedWords(words[0].paginatedResults));
+  && dispatch(setUserLearningWords(words[0].paginatedResults));
 };
 
 export const fetchUserDeletedWords = (userId, authToken, page = 0) => async (dispatch) => {
@@ -120,4 +121,10 @@ export const removeWordFromDeleted = (wordId, userId, authToken) => async (dispa
   if (response.status === 200) {
     dispatch(unsetUserWordDeleted(wordId));
   }
+};
+
+export const setWordGameStatistics = (
+  userId, authToken, wordId, gameName, answer,
+) => async () => {
+  await sendWordGameStatistics(userId, authToken, wordId, gameName, answer);
 };

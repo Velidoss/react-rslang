@@ -1,13 +1,15 @@
 import React from 'react';
-import { Container, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 
 const SavannahStart = ({ startGame }) => (
-  <Container>
-    <Button onClick={startGame}>
-      Начать игру
-    </Button>
-  </Container>
+  <Button
+    onClick={startGame}
+    variant="contained"
+    color="secondary"
+  >
+    Начать игру
+  </Button>
 );
 
 SavannahStart.propTypes = {

@@ -3,11 +3,14 @@ import {
   Grid, Chip,
 } from '@material-ui/core';
 //
+// import { useSelector } from 'react-redux';
 import useWordStatsStyles from './WordStatsStyles';
 import { statChipConfig } from '../../../../constants/textBookConstants';
+// import textBookSelector from '../../../../store/selectors/textBookSelector';
 //
 
 const WordStats = () => {
+  // const { userWords } = useSelector(textBookSelector);
   const classes = useWordStatsStyles();
 
   return (
