@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
       gridColumn: '1 / 3',
     },
 
-    '& .mini-game-link__savanna': {
+    '& .mini-game-link__savannah': {
       gridColumn: '3 / 4',
     },
 
@@ -30,7 +30,7 @@ export default makeStyles((theme) => ({
         gridColumn: '1 / 2',
       },
 
-      '& .mini-game-link__savanna': {
+      '& .mini-game-link__savannah': {
         gridColumn: '2 / 3',
       },
 
@@ -47,7 +47,7 @@ export default makeStyles((theme) => ({
         gridColumn: 'auto',
       },
 
-      '& .mini-game-link__savanna': {
+      '& .mini-game-link__savannah': {
         gridColumn: 'auto',
       },
 

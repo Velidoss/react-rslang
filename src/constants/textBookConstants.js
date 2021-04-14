@@ -70,8 +70,8 @@ export const textBookConstants = {
 const {
   minigames: {
     sprint,
-    savanna,
-    audioChallange,
+    savannah,
+    audioChallenge,
     puzzle,
   },
 } = images;
@@ -85,15 +85,15 @@ export const miniGameLinksConfig = [
   },
   {
     title: 'Саванна',
-    path: '/savanna',
-    img: savanna,
-    className: 'mini-game-link__savanna',
+    path: '/savannah',
+    img: savannah,
+    className: 'mini-game-link__savannah',
   },
   {
     title: 'Аудиовызов',
-    path: '/audiochallange',
-    img: audioChallange,
-    className: 'mini-game-link__audiochallange',
+    path: '/audiochallenge',
+    img: audioChallenge,
+    className: 'mini-game-link__audiochallenge',
   },
   {
     title: 'Паззл',
