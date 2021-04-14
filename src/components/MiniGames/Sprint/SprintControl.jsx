@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Button, CircularProgress, Container,
 } from '@material-ui/core';
@@ -7,7 +8,6 @@ import SprintActive from './SprintActive/SprintActive';
 import SprintResult from './SprintResult/SprintResult';
 import createQnAArrays from './sprintUtils';
 import getAllWordsCurrPrevPages from '../../../utils/getAllWordsCurrPrevPages';
-import miniGamesConstants from '../../../constants/miniGamesConstants';
 
 const useStyles = makeStyles(() => ({
   sprintResultP: {
@@ -35,16 +35,19 @@ const SprintControl = () => {
 
   const classes = useStyles();
 
+  const location = useLocation();
+
   const getWordsArray = async () => {
-    const randomGroupNum = Math.floor(Math.random() * miniGamesConstants.groupsNum);
-    const randomPageNum = Math.floor(Math.random() * miniGamesConstants.pagesNum);
-    const data = await getAllWordsCurrPrevPages(randomGroupNum, randomPageNum);
+    const groupNum = location.state.group || 0;
+    const pageNum = location.state.page || 0;
+    const data = await getAllWordsCurrPrevPages(groupNum, pageNum);
     setWordsArray(data);
   };
 
   useEffect(() => {
+    setGameState('GAME_STATE_LOADING');
     getWordsArray();
-  }, []);
+  }, [location.state.group, location.state.page]);
 
   useEffect(() => {
     if (!wordsArray || !wordsArray.length) return;
