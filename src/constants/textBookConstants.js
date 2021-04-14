@@ -107,18 +107,22 @@ export const statChipConfig = [
   {
     title: 'Спринт',
     icon: DirectionsRun,
+    statName: 'sprintStats',
   },
   {
     title: 'Саванна',
     icon: Pets,
+    statName: 'savannahStats',
   },
   {
     title: 'Аудиовызов',
     icon: Headset,
+    statName: 'audioChallengeStats',
   },
   {
     title: 'Паззл',
     icon: Extension,
+    statName: 'puzzleStats',
   }];
 
 export const TEXTBOOK_PAGES_QUANTITY = 30;
