@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Container,
-} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import textBookSelector from '../../store/selectors/textBookSelector';
-import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
-import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
-import { useAuth } from '../../contexts/AuthContext';
+import { Container } from '@material-ui/core';
+//
+import { TextBookHeader } from './TextBookHeader';
 import Dictionary from './Dictionary/Dictionary';
 import DifficultWords from './DifficultWords/DifficultWords';
 import LearningWords from './LearningWords/LearningWords';
 import DeletedWords from './DeletedWords/DeletedWords';
-import { TextBookHeader } from './TextBookHeader';
 import { Loader } from '../_common';
+//
+import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
+import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
+import textBookSelector from '../../store/selectors/textBookSelector';
+//
+import { useAuth } from '../../contexts/AuthContext';
 //
 import styles from './TextBook.style';
 
@@ -21,10 +22,9 @@ const TextBook = () => {
   const classes = styles();
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  const { auth: { userId, token }, isAuth } = useAuth();
-
   const [pageNumber, setPageNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(0);
+  const { auth: { userId, token }, isAuth } = useAuth();
 
   const {
     words, showControls, showTranslation,

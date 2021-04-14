@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
-import useTextBookStyles from '../useTextBookStyles';
-import { TextBookPagination } from '../TextBookPagination';
-import { WordList } from '../WordList/WordList';
+//
+import { WordList, TextBookPagination } from '../../_common';
 import { MiniGameLinks } from '../MiniGameLinks';
 
 const Dictionary = ({
-  words, showControls, showTranslation, pageNumber, changePage,
+  words,
+  showControls,
+  showTranslation,
+  pageNumber,
+  changePage,
 }) => {
-  const classes = useTextBookStyles();
+  const classes = {};
 
   return (
     <Grid container>

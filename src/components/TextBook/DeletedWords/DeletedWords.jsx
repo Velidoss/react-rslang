@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, List, CircularProgress } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import useTextBookStyles from '../useTextBookStyles';
-import { TextBookPagination } from '../TextBookPagination';
-import { useAuth } from '../../../contexts/AuthContext';
-import { fetchUserDeletedWords, removeWordFromDeleted } from '../../../store/textBookReducer/userWordsActionCreators';
-import UserWordItem from '../../_common/UserWordItem';
+import { Grid, List, CircularProgress } from '@material-ui/core';
+//
+import { TextBookPagination, WordList } from '../../_common';
+//
+import {
+  fetchUserDeletedWords,
+  // removeWordFromDeleted,
+} from '../../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../../store/selectors/textBookSelector';
+//
+import { useAuth } from '../../../contexts/AuthContext';
 
 const DeletedWords = ({
   showControls, showTranslation,
 }) => {
+  const classes = {};
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
-  const classes = useTextBookStyles();
   const { deletedWords, userWords } = useSelector(textBookSelector);
 
-  const { auth: { userId, token }, isAuth } = useAuth();
+  const {
+    auth: { userId, token },
+    // isAuth,
+  } = useAuth();
 
-  const changePage = (event, number) => setPageNumber(number - 1);
+  const changePage = (_, number) => { setPageNumber(number - 1); };
 
   useEffect(() => {
     dispatch(fetchUserDeletedWords(userId, token, pageNumber));
@@ -34,7 +41,13 @@ const DeletedWords = ({
       <Grid container item className={classes.container}>
         <Grid item xs={12}>
           <List>
-            {
+            <WordList
+              words={deletedWords}
+              userWords={userWords}
+              showControls={showControls}
+              showTranslation={showTranslation}
+            />
+            {/* {
               deletedWords.map((word) => (
                 <UserWordItem
                   isAuth={isAuth}
@@ -47,7 +60,7 @@ const DeletedWords = ({
                   restoreCallback={() => dispatch(removeWordFromDeleted(word._id, userId, token))}
                 />
               ))
-            }
+            } */}
           </List>
         </Grid>
       </Grid>

@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Grid, List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import useTextBookStyles from '../useTextBookStyles';
-import { TextBookPagination } from '../TextBookPagination';
-import { useAuth } from '../../../contexts/AuthContext';
-import { deleteWordFromDifficult, fetchUserDifficultWords } from '../../../store/textBookReducer/userWordsActionCreators';
-import UserWordItem from '../../_common/UserWordItem';
+import {
+  CircularProgress,
+  Grid,
+  List,
+} from '@material-ui/core';
+//
+import { WordList, TextBookPagination } from '../../_common';
+//
+import {
+  // deleteWordFromDifficult,
+  fetchUserDifficultWords,
+} from '../../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../../store/selectors/textBookSelector';
+//
+import { useAuth } from '../../../contexts/AuthContext';
 
 const DifficultWords = ({
   showControls, showTranslation,
 }) => {
   const dispatch = useDispatch();
+  const classes = {};
   const [pageNumber, setPageNumber] = useState(0);
-  const classes = useTextBookStyles();
   const { difficultWords, userWords } = useSelector(textBookSelector);
+  const { auth: { userId, token } } = useAuth();
 
-  const { auth: { userId, token }, isAuth } = useAuth();
-
-  const changePage = (event, number) => setPageNumber(number - 1);
+  const changePage = (_, number) => setPageNumber(number - 1);
 
   useEffect(() => {
     dispatch(fetchUserDifficultWords(userId, token, pageNumber));
@@ -33,37 +40,44 @@ const DifficultWords = ({
     <Grid container>
       <Grid container item className={classes.container}>
         <Grid item xs={12}>
-          <List>
-            {
-        difficultWords.map((word) => (
-          <UserWordItem
-            word={word}
+          <WordList
+            words={difficultWords}
             userWords={userWords}
             showControls={showControls}
             showTranslation={showTranslation}
-            userId={userId}
-            isAuth={isAuth}
-            token={token}
-            key={word._id}
-            restoreCallback={() => dispatch(deleteWordFromDifficult(word._id, userId, token))}
+            // restoreCallback={() => dispatch(deleteWordFromDifficult(word._id, userId, token))}
           />
-        ))
-      }
+          <List>
+            {/* {
+              difficultWords.map((word) => (
+                <UserWordItem
+                  word={word}
+                  userWords={userWords}
+                  showControls={showControls}
+                  showTranslation={showTranslation}
+                  userId={userId}
+                  isAuth={isAuth}
+                  token={token}
+                  key={word._id}
+                  restoreCallback={}
+                />
+              ))
+            } */}
           </List>
         </Grid>
       </Grid>
       {
-        difficultWords.length > 20
-          && (
-          <Grid item container className={classes.paginationContainer}>
-            <TextBookPagination
-              wordsCount={difficultWords.length}
-              currentPage={pageNumber}
-              changePage={changePage}
-            />
-          </Grid>
-          )
-      }
+          difficultWords.length > 20
+            && (
+            <Grid item container className={classes.paginationContainer}>
+              <TextBookPagination
+                wordsCount={difficultWords.length}
+                currentPage={pageNumber}
+                changePage={changePage}
+              />
+            </Grid>
+            )
+        }
     </Grid>
   );
 };

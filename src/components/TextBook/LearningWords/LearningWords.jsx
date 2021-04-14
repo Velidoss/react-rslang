@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import useTextBookStyles from '../useTextBookStyles';
-import { TextBookPagination } from '../TextBookPagination';
-import { useAuth } from '../../../contexts/AuthContext';
+import { Grid, List } from '@material-ui/core';
+//
+import { TextBookPagination, WordList } from '../../_common';
+//
 import { fetchUserDifficultWords } from '../../../store/textBookReducer/userWordsActionCreators';
-import UserWordItem from '../../_common/UserWordItem';
 import textBookSelector from '../../../store/selectors/textBookSelector';
+//
+import { useAuth } from '../../../contexts/AuthContext';
 
 const LearningWords = ({
   showControls, showTranslation,
 }) => {
+  const classes = {};
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
-  const classes = useTextBookStyles();
   const { difficultWords, userWords } = useSelector(textBookSelector);
+  const { auth: { userId, token } } = useAuth();
 
-  const { auth: { userId, token }, isAuth } = useAuth();
-
-  const changePage = (event, number) => setPageNumber(number - 1);
+  const changePage = (_, number) => { setPageNumber(number - 1); };
 
   useEffect(() => {
     dispatch(fetchUserDifficultWords(userId, token, pageNumber));
@@ -29,21 +29,27 @@ const LearningWords = ({
     <Grid container>
       <Grid container item className={classes.container}>
         <Grid item xs={12}>
-          <List>
-            {
-        difficultWords.map((word) => (
-          <UserWordItem
-            word={word}
+          <WordList
+            words={difficultWords}
             userWords={userWords}
             showControls={showControls}
             showTranslation={showTranslation}
-            userId={userId}
-            isAuth={isAuth}
-            token={token}
-            key={word._id}
           />
-        ))
-      }
+          <List>
+            {/* {
+              difficultWords.map((word) => (
+                <UserWordItem
+                  word={word}
+                  userWords={userWords}
+                  showControls={showControls}
+                  showTranslation={showTranslation}
+                  userId={userId}
+                  isAuth={isAuth}
+                  token={token}
+                  key={word._id}
+                />
+              ))
+      } */}
           </List>
         </Grid>
       </Grid>

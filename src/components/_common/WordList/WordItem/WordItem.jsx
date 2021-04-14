@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import * as React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import {
   Grid,
   ListItem,
@@ -11,32 +11,41 @@ import {
 } from '@material-ui/core';
 //
 import {
-  KeyboardArrowDown, KeyboardArrowUp,
+  KeyboardArrowDown,
+  KeyboardArrowUp,
 } from '@material-ui/icons';
-import { addWordToDifficult, deleteWordFromDifficult, addWordToDeleted } from '../../../../store/textBookReducer/userWordsActionCreators';
+//
 import { WordStats } from './WordStats';
 import { WordPlayButton } from './WordPlayButton';
 import { WordImage } from './WordImage';
+import WordInDifficultsButton from './ControlButtons/WordInDifficultsButton/WordInDifficultsButton';
+import WordDeleteButton from './ControlButtons/WordDeleteButton/WordDeleteButton';
+//
+import { addWordToDifficult, deleteWordFromDifficult, addWordToDeleted } from '../../../../store/textBookReducer/userWordsActionCreators';
+import checkIfWordInDifficult from '../../../../store/textBookReducer/checkIfWordInDifficult';
 //
 import styles from './WordItem.style';
-import checkIfWordInDifficult from '../../../../store/textBookReducer/checkIfWordInDifficult';
-import WordInDifficultsButton from '../../WordItem/WordInDifficultsButton/WordInDifficultsButton';
-import WordDeleteButton from '../../WordItem/WordDeleteButton/WordDeleteButton';
 
 const WordItem = ({
-  word, userWords, showControls, showTranslation, userId, token, isAuth,
+  word,
+  userWords,
+  showControls,
+  showTranslation,
+  userId,
+  token,
+  isAuth,
 }) => {
+  const classes = styles();
   const dispatch = useDispatch();
-  const [isDifficult, toggleIsDifficult] = useState(false);
-  const [isLoading, toggleIsLoading] = useState(false);
-  const [openStats, toggleOpenStats] = useState(false);
+  const [isDifficult, toggleIsDifficult] = React.useState(false);
+  const [isLoading, toggleIsLoading] = React.useState(false);
+  const [openStats, toggleOpenStats] = React.useState(false);
 
-  useEffect(() => (
+  React.useEffect(() => (
     userId && checkIfWordInDifficult(word, userWords)
       ? toggleIsDifficult(true)
       : toggleIsDifficult(false)), [userWords]);
 
-  const classes = styles();
   return (
     <ListItem className={classes.root}>
       <Grid container direction="row" spacing={2}>
@@ -151,6 +160,7 @@ const WordItem = ({
 WordItem.defaultProps = {
   userId: null,
   token: null,
+  // restoreCallback: null,
 };
 
 WordItem.propTypes = {
@@ -176,6 +186,7 @@ WordItem.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   userId: PropTypes.string,
   token: PropTypes.string,
+  // restoreCallback: PropTypes.func,
 };
 
 export { WordItem };

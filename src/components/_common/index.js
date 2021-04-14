@@ -4,5 +4,6 @@ export { FormCard } from './FormCard';
 export { HeaderButton } from './HeaderButton';
 export { ImageLink } from './ImageLink';
 export { Loader } from './Loader';
-export { TabPanel } from './TabPanel';
 export { VerticalTabPage } from './VerticalTabPage';
+export { WordList } from './WordList';
+export { TextBookPagination } from './TextBookPagination';
