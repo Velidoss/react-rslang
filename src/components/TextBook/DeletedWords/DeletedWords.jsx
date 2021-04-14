@@ -35,19 +35,19 @@ const DeletedWords = ({
         <Grid item xs={12}>
           <List>
             {
-        deletedWords.map((word) => (
-          <UserWordItem
-            isAuth={isAuth}
-            word={word}
-            userWords={userWords}
-            showControls={showControls}
-            showTranslation={showTranslation}
-            userId={userId}
-            key={word._id}
-            restoreCallback={() => dispatch(removeWordFromDeleted(word._id, userId, token))}
-          />
-        ))
-      }
+              deletedWords.map((word) => (
+                <UserWordItem
+                  isAuth={isAuth}
+                  word={word}
+                  userWords={userWords}
+                  showControls={showControls}
+                  showTranslation={showTranslation}
+                  userId={userId}
+                  key={word._id}
+                  restoreCallback={() => dispatch(removeWordFromDeleted(word._id, userId, token))}
+                />
+              ))
+            }
           </List>
         </Grid>
       </Grid>
@@ -55,7 +55,7 @@ const DeletedWords = ({
         deletedWords.length > 20
           && (
           <Grid item container className={classes.paginationContainer}>
-            <DifficultWordsPagination
+            <TextBookPagination
               wordsCount={deletedWords.length}
               currentPage={pageNumber}
               changePage={changePage}

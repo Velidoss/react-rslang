@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Typography, Button } from '@material-ui/core';
 import Puzzle from '../Puzzle/Puzzle';
-import DataAccessContants from '../../../../constants/DataAccessContants';
+import DataAccessContants from '../../../../constants/DataAccessConstants';
 import useStyles from '../styles/styles';
 
 const { GROUPS_QUANTITY } = DataAccessContants;

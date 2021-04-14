@@ -56,7 +56,7 @@ const DifficultWords = ({
         difficultWords.length > 20
           && (
           <Grid item container className={classes.paginationContainer}>
-            <DifficultWordsPagination
+            <TextBookPagination
               wordsCount={difficultWords.length}
               currentPage={pageNumber}
               changePage={changePage}
