@@ -34,7 +34,7 @@ export const navLinks = [
       },
       {
         label: 'Аудиовызов',
-        path: '/audiochallange',
+        path: '/audiochallenge',
         icon: Headset,
       },
       {
