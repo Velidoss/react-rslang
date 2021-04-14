@@ -110,7 +110,7 @@ const textBookReducer = (state = initialState, { type, payload }) => {
     case ADD_USER_WORD:
       return { ...state, userWords: [...state.userWords, payload] };
     case GET_USER_LEARNING_WORDS:
-      return { ...state, learningWords: [...state.learningWords, payload] };
+      return { ...state, learningWords: [...payload] };
     case SET_WORD_AS_DIFFICULT:
       return setWordAsDifficult(state, payload);
     case UNSET_WORD_AS_DIFFICULT:
