@@ -4,14 +4,14 @@ import { IconButton } from '@material-ui/core';
 //
 import { SettingsBackupRestore } from '@material-ui/icons';
 
-const DeletedWordButton = ({ deleteWordFromDifficult }) => (
-  <IconButton onClick={deleteWordFromDifficult}>
+const WordRestoreButton = ({ restoreCallback }) => (
+  <IconButton onClick={restoreCallback}>
     <SettingsBackupRestore />
   </IconButton>
 );
 
-DeletedWordButton.propTypes = {
-  deleteWordFromDifficult: PropTypes.func.isRequired,
+WordRestoreButton.propTypes = {
+  restoreCallback: PropTypes.func.isRequired,
 };
 
-export default DeletedWordButton;
+export { WordRestoreButton };

@@ -39,6 +39,7 @@ const LearningWords = ({
             {
               learningWords.map((word) => (
                 <WordItem
+                  key={word._id}
                   word={word}
                   userWords={userWords}
                   showControls={showControls}
@@ -46,7 +47,6 @@ const LearningWords = ({
                   userId={userId}
                   isAuth={isAuth}
                   token={token}
-                  key={word._id}
                 />
               ))
             }

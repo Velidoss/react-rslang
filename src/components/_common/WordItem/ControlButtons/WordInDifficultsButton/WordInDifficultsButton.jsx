@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { IconButton, CircularProgress } from '@material-ui/core';
 //
 import { Star } from '@material-ui/icons';
 //
 import styles from './WordInDifficultButton.style';
 
-const WordInDifficultsButton = ({
+const WordInDifficultsButton = React.memo(({
   isDifficult,
   isLoading,
   addWordToDifficult,
@@ -20,22 +21,15 @@ const WordInDifficultsButton = ({
     );
   }
 
-  return (isDifficult ? (
+  return (
     <IconButton
-      className={classes.active}
-      onClick={removeWordFromDifficult}
+      className={clsx(isDifficult && classes.active)}
+      onClick={isDifficult ? removeWordFromDifficult : addWordToDifficult}
     >
-      <Star className={classes.activeIcon} />
+      <Star className={clsx(isDifficult && classes.activeIcon)} />
     </IconButton>
-  )
-    : (
-      <IconButton
-        onClick={addWordToDifficult}
-      >
-        <Star />
-      </IconButton>
-    ));
-};
+  );
+});
 
 WordInDifficultsButton.propTypes = {
   isDifficult: PropTypes.bool.isRequired,
@@ -44,4 +38,4 @@ WordInDifficultsButton.propTypes = {
   removeWordFromDifficult: PropTypes.func.isRequired,
 };
 
-export default WordInDifficultsButton;
+export { WordInDifficultsButton };

@@ -50,6 +50,7 @@ const DifficultWords = ({
             {
               difficultWords.map((word) => (
                 <WordItem
+                  key={word._id}
                   word={word}
                   userWords={userWords}
                   showControls={showControls}
@@ -57,7 +58,6 @@ const DifficultWords = ({
                   userId={userId}
                   isAuth={isAuth}
                   token={token}
-                  key={word._id}
                   restoreCallback={() => dispatch(deleteWordFromDifficult(word._id, userId, token))}
                 />
               ))

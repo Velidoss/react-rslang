@@ -24,11 +24,16 @@ const TextBook = () => {
   const match = useRouteMatch();
   const [pageNumber, setPageNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(0);
-  const { auth: { userId, token }, isAuth } = useAuth();
-
   const {
     words, showControls, showTranslation,
   } = useSelector(textBookSelector);
+  const {
+    auth: {
+      userId,
+      token,
+    },
+    isAuth,
+  } = useAuth();
 
   const changePage = (_, number) => {
     setPageNumber(number - 1);

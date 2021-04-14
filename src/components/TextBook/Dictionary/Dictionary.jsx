@@ -22,6 +22,7 @@ const Dictionary = ({
   const {
     auth: {
       userId,
+      token,
     },
     isAuth,
   } = useAuth();
@@ -32,13 +33,14 @@ const Dictionary = ({
         <List>
           {words.map((word) => (
             <WordItem
-              isAuth={isAuth}
+              key={word._id}
               word={word}
               userWords={userWords}
               showControls={showControls}
               showTranslation={showTranslation}
               userId={userId}
-              key={word._id}
+              isAuth={isAuth}
+              token={token}
             />
           ))}
         </List>

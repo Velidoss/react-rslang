@@ -46,13 +46,14 @@ const DeletedWords = ({
             {
               deletedWords.map((word) => (
                 <WordItem
-                  isAuth={isAuth}
+                  key={word._id}
                   word={word}
                   userWords={userWords}
                   showControls={showControls}
                   showTranslation={showTranslation}
                   userId={userId}
-                  key={word._id}
+                  isAuth={isAuth}
+                  token={token}
                   restoreCallback={() => dispatch(removeWordFromDeleted(word._id, userId, token))}
                 />
               ))
