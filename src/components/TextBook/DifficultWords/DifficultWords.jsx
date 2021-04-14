@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CircularProgress, Grid, List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import useTextBookStyles from '../useTextBookStyles';
-import { TextBookPagination } from '../TextBookPagination';
+import DifficultWordsPagination from './DifficultWordsPagination/DifficultWordsPagination';
 import { useAuth } from '../../../contexts/AuthContext';
 import { deleteWordFromDifficult, fetchUserDifficultWords } from '../../../store/textBookReducer/userWordsActionCreators';
 import UserWordItem from '../../_common/UserWordItem';
@@ -56,7 +56,7 @@ const DifficultWords = ({
         difficultWords.length > 20
           && (
           <Grid item container className={classes.paginationContainer}>
-            <TextBookPagination
+            <DifficultWordsPagination
               wordsCount={difficultWords.length}
               currentPage={pageNumber}
               changePage={changePage}

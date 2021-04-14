@@ -60,13 +60,6 @@ const SprintResult = ({ answersState, points, startGame }) => {
       </Typography>
       <Typography className={classes.sprintResultP}>
         <Button
-          variant="contained"
-          color="primary"
-          className={classes.sprintResultBtn}
-        >
-          Другие мини-игры
-        </Button>
-        <Button
           onClick={startGame}
           variant="contained"
           color="secondary"
