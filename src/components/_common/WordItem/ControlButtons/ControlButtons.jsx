@@ -31,7 +31,7 @@ const ControlButtons = ({
 
   React.useEffect(() => {
     toggleIsDifficult(userId && checkIfWordInDifficult(word, userWords));
-  }, [userWords]);
+  }, [userWords, word]);
 
   const handleDelete = () => {
     dispatch(addWordToDeleted(word.id, userId, token));
