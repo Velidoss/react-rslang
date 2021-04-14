@@ -4,14 +4,14 @@ import { IconButton } from '@material-ui/core';
 //
 import { SettingsBackupRestore } from '@material-ui/icons';
 
-const WordRestoreButton = ({ restoreCallback }) => (
-  <IconButton onClick={restoreCallback}>
+const WordRestoreButton = ({ restoreWord }) => (
+  <IconButton onClick={restoreWord}>
     <SettingsBackupRestore />
   </IconButton>
 );
 
 WordRestoreButton.propTypes = {
-  restoreCallback: PropTypes.func.isRequired,
+  restoreWord: PropTypes.func.isRequired,
 };
 
 export { WordRestoreButton };

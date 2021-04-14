@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, List } from '@material-ui/core';
+import { List } from '@material-ui/core';
 //
 import { TextBookPagination, WordItem } from '../../_common';
 //
@@ -11,9 +11,8 @@ import textBookSelector from '../../../store/selectors/textBookSelector';
 import { useAuth } from '../../../contexts/AuthContext';
 
 const LearningWords = ({
-  showControls, showTranslation,
+  showTranslation,
 }) => {
-  const classes = {};
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
   const { learningWords, userWords } = useSelector(textBookSelector);
@@ -32,47 +31,43 @@ const LearningWords = ({
   }, [userId, token]);
 
   return (
-    <Grid container>
-      <Grid container item className={classes.container}>
-        <Grid item xs={12}>
-          <List>
-            {
-              learningWords.map((word) => (
-                <WordItem
-                  key={word._id}
-                  word={word}
-                  userWords={userWords}
-                  showControls={showControls}
-                  showTranslation={showTranslation}
-                  userId={userId}
-                  isAuth={isAuth}
-                  token={token}
-                />
-              ))
-            }
-          </List>
-        </Grid>
-      </Grid>
+    <>
+      <div className="list-wrapper">
+        <List className="list">
+          {
+            learningWords.map((word) => (
+              <WordItem
+                key={word._id}
+                word={word}
+                userWords={userWords}
+                showControls={false}
+                showTranslation={showTranslation}
+                userId={userId}
+                isAuth={isAuth}
+                token={token}
+              />
+            ))
+          }
+        </List>
+      </div>
       {
         learningWords.length > 20
           && (
-          <Grid item container className={classes.paginationContainer}>
-            <TextBookPagination
-              wordsCount={learningWords.length}
-              currentPage={pageNumber}
-              changePage={changePage}
-            />
-          </Grid>
+            <div className="pagination-wrapper">
+              <TextBookPagination
+                wordsCount={learningWords.length}
+                currentPage={pageNumber}
+                changePage={changePage}
+              />
+            </div>
           )
       }
-    </Grid>
-
+    </>
   );
 };
 
 LearningWords.propTypes = {
-  showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
 };
 
-export default LearningWords;
+export { LearningWords };

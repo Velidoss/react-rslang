@@ -15,7 +15,7 @@ import checkIfWordInDifficult from '../../../../store/textBookReducer/checkIfWor
 //
 import styles from './ControlButtons.style';
 
-const ControlButtons = React.memo(({
+const ControlButtons = ({
   word,
   userWords,
   userId,
@@ -29,13 +29,13 @@ const ControlButtons = React.memo(({
   const [isLoading, toggleIsLoading] = React.useState(false);
   const [isDifficult, toggleIsDifficult] = React.useState(false);
 
-  React.useEffect(() => (
-    userId && checkIfWordInDifficult(word, userWords)
-      ? toggleIsDifficult(true)
-      : toggleIsDifficult(false)
-  ), [userWords]);
+  React.useEffect(() => {
+    toggleIsDifficult(userId && checkIfWordInDifficult(word, userWords));
+  }, [userWords]);
 
-  const handleDelete = () => { dispatch(addWordToDeleted(word.id, userId, token)); };
+  const handleDelete = () => {
+    dispatch(addWordToDeleted(word.id, userId, token));
+  };
   const handleAddToDifficult = () => {
     toggleIsLoading(true);
     dispatch(addWordToDifficult(word.id, userId, token));
@@ -46,20 +46,29 @@ const ControlButtons = React.memo(({
     dispatch(deleteWordFromDifficult(word.id, userId, token));
     toggleIsLoading(false);
   };
+  const handleRestore = () => {
+    dispatch(restoreCallback(word._id, userId, token));
+  };
 
-  return (
+  return (isAuth && showControls && (
     <div className={classes.root}>
-      <WordDeleteButton deleteWord={handleDelete} />
-      <WordInDifficultsButton
-        isDifficult={isDifficult}
-        isLoading={isLoading}
-        addWordToDifficult={handleAddToDifficult}
-        removeWordFromDifficult={handleRemoveFromDifficult}
-      />
-      <WordRestoreButton />
+      {restoreCallback
+        ? <WordRestoreButton restoreWord={handleRestore} />
+        : (
+          <>
+            <WordInDifficultsButton
+              isDifficult={isDifficult}
+              isLoading={isLoading}
+              addWordToDifficult={handleAddToDifficult}
+              removeWordFromDifficult={handleRemoveFromDifficult}
+            />
+            <WordDeleteButton deleteWord={handleDelete} />
+          </>
+        )
+      }
     </div>
-  );
-});
+  ));
+};
 
 ControlButtons.defaultProps = {
   userId: null,

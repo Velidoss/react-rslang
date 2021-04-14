@@ -10,7 +10,7 @@ const WordTextBlock = ({ text, translation, isTranslationOn }) => (
     {
       isTranslationOn && (
         <Typography variant="subtitle2">
-          {` - ${translation}`}
+          {translation}
         </Typography>
       )
     }

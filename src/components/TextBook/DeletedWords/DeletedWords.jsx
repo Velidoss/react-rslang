@@ -1,7 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, List, CircularProgress } from '@material-ui/core';
+import { List } from '@material-ui/core';
+//
+import { MiniGameLinks } from '../MiniGameLinks';
 //
 import { TextBookPagination, WordItem } from '../../_common';
 //
@@ -16,7 +18,6 @@ import { useAuth } from '../../../contexts/AuthContext';
 const DeletedWords = ({
   showControls, showTranslation,
 }) => {
-  const classes = {};
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = React.useState(0);
   const { deletedWords, userWords } = useSelector(textBookSelector);
@@ -34,46 +35,43 @@ const DeletedWords = ({
     dispatch(fetchUserDeletedWords(userId, token, pageNumber));
   }, [userId, token]);
 
-  if (deletedWords.length < 1) {
-    return <CircularProgress />;
-  }
-
   return (
-    <Grid container>
-      <Grid container item className={classes.container}>
-        <Grid item xs={12}>
-          <List>
-            {
-              deletedWords.map((word) => (
-                <WordItem
-                  key={word._id}
-                  word={word}
-                  userWords={userWords}
-                  showControls={showControls}
-                  showTranslation={showTranslation}
-                  userId={userId}
-                  isAuth={isAuth}
-                  token={token}
-                  restoreCallback={() => dispatch(removeWordFromDeleted(word._id, userId, token))}
-                />
-              ))
-            }
-          </List>
-        </Grid>
-      </Grid>
+    <>
+      <div className="list-wrapper">
+        <List className="list">
+          {
+            deletedWords.map((word) => (
+              <WordItem
+                key={word._id}
+                word={word}
+                userWords={userWords}
+                showControls={showControls}
+                showTranslation={showTranslation}
+                userId={userId}
+                isAuth={isAuth}
+                token={token}
+                restoreCallback={removeWordFromDeleted}
+              />
+            ))
+          }
+        </List>
+      </div>
       {
         deletedWords.length > 20
           && (
-          <Grid item container className={classes.paginationContainer}>
-            <TextBookPagination
-              wordsCount={deletedWords.length}
-              currentPage={pageNumber}
-              changePage={changePage}
-            />
-          </Grid>
+            <div className="pagination-wrapper">
+              <TextBookPagination
+                wordsCount={deletedWords.length}
+                currentPage={pageNumber}
+                changePage={changePage}
+              />
+            </div>
           )
       }
-    </Grid>
+      <div className="links-wrapper">
+        <MiniGameLinks />
+      </div>
+    </>
   );
 };
 
@@ -82,4 +80,4 @@ DeletedWords.propTypes = {
   showTranslation: PropTypes.bool.isRequired,
 };
 
-export default DeletedWords;
+export { DeletedWords };

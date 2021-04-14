@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { Grid, List } from '@material-ui/core';
+import { List } from '@material-ui/core';
 //
 import { WordItem, TextBookPagination } from '../../_common';
 import { MiniGameLinks } from '../MiniGameLinks';
@@ -17,7 +17,6 @@ const Dictionary = ({
   pageNumber,
   changePage,
 }) => {
-  const classes = {};
   const { userWords } = useSelector(textBookSelector);
   const {
     auth: {
@@ -28,9 +27,9 @@ const Dictionary = ({
   } = useAuth();
 
   return (
-    <Grid container>
-      <div className={classes.listWrapper}>
-        <List>
+    <>
+      <div className="list-wrapper">
+        <List className="list">
           {words.map((word) => (
             <WordItem
               key={word._id}
@@ -45,17 +44,16 @@ const Dictionary = ({
           ))}
         </List>
       </div>
-      <div className={classes.paginationWrapper}>
+      <div className="pagination-wrapper">
         <TextBookPagination
           currentPage={pageNumber}
           changePage={changePage}
         />
       </div>
-      <div className={classes.linksWrapper}>
+      <div className="links-wrapper">
         <MiniGameLinks />
       </div>
-    </Grid>
-
+    </>
   );
 };
 
@@ -69,4 +67,4 @@ Dictionary.propTypes = {
   changePage: PropTypes.func.isRequired,
 };
 
-export default Dictionary;
+export { Dictionary };

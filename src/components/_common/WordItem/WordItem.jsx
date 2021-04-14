@@ -11,13 +11,14 @@ import {
 //
 import { WordImage } from './WordImage';
 import { OpenStatsButton } from './OpenStatsButton';
+import { ControlButtons } from './ControlButtons';
 import { WordTextBlock } from './WordTextBlock';
 import { WordStats } from './WordStats';
 import { WordPlayButton } from './WordPlayButton';
 //
 import styles from './WordItem.style';
 
-const WordItem = React.memo(({
+const WordItem = ({
   word,
   userWords,
   showControls,
@@ -28,16 +29,9 @@ const WordItem = React.memo(({
   restoreCallback,
 }) => {
   const classes = styles();
-  const [isLoading, toggleIsLoading] = React.useState(false);
   const [openStats, toggleOpenStats] = React.useState(false);
-  const [isDifficult, toggleIsDifficult] = React.useState(false);
 
   const handleOpenStats = () => { toggleOpenStats(!openStats); };
-
-  React.useEffect(() => (
-    userId && checkIfWordInDifficult(word, userWords)
-      ? toggleIsDifficult(true)
-      : toggleIsDifficult(false)), [userWords]);
 
   return (
     <ListItem className={classes.root}>
@@ -45,61 +39,45 @@ const WordItem = React.memo(({
         <Grid item xs={3} sm={2} lg={1}>
           <WordImage imgSrc={word.image} />
         </Grid>
-        <Grid item container direction="column" xs={9} sm={10} lg={11}>
+        <Grid item container xs={9} sm={10} lg={11}>
           <Grid item xs={12}>
             <Box className={classes.wordHeader}>
-              <Box className={classes.wordMain}>
-                <Box className={classes.wordPlayButton}>
+              <Box className={classes.wordMainWrapper}>
+                <div className={classes.wordMain}>
                   <WordPlayButton
                     audio={word.audio}
                     audioMeaning={word.audioMeaning}
                     audioExample={word.audioExample}
                   />
-                </Box>
-                <Typography variant="h5" className={classes.wordName}>
-                  {word.word}
-                </Typography>
-                <Typography variant="h5" className={classes.wordTranscription}>
-                  {word.transcription}
-                </Typography>
-                {
-                  showTranslation && (
-                    <Typography variant="h5">{` - ${word.wordTranslate}`}</Typography>
-                  )
-                }
+                  <Typography variant="h5">
+                    <span className={classes.wordName}>{word.word}</span>
+                    <span className={classes.wordTranscription}>{word.transcription}</span>
+                  </Typography>
+                </div>
               </Box>
               <Box className={classes.wordControls}>
-                {
-                  (showControls && isAuth) && (
-                  <Grid>
-                    <WordInDifficultsButton
-                      isDifficult={isDifficult}
-                      isLoading={isLoading}
-                      addWordToDifficult={
-                            () => {
-                              toggleIsLoading(true);
-                              dispatch(addWordToDifficult(word.id, userId, token));
-                              toggleIsLoading(false);
-                            }
-                          }
-                      removeWordFromDifficult={
-                            () => {
-                              toggleIsLoading(true);
-                              dispatch(deleteWordFromDifficult(word.id, userId, token));
-                              toggleIsLoading(false);
-                            }
-                          }
-                    />
-                    <WordDeleteButton
-                      deleteWord={() => dispatch(addWordToDeleted(word.id, userId, token))}
-                    />
-                  </Grid>
-                  )
-                }
+                <ControlButtons
+                  word={word}
+                  userWords={userWords}
+                  userId={userId}
+                  token={token}
+                  isAuth={isAuth}
+                  showControls={showControls}
+                  restoreCallback={restoreCallback}
+                />
                 <OpenStatsButton isOpen={openStats} onClick={handleOpenStats} />
               </Box>
             </Box>
           </Grid>
+          {
+            showTranslation && (
+              <Grid item xs={12}>
+                <Typography variant="h5" className={classes.wordTranslation}>
+                  {`${word.wordTranslate}`}
+                </Typography>
+              </Grid>
+            )
+          }
           <Grid item xs={12}>
             <WordTextBlock
               text={word.textMeaning}
@@ -122,7 +100,7 @@ const WordItem = React.memo(({
       </Grid>
     </ListItem>
   );
-});
+};
 
 WordItem.defaultProps = {
   userId: null,

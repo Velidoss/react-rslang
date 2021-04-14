@@ -10,16 +10,25 @@ export default makeStyles({
     },
   },
 
-  wordControls: {
+  wordHeader: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
-  wordControlsItem: {
+  wordMainWrapper: {
     display: 'flex',
-    flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+
+  wordMain: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexWrap: 'wrap',
   },
 
   wordName: {
@@ -29,5 +38,15 @@ export default makeStyles({
   wordTranscription: {
     marginLeft: '0.5rem',
     fontStyle: 'italic',
+  },
+
+  wordTranslation: {
+    margin: '0 0 0.5rem',
+  },
+
+  wordControls: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
   },
 });

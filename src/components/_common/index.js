@@ -7,4 +7,3 @@ export { Loader } from './Loader';
 export { VerticalTabPage } from './VerticalTabPage';
 export { TextBookPagination } from './TextBookPagination';
 export { WordItem } from './WordItem';
-export { WordList } from './WordList';

@@ -1,22 +1,30 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useTextBookStyles = makeStyles({
-  headerWrapper: {
-    margin: '1rem 0',
-  },
+  root: {
+    '& .header-wrapper': {
+      margin: '1rem 0',
+    },
 
-  listWrapper: {
-    margin: '1rem 0',
-  },
+    '& .list-wrapper': {
+      margin: '1rem 0',
+    },
 
-  paginationWrapper: {
-    margin: '2rem 0',
-    display: 'flex',
-    justifyContent: 'center',
-  },
+    '& .list': {
+      overflow: 'hidden',
+      borderRadius: '1rem',
+      boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.5)',
+    },
 
-  linksWrapper: {
-    margin: '1rem 0',
+    '& .pagination-wrapper': {
+      margin: '2rem 0',
+      display: 'flex',
+      justifyContent: 'center',
+    },
+
+    '& .links-wrapper': {
+      margin: '1rem 0',
+    },
   },
 });
 

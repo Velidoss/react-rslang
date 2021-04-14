@@ -4,10 +4,10 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Container } from '@material-ui/core';
 //
 import { TextBookHeader } from './TextBookHeader';
-import Dictionary from './Dictionary/Dictionary';
-import DifficultWords from './DifficultWords/DifficultWords';
-import LearningWords from './LearningWords/LearningWords';
-import DeletedWords from './DeletedWords/DeletedWords';
+import { Dictionary } from './Dictionary';
+import { DifficultWords } from './DifficultWords';
+import { LearningWords } from './LearningWords';
+import { DeletedWords } from './DeletedWords';
 import { Loader } from '../_common';
 //
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
@@ -53,9 +53,9 @@ const TextBook = () => {
   ), [groupNumber, pageNumber]);
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" className={classes.root}>
       {words.length === 0 && <Loader />}
-      <div className={classes.headerWrapper}>
+      <div className="header-wrapper">
         <TextBookHeader
           groupNumber={groupNumber}
           setGroupNumber={setGroupNumber}
