@@ -1,36 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from '@material-ui/core';
-import useTextBookStyles from '../useTextBookStyles';
-import { TextBookPagination } from '../TextBookPagination';
-import { WordList } from '../WordList/WordList';
+import clsx from 'clsx';
+import { useSelector } from 'react-redux';
+import { List } from '@material-ui/core';
+//
+import { WordItem, TextBookPagination } from '../../_common';
 import { MiniGameLinks } from '../MiniGameLinks';
+//
+import textBookSelector from '../../../store/selectors/textBookSelector';
+//
+import { useAuth } from '../../../contexts/AuthContext';
 
 const Dictionary = ({
-  words, showControls, showTranslation, pageNumber, changePage,
+  words,
+  showControls,
+  showTranslation,
+  pageNumber,
+  groupNumber,
+  changePage,
 }) => {
-  const classes = useTextBookStyles();
+  const { userWords } = useSelector(textBookSelector);
+  const {
+    auth: {
+      userId,
+      token,
+    },
+    isAuth,
+  } = useAuth();
 
   return (
-    <Grid container>
-      <div className={classes.listWrapper}>
-        <WordList
-          words={words}
-          showControls={showControls}
-          showTranslation={showTranslation}
-        />
+    <>
+      <div className="list-wrapper">
+        <List className={clsx('list', `list--${groupNumber}`)}>
+          {words.map((word) => (
+            <WordItem
+              key={word._id}
+              word={word}
+              userWords={userWords}
+              showControls={showControls}
+              showTranslation={showTranslation}
+              userId={userId}
+              isAuth={isAuth}
+              token={token}
+            />
+          ))}
+        </List>
       </div>
-      <div className={classes.paginationWrapper}>
+      <div className="pagination-wrapper">
         <TextBookPagination
           currentPage={pageNumber}
           changePage={changePage}
         />
       </div>
-      <div className={classes.linksWrapper}>
+      <div className="links-wrapper">
         <MiniGameLinks />
       </div>
-    </Grid>
-
+    </>
   );
 };
 
@@ -41,7 +66,8 @@ Dictionary.propTypes = {
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
   pageNumber: PropTypes.number.isRequired,
+  groupNumber: PropTypes.number.isRequired,
   changePage: PropTypes.func.isRequired,
 };
 
-export default Dictionary;
+export { Dictionary };

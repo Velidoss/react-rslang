@@ -1,0 +1,1 @@
+export { WordInDifficultsButton } from './WordInDifficultsButton';

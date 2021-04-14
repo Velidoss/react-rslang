@@ -76,7 +76,7 @@ export const fetchUserWords = (userId, authToken) => async (dispatch) => {
 export const fetchLearningWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getUserLearningWords(userId, authToken, page);
   return words && words[0].paginatedResults.length > 0
-  && dispatch(setUserDeletedWords(words[0].paginatedResults));
+  && dispatch(setUserLearningWords(words[0].paginatedResults));
 };
 
 export const fetchUserDeletedWords = (userId, authToken, page = 0) => async (dispatch) => {

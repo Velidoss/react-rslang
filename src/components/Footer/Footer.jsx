@@ -1,18 +1,20 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 //
 import { DevIcon } from './DevIcon';
 //
 import { ReactComponent as LogoRssWhite } from '../../assets/logo-rss-white.svg';
 //
+import { team, miniGameLocations } from '../../constants/mainConstants';
+//
 import styles from './Footer.style';
-
-const developers = ['Velidoss', 'arumirinka', 'va-z', 'reagentjs'];
 
 const Footer = () => {
   const classes = styles();
+  const { pathname } = useLocation();
 
-  return (
+  return !(miniGameLocations.includes(pathname)) && (
     <footer className={classes.root}>
       <Box className={classes.wrapper}>
         <a
@@ -24,7 +26,7 @@ const Footer = () => {
           <LogoRssWhite className={classes.logoRss} />
         </a>
         <Box className={classes.devs}>
-          {developers.map((dev) => <DevIcon key={dev} name={dev} />)}
+          {team.map(({ github }) => <DevIcon key={github} name={github} />)}
         </Box>
         <Typography variant="subtitle2" className={classes.year}>2021</Typography>
       </Box>

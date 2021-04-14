@@ -1,72 +1,74 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import useTextBookStyles from '../useTextBookStyles';
+import { List } from '@material-ui/core';
+//
 import LearningWordsPagination from './LearningWordsPagination/LearningWordsPagination';
-import { useAuth } from '../../../contexts/AuthContext';
-import { fetchUserDifficultWords } from '../../../store/textBookReducer/userWordsActionCreators';
-import UserWordItem from '../../_common/UserWordItem';
+import { WordItem } from '../../_common';
+//
+import { fetchLearningWords } from '../../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../../store/selectors/textBookSelector';
+//
+import { useAuth } from '../../../contexts/AuthContext';
 
 const LearningWords = ({
-  showControls, showTranslation,
+  showTranslation,
 }) => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
-  const classes = useTextBookStyles();
-  const { difficultWords, userWords } = useSelector(textBookSelector);
+  const { learningWords, userWords } = useSelector(textBookSelector);
+  const {
+    auth: {
+      userId,
+      token,
+    },
+    isAuth,
+  } = useAuth();
 
-  const { auth: { userId, token }, isAuth } = useAuth();
+  const changePage = (_, number) => { setPageNumber(number - 1); };
 
-  const changePage = (event, number) => setPageNumber(number - 1);
-
-  useEffect(() => {
-    dispatch(fetchUserDifficultWords(userId, token, pageNumber));
-  }, [userId, token]);
+  useEffect(() => userId && token && dispatch(
+    fetchLearningWords(userId, token, pageNumber),
+  ), [userId, token]);
 
   return (
-    <Grid container>
-      <Grid container item className={classes.container}>
-        <Grid item xs={12}>
-          <List>
-            {
-        difficultWords.map((word) => (
-          <UserWordItem
-            word={word}
-            userWords={userWords}
-            showControls={showControls}
-            showTranslation={showTranslation}
-            userId={userId}
-            isAuth={isAuth}
-            token={token}
-            key={word._id}
-          />
-        ))
-      }
-          </List>
-        </Grid>
-      </Grid>
+    <>
+      <div className="list-wrapper">
+        <List className="list">
+          {
+            learningWords.map((word) => (
+              <WordItem
+                key={word._id}
+                word={word}
+                userWords={userWords}
+                showControls={false}
+                showTranslation={showTranslation}
+                userId={userId}
+                isAuth={isAuth}
+                token={token}
+              />
+            ))
+          }
+        </List>
+      </div>
       {
-        difficultWords.length > 20
+        learningWords.length > 20
           && (
-          <Grid item container className={classes.paginationContainer}>
-            <LearningWordsPagination
-              wordsCount={difficultWords.length}
-              currentPage={pageNumber}
-              changePage={changePage}
-            />
-          </Grid>
+            <div className="pagination-wrapper">
+              <LearningWordsPagination
+                wordsCount={learningWords.length}
+                currentPage={pageNumber}
+                changePage={changePage}
+              />
+            </div>
           )
       }
-    </Grid>
-
+    </>
   );
 };
 
 LearningWords.propTypes = {
-  showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
 };
 
-export default LearningWords;
+export { LearningWords };

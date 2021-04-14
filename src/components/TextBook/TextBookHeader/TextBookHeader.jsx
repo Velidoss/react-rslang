@@ -6,8 +6,9 @@ import { useLocation } from 'react-router-dom';
 import { SettingsMenu } from './SettingsMenu';
 import { GroupsMenu } from './GroupsMenu';
 //
-import styles from './TextBookHeader.style';
 import determinateHeaderTitle from './determinateHeaderTitle';
+//
+import styles from './TextBookHeader.style';
 
 const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
   const classes = styles();

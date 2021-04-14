@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Container,
-} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Route, Switch, useParams, useRouteMatch,
-} from 'react-router-dom';
-import textBookSelector from '../../store/selectors/textBookSelector';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Container } from '@material-ui/core';
+//
+import { TextBookHeader } from './TextBookHeader';
+import { Dictionary } from './Dictionary';
+import { DifficultWords } from './DifficultWords';
+import { LearningWords } from './LearningWords';
+import { DeletedWords } from './DeletedWords';
+import { Loader } from '../_common';
+
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
 import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
+import textBookSelector from '../../store/selectors/textBookSelector';
+//
 import { useAuth } from '../../contexts/AuthContext';
-import Dictionary from './Dictionary/Dictionary';
-import DifficultWords from './DifficultWords/DifficultWords';
-import LearningWords from './LearningWords/LearningWords';
-import DeletedWords from './DeletedWords/DeletedWords';
-import { TextBookHeader } from './TextBookHeader';
-import { Loader } from '../_common';
 //
 import styles from './TextBook.style';
 
@@ -23,15 +22,18 @@ const TextBook = () => {
   const classes = styles();
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  const { auth: { userId, token }, isAuth } = useAuth();
-  const { slug } = useParams();
-  console.log(slug);
   const [pageNumber, setPageNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(0);
-
   const {
     words, showControls, showTranslation,
   } = useSelector(textBookSelector);
+  const {
+    auth: {
+      userId,
+      token,
+    },
+    isAuth,
+  } = useAuth();
 
   const changePage = (_, number) => {
     setPageNumber(number - 1);
@@ -51,9 +53,9 @@ const TextBook = () => {
   ), [groupNumber, pageNumber]);
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" className={classes.root}>
       {words.length === 0 && <Loader />}
-      <div className={classes.headerWrapper}>
+      <div className="header-wrapper">
         <TextBookHeader
           groupNumber={groupNumber}
           setGroupNumber={setGroupNumber}
@@ -96,6 +98,7 @@ const TextBook = () => {
               showControls={showControls}
               showTranslation={showTranslation}
               pageNumber={pageNumber}
+              groupNumber={groupNumber}
               changePage={changePage}
             />
           )}
