@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, List, CircularProgress } from '@material-ui/core';
 //
-import { TextBookPagination, WordList } from '../../_common';
+import { TextBookPagination, WordItem } from '../../_common';
 //
 import {
   fetchUserDeletedWords,
-  // removeWordFromDeleted,
+  removeWordFromDeleted,
 } from '../../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../../store/selectors/textBookSelector';
 //
@@ -18,17 +18,19 @@ const DeletedWords = ({
 }) => {
   const classes = {};
   const dispatch = useDispatch();
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = React.useState(0);
   const { deletedWords, userWords } = useSelector(textBookSelector);
-
   const {
-    auth: { userId, token },
-    // isAuth,
+    auth: {
+      userId,
+      token,
+    },
+    isAuth,
   } = useAuth();
 
   const changePage = (_, number) => { setPageNumber(number - 1); };
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(fetchUserDeletedWords(userId, token, pageNumber));
   }, [userId, token]);
 
@@ -41,15 +43,9 @@ const DeletedWords = ({
       <Grid container item className={classes.container}>
         <Grid item xs={12}>
           <List>
-            <WordList
-              words={deletedWords}
-              userWords={userWords}
-              showControls={showControls}
-              showTranslation={showTranslation}
-            />
-            {/* {
+            {
               deletedWords.map((word) => (
-                <UserWordItem
+                <WordItem
                   isAuth={isAuth}
                   word={word}
                   userWords={userWords}
@@ -60,7 +56,7 @@ const DeletedWords = ({
                   restoreCallback={() => dispatch(removeWordFromDeleted(word._id, userId, token))}
                 />
               ))
-            } */}
+            }
           </List>
         </Grid>
       </Grid>

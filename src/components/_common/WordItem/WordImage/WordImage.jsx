@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'material-ui-image';
 //
-import DataAccessConstants from '../../../../../constants/DataAccessConstants';
+import DataAccessConstants from '../../../../constants/DataAccessConstants';
 //
 import styles from './WordImage.style';
 

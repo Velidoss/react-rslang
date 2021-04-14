@@ -1,6 +1,6 @@
 import React from 'react';
+import { useLocation, Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
-import { Switch, Route } from 'react-router-dom';
 //
 import {
   Header,
@@ -15,17 +15,25 @@ import SprintControl from './components/MiniGames/Sprint/SprintControl';
 import PuzzleControl from './components/MiniGames/Puzzle/PuzzleControl/PuzzleControl';
 import { Error404 } from './components/_common';
 
-function App() {
-  const useStyles = makeStyles({
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '100vh',
-      fontFamily: 'Roboto',
-    },
-  });
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    fontFamily: 'Roboto',
+  },
+});
 
+const isNotMiniGame = (location) => (
+  location !== '/savannah'
+    && location !== '/puzzle'
+    && location !== '/audiochallange'
+    && location !== '/sprint'
+);
+
+function App() {
   const classes = useStyles();
+  const { location } = useLocation();
 
   return (
     <div className={classes.root}>
@@ -40,7 +48,7 @@ function App() {
         <Route exact path="/" component={Main} />
         <Route path="*" component={Error404} />
       </Switch>
-      <Footer />
+      {isNotMiniGame(location) && <Footer /> }
     </div>
   );
 }

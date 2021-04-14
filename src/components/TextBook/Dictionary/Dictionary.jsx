@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { Grid, List } from '@material-ui/core';
 //
-import { WordList, TextBookPagination } from '../../_common';
+import { WordItem, TextBookPagination } from '../../_common';
 import { MiniGameLinks } from '../MiniGameLinks';
+//
+import textBookSelector from '../../../store/selectors/textBookSelector';
+//
+import { useAuth } from '../../../contexts/AuthContext';
 
 const Dictionary = ({
   words,
@@ -13,15 +18,30 @@ const Dictionary = ({
   changePage,
 }) => {
   const classes = {};
+  const { userWords } = useSelector(textBookSelector);
+  const {
+    auth: {
+      userId,
+    },
+    isAuth,
+  } = useAuth();
 
   return (
     <Grid container>
       <div className={classes.listWrapper}>
-        <WordList
-          words={words}
-          showControls={showControls}
-          showTranslation={showTranslation}
-        />
+        <List>
+          {words.map((word) => (
+            <WordItem
+              isAuth={isAuth}
+              word={word}
+              userWords={userWords}
+              showControls={showControls}
+              showTranslation={showTranslation}
+              userId={userId}
+              key={word._id}
+            />
+          ))}
+        </List>
       </div>
       <div className={classes.paginationWrapper}>
         <TextBookPagination

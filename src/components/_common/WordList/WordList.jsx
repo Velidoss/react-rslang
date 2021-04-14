@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { List } from '@material-ui/core';
 //
-import { WordItem } from './WordItem';
+import { WordItem } from '../WordItem';
 //
 import textBookSelector from '../../../store/selectors/textBookSelector';
 //

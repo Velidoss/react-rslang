@@ -1,5 +1,5 @@
-import wordAudio from '../../../../../common/wordAudio';
-import DataAccessConstants from '../../../../../constants/DataAccessConstants';
+import wordAudio from '../../../../common/wordAudio';
+import DataAccessConstants from '../../../../constants/DataAccessConstants';
 
 const { ApiUrl } = DataAccessConstants;
 

@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 //
 import useWordStatsStyles from './WordStatsStyles';
-import { statChipConfig } from '../../../../../constants/textBookConstants';
+import { statChipConfig } from '../../../../constants/textBookConstants';
 //
 
 const WordStats = () => {

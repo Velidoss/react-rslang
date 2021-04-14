@@ -5,5 +5,6 @@ export { HeaderButton } from './HeaderButton';
 export { ImageLink } from './ImageLink';
 export { Loader } from './Loader';
 export { VerticalTabPage } from './VerticalTabPage';
-export { WordList } from './WordList';
 export { TextBookPagination } from './TextBookPagination';
+export { WordItem } from './WordItem';
+export { WordList } from './WordList';

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, List } from '@material-ui/core';
 //
-import { TextBookPagination, WordList } from '../../_common';
+import { TextBookPagination, WordItem } from '../../_common';
 //
-import { fetchUserDifficultWords } from '../../../store/textBookReducer/userWordsActionCreators';
+import { fetchLearningWords } from '../../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../../contexts/AuthContext';
@@ -16,29 +16,29 @@ const LearningWords = ({
   const classes = {};
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
-  const { difficultWords, userWords } = useSelector(textBookSelector);
-  const { auth: { userId, token } } = useAuth();
+  const { learningWords, userWords } = useSelector(textBookSelector);
+  const {
+    auth: {
+      userId,
+      token,
+    },
+    isAuth,
+  } = useAuth();
 
   const changePage = (_, number) => { setPageNumber(number - 1); };
 
   useEffect(() => {
-    dispatch(fetchUserDifficultWords(userId, token, pageNumber));
+    dispatch(fetchLearningWords(userId, token, pageNumber));
   }, [userId, token]);
 
   return (
     <Grid container>
       <Grid container item className={classes.container}>
         <Grid item xs={12}>
-          <WordList
-            words={difficultWords}
-            userWords={userWords}
-            showControls={showControls}
-            showTranslation={showTranslation}
-          />
           <List>
-            {/* {
-              difficultWords.map((word) => (
-                <UserWordItem
+            {
+              learningWords.map((word) => (
+                <WordItem
                   word={word}
                   userWords={userWords}
                   showControls={showControls}
@@ -49,16 +49,16 @@ const LearningWords = ({
                   key={word._id}
                 />
               ))
-      } */}
+            }
           </List>
         </Grid>
       </Grid>
       {
-        difficultWords.length > 20
+        learningWords.length > 20
           && (
           <Grid item container className={classes.paginationContainer}>
             <TextBookPagination
-              wordsCount={difficultWords.length}
+              wordsCount={learningWords.length}
               currentPage={pageNumber}
               changePage={changePage}
             />
