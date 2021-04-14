@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { List } from '@material-ui/core';
 //
-import { TextBookPagination, WordItem } from '../../_common';
+import LearningWordsPagination from './LearningWordsPagination/LearningWordsPagination';
+import { WordItem } from '../../_common';
 //
 import { fetchLearningWords } from '../../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../../store/selectors/textBookSelector';
@@ -54,7 +55,7 @@ const LearningWords = ({
         learningWords.length > 20
           && (
             <div className="pagination-wrapper">
-              <TextBookPagination
+              <LearningWordsPagination
                 wordsCount={learningWords.length}
                 currentPage={pageNumber}
                 changePage={changePage}

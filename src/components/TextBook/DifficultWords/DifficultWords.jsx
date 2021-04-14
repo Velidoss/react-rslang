@@ -6,8 +6,9 @@ import {
 } from '@material-ui/core';
 //
 import { MiniGameLinks } from '../MiniGameLinks';
+import DifficultWordsPagination from './DifficultWordsPagination/DifficultWordsPagination';
 //
-import { WordItem, TextBookPagination } from '../../_common';
+import { WordItem } from '../../_common';
 //
 import {
   deleteWordFromDifficult,
@@ -62,7 +63,7 @@ const DifficultWords = ({
         difficultWords.length > 20
           && (
             <div className="pagination-wrapper">
-              <TextBookPagination
+              <DifficultWordsPagination
                 wordsCount={difficultWords.length}
                 currentPage={pageNumber}
                 changePage={changePage}

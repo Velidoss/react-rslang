@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { List } from '@material-ui/core';
 //
 import { MiniGameLinks } from '../MiniGameLinks';
+import DeletedWordsPagination from './DeletedWordsPagination/DeletedWordsPagination';
 //
-import { TextBookPagination, WordItem } from '../../_common';
+import { WordItem } from '../../_common';
 //
 import {
   fetchUserDeletedWords,
@@ -60,7 +61,7 @@ const DeletedWords = ({
         deletedWords.length > 20
           && (
             <div className="pagination-wrapper">
-              <TextBookPagination
+              <DeletedWordsPagination
                 wordsCount={deletedWords.length}
                 currentPage={pageNumber}
                 changePage={changePage}
