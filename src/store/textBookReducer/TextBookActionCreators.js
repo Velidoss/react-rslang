@@ -31,5 +31,8 @@ export const getTextBookWords = (group = 0, page = 0, userId, authToken) => asyn
     const deletedWords = await getAllDeletedWords(userId, authToken);
     words = filterTextBookWords(words, deletedWords[0].paginatedResults);
   }
+  if (words.length < 1) {
+    dispatch(getTextBookWords(group, page + 1, userId, authToken));
+  }
   dispatch(fetchWordsAC(words));
 };

@@ -50,7 +50,7 @@ const TextBook = () => {
     isAuth
       ? dispatch(getTextBookWords(groupNumber, pageNumber, userId, token))
       : dispatch(getTextBookWords(groupNumber, pageNumber))
-  ), [groupNumber, pageNumber]);
+  ), [groupNumber, pageNumber, isAuth]);
 
   return (
     <Container maxWidth="xl" className={classes.root}>
