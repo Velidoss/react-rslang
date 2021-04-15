@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Container, Button, Grid, Typography, Divider,
+  Container, Button, Grid, Typography, Divider, IconButton,
 } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import wordAudio from '../../../../common/wordAudio';
 
 const useStyles = makeStyles(() => ({
   audioChallengeActiveGridItem: {
@@ -32,6 +34,10 @@ const SprintActive = ({
   const [isCurrQAnswered, setIsCurrQAnswered] = useState(false);
 
   const classes = useStyles();
+
+  useEffect(() => {
+    wordAudio(questionsArr[questionNum].audio).play();
+  }, [questionNum]);
 
   const showNextQuestion = () => {
     if (questionsArr.length > questionNum + 1) {
@@ -65,7 +71,11 @@ const SprintActive = ({
       <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item xs={12} className={classes.audioChallengeActiveGridItem}>
           <Typography variant="h5" className={classes.audioChallengeActiveQ}>
-            {questionsArr[questionNum].word}
+            {!isCurrQAnswered ? (
+              <IconButton onClick={() => wordAudio(questionsArr[questionNum].audio).play()}>
+                <VolumeUpIcon />
+              </IconButton>
+            ) : questionsArr[questionNum].word}
           </Typography>
           {mixedAnswersArr[questionNum].map((el, index) => (
             <Button
