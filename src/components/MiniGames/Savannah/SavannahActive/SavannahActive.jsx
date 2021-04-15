@@ -9,8 +9,8 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
   const [wordGroup, setWordGroup] = useState(0);
   const [timeForAnswer, setTimeForAnswer] = useState(5);
 
-  const onCLick = (group, answer) => {
-    makeAnswer(group, answer);
+  const onCLick = (group, wordId, answer) => {
+    makeAnswer(group, wordId, answer);
     setWordGroup(wordGroup + 1);
     setTimeForAnswer(5);
   };
@@ -42,7 +42,7 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
       {timeForAnswer}
       {
       words[wordGroup].map((word) => (
-        <Button key={word.id} onClick={() => onCLick(words[wordGroup], word.word)}>
+        <Button key={word.id} onClick={() => onCLick(words[wordGroup], word.id, word.word)}>
           {word.wordTranslate}
         </Button>
       ))
