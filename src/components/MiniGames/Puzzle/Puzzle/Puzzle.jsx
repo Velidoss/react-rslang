@@ -78,7 +78,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   }, [movesCounter]);
 
   const isAnswersStateIncludesObject = (obj) => (
-    answersState.wrong.some((item) => item.word === obj.word)
+    answersState.wrong.some((word) => word._id === obj._id)
   );
 
   const submitAnswer = (rightOrWrong) => {

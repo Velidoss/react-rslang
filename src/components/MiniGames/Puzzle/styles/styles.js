@@ -16,6 +16,10 @@ const useStyles = makeStyles({
       marginRight: '2vw',
     },
 
+    '& .button': {
+      marginBottom: '1vh',
+    },
+
     '& .blocks': {
       minHeight: '14vh',
       marginBottom: '2rem',
@@ -25,7 +29,6 @@ const useStyles = makeStyles({
       },
 
       '& button': {
-        marginBottom: '2vh',
         textTransform: 'none',
       },
     },
