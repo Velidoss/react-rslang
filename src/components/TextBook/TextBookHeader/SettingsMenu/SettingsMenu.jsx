@@ -13,8 +13,10 @@ import { SettingsApplications } from '@material-ui/icons';
 //
 import textBookSelector from '../../../../store/selectors/textBookSelector';
 import { changeTranslationStateAC, fetchControlsStateAC } from '../../../../store/textBookReducer/TextBookActionCreators';
+import { useAuth } from '../../../../contexts/AuthContext';
 
 const SettingsMenu = ({ className }) => {
+  const { isAuth } = useAuth();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { showTranslation, showControls } = useSelector(textBookSelector);
@@ -50,16 +52,21 @@ const SettingsMenu = ({ className }) => {
             Перевод
           </Typography>
         </MenuItem>
-        <MenuItem onClick={() => dispatch(fetchControlsStateAC(!showControls))}>
-          <Checkbox
-            checked={showControls}
-            color="default"
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-          />
-          <Typography>
-            Кнопки управления
-          </Typography>
-        </MenuItem>
+        {
+          isAuth && (
+          <MenuItem onClick={() => dispatch(fetchControlsStateAC(!showControls))}>
+            <Checkbox
+              checked={showControls}
+              color="default"
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+            <Typography>
+              Кнопки управления
+            </Typography>
+          </MenuItem>
+          )
+        }
+
       </Menu>
     </>
   );

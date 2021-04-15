@@ -7,6 +7,11 @@ import {
 //
 import * as images from '../assets/images';
 
+export const linkTypes = {
+  LINK_PUBLIC: 'LINK_PUBLIC',
+  LINK_PRIVATE: 'LINK_PRIVATE',
+};
+
 export const textBookConstants = {
   TEXTBOOK_PAGES_QUANTITY: 30,
   getTextBookLinks: (setGroupNumber) => ([
@@ -15,54 +20,63 @@ export const textBookConstants = {
       link: '/textbook',
       text: 'Раздел 1',
       onClickAction: () => setGroupNumber(0),
+      type: linkTypes.LINK_PUBLIC,
     },
     {
       id: 1,
       link: '/textbook',
       text: 'Раздел 2',
       onClickAction: () => setGroupNumber(1),
+      type: linkTypes.LINK_PUBLIC,
     },
     {
       id: 2,
       link: '/textbook',
       text: 'Раздел 3',
       onClickAction: () => setGroupNumber(2),
+      type: linkTypes.LINK_PUBLIC,
     },
     {
       id: 3,
       link: '/textbook',
       text: 'Раздел 4',
       onClickAction: () => setGroupNumber(3),
+      type: linkTypes.LINK_PUBLIC,
     },
     {
       id: 4,
       link: '/textbook',
       text: 'Раздел 5',
       onClickAction: () => setGroupNumber(4),
+      type: linkTypes.LINK_PUBLIC,
     },
     {
       id: 5,
       link: '/textbook',
       text: 'Раздел 6',
       onClickAction: () => setGroupNumber(5),
+      type: linkTypes.LINK_PUBLIC,
     },
     {
       id: 6,
       link: '/textbook/learning',
       text: 'Изучаемые слова',
       onClickAction: () => {},
+      type: linkTypes.LINK_PRIVATE,
     },
     {
       id: 7,
       link: '/textbook/difficult',
       text: 'Сложные слова',
       onClickAction: () => {},
+      type: linkTypes.LINK_PRIVATE,
     },
     {
       id: 8,
       link: '/textbook/deleted',
       text: 'Удаленные слова',
       onClickAction: () => {},
+      type: linkTypes.LINK_PRIVATE,
     },
   ]),
 };
