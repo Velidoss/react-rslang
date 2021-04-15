@@ -17,6 +17,21 @@ const useStyles = makeStyles(() => ({
   audioChallengeActiveBtn: {
     margin: '1rem',
   },
+  audioChallengeActiveDisabledBtn: {
+    margin: '1rem',
+    backgroundColor: 'darkgray',
+    pointerEvents: 'none',
+  },
+  audioChallengeActiveCorrectBtn: {
+    margin: '1rem',
+    backgroundColor: 'darkgreen',
+    pointerEvents: 'none',
+  },
+  audioChallengeActiveWrongBtn: {
+    margin: '1rem',
+    backgroundColor: 'darkred',
+    pointerEvents: 'none',
+  },
   audioChallengeActiveHr: {
     margin: '0 auto 1rem',
     width: '80%',
@@ -32,6 +47,7 @@ const SprintActive = ({
 }) => {
   const [streak, setStreak] = useState(0);
   const [isCurrQAnswered, setIsCurrQAnswered] = useState(false);
+  const [currAnswerNum, setCurrAnswerNum] = useState(-1);
 
   const classes = useStyles();
 
@@ -43,12 +59,17 @@ const SprintActive = ({
     if (questionsArr.length > questionNum + 1) {
       setQuestionNum(questionNum + 1);
       setIsCurrQAnswered(false);
+      setCurrAnswerNum(-1);
     } else {
       finishGame();
     }
   };
 
   const handleAnswer = (answerI) => {
+    if (isCurrQAnswered) {
+      return;
+    }
+
     const isCorrect = questionsArr[questionNum].word === mixedAnswersArr[questionNum][answerI].word;
     if (isCorrect) {
       setAnswersState({
@@ -64,6 +85,18 @@ const SprintActive = ({
       setStreak(0);
     }
     setIsCurrQAnswered(true);
+    setCurrAnswerNum(answerI);
+  };
+
+  const getBtnClassName = (index) => {
+    const isCorrect = questionsArr[questionNum].word === mixedAnswersArr[questionNum][index].word;
+    if (isCorrect && currAnswerNum === index) {
+      return classes.audioChallengeActiveCorrectBtn;
+    }
+    if (!isCorrect && currAnswerNum === index) {
+      return classes.audioChallengeActiveWrongBtn;
+    }
+    return classes.audioChallengeActiveDisabledBtn;
   };
 
   return (
@@ -79,10 +112,10 @@ const SprintActive = ({
           </Typography>
           {mixedAnswersArr[questionNum].map((el, index) => (
             <Button
-              key={el.translation}
+              key={`${el.translation} ${isCurrQAnswered}`}
               variant="contained"
               color="secondary"
-              className={classes.audioChallengeActiveBtn}
+              className={isCurrQAnswered ? getBtnClassName(index) : classes.audioChallengeActiveBtn}
               onClick={() => handleAnswer(index)}
             >
               {index + 1}
