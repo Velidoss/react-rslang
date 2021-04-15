@@ -6,6 +6,9 @@ import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import wordAudio from '../../../../common/wordAudio';
+import DataAccessConstants from '../../../../constants/DataAccessConstants';
+
+const { ApiUrl } = DataAccessConstants;
 
 const useStyles = makeStyles(() => ({
   audioChallengeActiveGridItem: {
@@ -13,6 +16,12 @@ const useStyles = makeStyles(() => ({
   },
   audioChallengeActiveQ: {
     margin: '1rem',
+  },
+  audioChallengeActiveImg: {
+    borderRadius: '100%',
+    width: '90px',
+    height: '90px',
+    objectFit: 'cover',
   },
   audioChallengeActiveBtn: {
     margin: '1rem',
@@ -103,13 +112,26 @@ const SprintActive = ({
     <Container>
       <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item xs={12} className={classes.audioChallengeActiveGridItem}>
-          <Typography variant="h5" className={classes.audioChallengeActiveQ}>
-            {!isCurrQAnswered ? (
+          {!isCurrQAnswered ? (
+            <Typography variant="h5" className={classes.audioChallengeActiveQ}>
               <IconButton onClick={() => wordAudio(questionsArr[questionNum].audio).play()}>
                 <VolumeUpIcon />
               </IconButton>
-            ) : questionsArr[questionNum].word}
-          </Typography>
+            </Typography>
+          ) : (
+            <>
+              <img
+                src={`${ApiUrl}/${questionsArr[questionNum].image}`}
+                alt={questionsArr[questionNum].word}
+                className={classes.audioChallengeActiveImg}
+              />
+              <Typography variant="h5" className={classes.audioChallengeActiveQ}>
+                {questionsArr[questionNum].word}
+                {' - '}
+                {questionsArr[questionNum].translation}
+              </Typography>
+            </>
+          )}
           {mixedAnswersArr[questionNum].map((el, index) => (
             <Button
               key={`${el.translation} ${isCurrQAnswered}`}
