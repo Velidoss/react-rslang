@@ -100,6 +100,8 @@ const SprintActive = ({
   const handleKeypress = (e) => {
     if ([1, 2, 3, 4, 5].includes(Number(e.key))) {
       handleAnswer(Number(e.key) - 1);
+    } else if (e.key === 'Enter' && isCurrQAnswered) {
+      showNextQuestion();
     }
   };
 
