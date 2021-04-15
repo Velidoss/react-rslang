@@ -24,9 +24,9 @@ export default (words, userWords) => words.reduce((acc, { id }) => {
     acc['Неправильных ответов'] += userWord.optional.puzzle.wrong;
   }
 
-  if (userWord.optional?.audiochallange) {
-    acc['Правильных ответов'] += userWord.optional.audiochallange.right;
-    acc['Неправильных ответов'] += userWord.optional.audiochallange.wrong;
+  if (userWord.optional?.audiochallenge) {
+    acc['Правильных ответов'] += userWord.optional.audiochallenge.right;
+    acc['Неправильных ответов'] += userWord.optional.audiochallenge.wrong;
   }
 
   return acc;

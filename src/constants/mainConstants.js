@@ -62,7 +62,7 @@ export const team = [
 export const miniGameLocations = [
   '/savannah',
   '/puzzle',
-  '/audiochallange',
+  '/audiochallenge',
   '/sprint',
 ];
 
