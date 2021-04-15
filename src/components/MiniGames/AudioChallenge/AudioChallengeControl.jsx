@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Button, CircularProgress, Container,
 } from '@material-ui/core';
@@ -7,7 +8,6 @@ import AudioChallengeActive from './AudioChallengeActive/AudioChallengeActive';
 import AudioChallengeResult from './AudioChallengeResult/AudioChallengeResult';
 import createQnAArrays from './audioChallengeUtils';
 import getWords from '../../../api/getWords';
-import miniGamesConstants from '../../../constants/miniGamesConstants';
 
 const useStyles = makeStyles(() => ({
   wrapperContainer: {
@@ -30,16 +30,19 @@ const AudioChallengeControl = () => {
 
   const classes = useStyles();
 
+  const location = useLocation();
+  const groupNum = (location.state && location.state.group) ? location.state.group : 0;
+  const pageNum = (location.state && location.state.page) ? location.state.page : 0;
+
   const getWordsArray = async () => {
-    const randomGroupNum = Math.floor(Math.random() * miniGamesConstants.groupsNum);
-    const randomPageNum = Math.floor(Math.random() * miniGamesConstants.pagesNum);
-    const data = await getWords(randomGroupNum, randomPageNum);
+    const data = await getWords(groupNum, pageNum);
     setWordsArray(data);
   };
 
   useEffect(() => {
+    setGameState('GAME_STATE_LOADING');
     getWordsArray();
-  }, []);
+  }, [groupNum, pageNum]);
 
   useEffect(() => {
     if (!wordsArray || !wordsArray.length) return;
