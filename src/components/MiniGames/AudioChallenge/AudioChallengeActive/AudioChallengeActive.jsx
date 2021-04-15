@@ -114,6 +114,16 @@ const SprintActive = ({
     setCurrAnswerNum(answerI);
   };
 
+  const giveUp = () => {
+    setAnswersState({
+      ...answersState,
+      wrong: [...answersState.wrong, questionsArr[questionNum].word],
+    });
+    setStreak(0);
+    setIsCurrQAnswered(true);
+    setCurrAnswerNum(-1);
+  };
+
   const handleKeypress = (e) => {
     if ([1, 2, 3, 4, 5].includes(Number(e.key))) {
       handleAnswer(Number(e.key) - 1);
@@ -191,13 +201,22 @@ const SprintActive = ({
             {isCurrQAnswered ? (
               <Button
                 variant="contained"
-                color="primary"
+                color="secondary"
                 className={classes.audioChallengeActiveBtn}
                 onClick={showNextQuestion}
               >
                 Далее
               </Button>
-            ) : null}
+            ) : (
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.audioChallengeActiveBtn}
+                onClick={giveUp}
+              >
+                Не знаю
+              </Button>
+            )}
           </Box>
         </Grid>
       </Grid>
