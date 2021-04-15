@@ -6,6 +6,7 @@ import { List } from '@material-ui/core';
 //
 import { WordItem, TextBookPagination } from '../../_common';
 import { MiniGameLinks } from '../MiniGameLinks';
+import { PageStats } from './PageStats';
 //
 import textBookSelector from '../../../store/selectors/textBookSelector';
 //
@@ -30,6 +31,9 @@ const Dictionary = ({
 
   return (
     <>
+      <div className="stats-wrapper">
+        <PageStats words={words} userWords={userWords} />
+      </div>
       <div className="list-wrapper">
         <List className={clsx('list', `list--${groupNumber}`)}>
           {words.map((word) => (

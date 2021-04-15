@@ -7,7 +7,6 @@ import loginReducer from './loginReducer/loginReducer';
 import registerReducer from './registerReducer/registerReducer';
 import avatarReducer from './avatarReducer/avatarReducer';
 import textBookReducer from './textBookReducer/textBookReducer';
-import textBookStatsReducer from './textBooksStatsReducer/textBookStatsReducer';
 
 const store = createStore(combineReducers(
   {
@@ -16,7 +15,6 @@ const store = createStore(combineReducers(
     avatar: avatarReducer,
     login: loginReducer,
     register: registerReducer,
-    textBookStats: textBookStatsReducer,
   },
 ), composeWithDevTools(
   applyMiddleware(thunk),

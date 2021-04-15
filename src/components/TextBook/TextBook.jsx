@@ -8,7 +8,6 @@ import { Dictionary } from './Dictionary';
 import { DifficultWords } from './DifficultWords';
 import { LearningWords } from './LearningWords';
 import { DeletedWords } from './DeletedWords';
-import { TextBookStats } from './TextBookStats';
 import { Loader } from '../_common';
 //
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
@@ -92,13 +91,6 @@ const TextBook = () => {
         />
         <Route
           exact
-          path={`${match.url}/stats`}
-          render={() => (
-            <TextBookStats />
-          )}
-        />
-        <Route
-          exact
           path={match.url}
           render={() => (
             <Dictionary
@@ -111,7 +103,6 @@ const TextBook = () => {
             />
           )}
         />
-
       </Switch>
     </Container>
   );

@@ -6,6 +6,10 @@ const useTextBookStyles = makeStyles((theme) => ({
       margin: '1rem 0',
     },
 
+    '& .stats-wrapper': {
+      margin: '1rem 0',
+    },
+
     '& .list-wrapper': {
       margin: '1rem 0',
     },

@@ -64,12 +64,6 @@ export const textBookConstants = {
       text: 'Удаленные слова',
       onClickAction: () => {},
     },
-    {
-      id: 9,
-      link: '/textbook/stats',
-      text: 'Статистика по словарю',
-      onClickAction: () => {},
-    },
   ]),
 };
 

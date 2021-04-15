@@ -7,6 +7,7 @@ import {
   Typography,
   Divider,
   Collapse,
+  Badge,
 } from '@material-ui/core';
 //
 import { WordImage } from './WordImage';
@@ -15,6 +16,8 @@ import { ControlButtons } from './ControlButtons';
 import { WordTextBlock } from './WordTextBlock';
 import { WordStats } from './WordStats';
 import { WordPlayButton } from './WordPlayButton';
+//
+import checkIfWordInDifficult from '../../../store/textBookReducer/checkIfWordInDifficult';
 //
 import styles from './WordItem.style';
 
@@ -30,8 +33,13 @@ const WordItem = ({
 }) => {
   const classes = styles();
   const [openStats, toggleOpenStats] = React.useState(false);
+  const [isDifficult, toggleIsDifficult] = React.useState(false);
 
   const handleOpenStats = () => { toggleOpenStats(!openStats); };
+
+  React.useEffect(() => {
+    toggleIsDifficult(userId && checkIfWordInDifficult(word, userWords));
+  }, [word, userWords]);
 
   return (
     <ListItem className={classes.root}>
@@ -43,23 +51,33 @@ const WordItem = ({
           <Grid item xs={12}>
             <Box className={classes.wordHeader}>
               <Box className={classes.wordMainWrapper}>
-                <div className={classes.wordMain}>
-                  <WordPlayButton
-                    audio={word.audio}
-                    audioMeaning={word.audioMeaning}
-                    audioExample={word.audioExample}
-                  />
-                  <Typography variant="h5">
-                    <span className={classes.wordName}>{word.word}</span>
-                    <span className={classes.wordTranscription}>{word.transcription}</span>
-                  </Typography>
-                </div>
+                <Badge
+                  invisible={!isDifficult}
+                  badgeContent="Сложное"
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  color="error"
+                >
+                  <div className={classes.wordMain}>
+                    <WordPlayButton
+                      audio={word.audio}
+                      audioMeaning={word.audioMeaning}
+                      audioExample={word.audioExample}
+                    />
+                    <Typography variant="h5">
+                      <span className={classes.wordName}>{word.word}</span>
+                      <span className={classes.wordTranscription}>{word.transcription}</span>
+                    </Typography>
+                  </div>
+                </Badge>
               </Box>
               <Box className={classes.wordControls}>
                 <ControlButtons
                   word={word}
-                  userWords={userWords}
                   userId={userId}
+                  isDifficult={isDifficult}
                   token={token}
                   isAuth={isAuth}
                   showControls={showControls}

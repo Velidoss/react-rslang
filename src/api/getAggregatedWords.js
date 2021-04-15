@@ -9,9 +9,6 @@ const getAggregatedWords = (userId, authToken) => axios({
   headers: {
     Authorization: `Bearer ${authToken}`,
   },
-  params: {
-    wordsPerPage: 3600,
-  },
 });
 
 export default getAggregatedWords;
