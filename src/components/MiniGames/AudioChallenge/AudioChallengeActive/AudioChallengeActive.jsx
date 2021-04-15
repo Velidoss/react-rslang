@@ -232,6 +232,7 @@ const SprintActive = ({
                 color="secondary"
                 className={classes.audioChallengeActiveBtn}
                 onClick={showNextQuestion}
+                key="next"
               >
                 Далее
               </Button>
@@ -241,6 +242,7 @@ const SprintActive = ({
                 color="primary"
                 className={classes.audioChallengeActiveBtn}
                 onClick={giveUp}
+                key="give-up"
               >
                 Не знаю
               </Button>
