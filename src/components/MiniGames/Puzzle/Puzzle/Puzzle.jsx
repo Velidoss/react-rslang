@@ -96,6 +96,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
       setWrongAnswers(wrongAnswers + 1);
     }
   };
+  console.log(data[randomIndexes[movesCounter]] && data[randomIndexes[movesCounter]].id);
 
   const convertForComparsion = (word) => word.toLowerCase().replace('.', '').replace(',', '');
 
