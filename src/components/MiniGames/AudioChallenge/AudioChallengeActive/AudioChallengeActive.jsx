@@ -5,8 +5,11 @@ import {
 import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import { useDispatch } from 'react-redux';
 import wordAudio from '../../../../common/wordAudio';
 import DataAccessConstants from '../../../../constants/DataAccessConstants';
+import { useAuth } from '../../../../contexts/AuthContext';
+import { setWordGameStatistics } from '../../../../store/textBookReducer/userWordsActionCreators';
 
 const { ApiUrl } = DataAccessConstants;
 
@@ -54,6 +57,8 @@ const SprintActive = ({
   questionsArr, mixedAnswersArr, questionNum, setQuestionNum, answersState, setAnswersState,
   finishGame,
 }) => {
+  const dispatch = useDispatch();
+  const { auth: { token, userId }, isAuth } = useAuth();
   const [streak, setStreak] = useState(0);
   const [isCurrQAnswered, setIsCurrQAnswered] = useState(false);
   const [currAnswerNum, setCurrAnswerNum] = useState(-1);
@@ -85,12 +90,18 @@ const SprintActive = ({
         ...answersState,
         right: [...answersState.right, questionsArr[questionNum].word],
       });
+      if (isAuth) {
+        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'audioChallenge', 'right'));
+      }
       setStreak(streak + 1);
     } else if (!isCorrect) {
       setAnswersState({
         ...answersState,
         wrong: [...answersState.wrong, questionsArr[questionNum].word],
       });
+      if (isAuth) {
+        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'audioChallenge', 'wrong'));
+      }
       setStreak(0);
     }
     setIsCurrQAnswered(true);

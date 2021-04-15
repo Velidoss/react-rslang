@@ -22,6 +22,9 @@ const WordStats = ({ word }) => {
     if (word && word.optional && word.optional.puzzle) {
       setGameStats({ ...gameStats, puzzleStats: { ...word.optional.puzzle } });
     }
+    if (word && word.optional && word.optional.puzzle) {
+      setGameStats({ ...gameStats, audioChallengeStats: { ...word.optional.audioChallenge } });
+    }
   }, [word]);
 
   return (
@@ -72,6 +75,11 @@ WordStats.propTypes = {
         metInGame: PropTypes.number.isRequired,
       }),
       puzzle: PropTypes.shape({
+        right: PropTypes.number.isRequired,
+        wrong: PropTypes.number.isRequired,
+        metInGame: PropTypes.number.isRequired,
+      }),
+      audioChallenge: PropTypes.shape({
         right: PropTypes.number.isRequired,
         wrong: PropTypes.number.isRequired,
         metInGame: PropTypes.number.isRequired,
