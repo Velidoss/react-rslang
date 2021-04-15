@@ -26,7 +26,11 @@ const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
         className={classes.settingsButton}
         setTextBookHeaderTitle={setTextBookHeaderTitle}
       />
-      <SettingsMenu className={classes.groupButton} />
+      {
+        pathname !== '/textbook/stats' && (
+          <SettingsMenu className={classes.groupButton} />
+        )
+      }
       <Typography variant="h5">
         {textBookHeaderTitle}
       </Typography>
