@@ -16,6 +16,8 @@ import { WordTextBlock } from './WordTextBlock';
 import { WordStats } from './WordStats';
 import { WordPlayButton } from './WordPlayButton';
 //
+import checkIfWordInDifficult from '../../../store/textBookReducer/checkIfWordInDifficult';
+//
 import styles from './WordItem.style';
 
 const WordItem = ({
@@ -30,14 +32,19 @@ const WordItem = ({
 }) => {
   const classes = styles();
   const [openStats, toggleOpenStats] = React.useState(false);
+  const [isDifficult, toggleIsDifficult] = React.useState(false);
 
   const handleOpenStats = () => { toggleOpenStats(!openStats); };
+
+  React.useEffect(() => {
+    toggleIsDifficult(userId && checkIfWordInDifficult(word, userWords));
+  }, [word, userWords]);
 
   return (
     <ListItem className={classes.root}>
       <Grid container direction="row" spacing={2}>
         <Grid item xs={3} sm={2} lg={1}>
-          <WordImage imgSrc={word.image} />
+          <WordImage imgSrc={word.image} isDifficult={isDifficult} />
         </Grid>
         <Grid item container xs={9} sm={10} lg={11}>
           <Grid item xs={12}>
@@ -58,8 +65,8 @@ const WordItem = ({
               <Box className={classes.wordControls}>
                 <ControlButtons
                   word={word}
-                  userWords={userWords}
                   userId={userId}
+                  isDifficult={isDifficult}
                   token={token}
                   isAuth={isAuth}
                   showControls={showControls}
@@ -94,7 +101,15 @@ const WordItem = ({
           </Grid>
           <Collapse in={openStats}>
             <Divider />
-            <WordStats />
+            <WordStats
+              word={
+                userWords.length > 0
+                  ? userWords.find(
+                    (userWord) => userWord.wordId === word.id || userWord.wordId === word._id,
+                  )
+                  : null
+              }
+            />
           </Collapse>
         </Grid>
       </Grid>
@@ -110,6 +125,7 @@ WordItem.defaultProps = {
 
 WordItem.propTypes = {
   word: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     audio: PropTypes.string.isRequired,

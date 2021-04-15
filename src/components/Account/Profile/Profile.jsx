@@ -12,6 +12,7 @@ import { AvatarModal } from './AvatarModal';
 //
 import { useAuthChange, useAuth } from '../../../contexts/AuthContext';
 //
+import portraitPlaceholder from '../../../assets/portrait-placeholder.png';
 import styles from './Profile.style';
 
 const Profile = () => {
@@ -35,7 +36,7 @@ const Profile = () => {
         <Grid item xs={12} sm={3}>
           <Box className={classes.imageOuterWrapper}>
             <Box className={classes.imageInnerWrapper}>
-              <Image src={avatar} cover />
+              <Image src={avatar || portraitPlaceholder} cover />
             </Box>
           </Box>
         </Grid>

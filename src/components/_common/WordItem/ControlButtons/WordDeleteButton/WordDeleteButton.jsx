@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 //
 import { Delete } from '@material-ui/icons';
 
 const WordDeleteButton = ({ deleteWord }) => (
-  <IconButton onClick={deleteWord}>
-    <Delete />
-  </IconButton>
+  <Tooltip title="удаленные">
+    <IconButton onClick={deleteWord}>
+      <Delete />
+    </IconButton>
+  </Tooltip>
 );
 
 WordDeleteButton.propTypes = {

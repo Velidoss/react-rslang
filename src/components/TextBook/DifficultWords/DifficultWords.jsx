@@ -8,7 +8,7 @@ import {
 import { MiniGameLinks } from '../MiniGameLinks';
 import DifficultWordsPagination from './DifficultWordsPagination/DifficultWordsPagination';
 //
-import { WordItem } from '../../_common';
+import { WordItem, NoAuthPlaceholder } from '../../_common';
 //
 import {
   deleteWordFromDifficult,
@@ -38,11 +38,13 @@ const DifficultWords = ({
     fetchUserDifficultWords(userId, token, pageNumber),
   ), [userId, token]);
 
-  return (
-    <>
-      <div className="list-wrapper">
-        <List className="list">
-          {
+  return !isAuth
+    ? <NoAuthPlaceholder />
+    : (
+      <>
+        <div className="list-wrapper">
+          <List className="list">
+            {
             difficultWords.map((word) => (
               <WordItem
                 key={word._id}
@@ -57,9 +59,9 @@ const DifficultWords = ({
               />
             ))
           }
-        </List>
-      </div>
-      {
+          </List>
+        </div>
+        {
         difficultWords.length > 20
           && (
             <div className="pagination-wrapper">
@@ -71,11 +73,11 @@ const DifficultWords = ({
             </div>
           )
       }
-      <div className="links-wrapper">
-        <MiniGameLinks />
-      </div>
-    </>
-  );
+        <div className="links-wrapper">
+          <MiniGameLinks />
+        </div>
+      </>
+    );
 };
 
 DifficultWords.propTypes = {

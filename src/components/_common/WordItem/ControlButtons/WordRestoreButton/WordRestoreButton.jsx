@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 //
 import { SettingsBackupRestore } from '@material-ui/icons';
 
 const WordRestoreButton = ({ restoreWord }) => (
-  <IconButton onClick={restoreWord}>
-    <SettingsBackupRestore />
-  </IconButton>
+  <Tooltip title="восстановить">
+    <IconButton onClick={restoreWord}>
+      <SettingsBackupRestore />
+    </IconButton>
+  </Tooltip>
 );
 
 WordRestoreButton.propTypes = {

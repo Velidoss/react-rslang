@@ -35,25 +35,25 @@ export const features = [
 export const team = [
   {
     name: 'Юрий Велидченко',
-    text: 'Duo dicam tempor denique eu, qui in vidit conceptam, ad eum wisi patrioque reprehendunt.',
+    text: 'Full-stack Team Lead. Разрабатывал back-end, Учебник, Словарь, а также мини-игру Саванна.',
     image: velidoss,
     github: 'Velidoss',
   },
   {
     name: 'Ирина Степанова',
-    text: 'Duo dicam tempor denique eu, qui in vidit conceptam, ad eum wisi patrioque reprehendunt.',
+    text: 'Front-end разработчик. Разрабатывала мини-игры Спринт и Аудиовызов.',
     image: arumirinka,
     github: 'arumirinka',
   },
   {
     name: 'Василий Задорожнюк',
-    text: 'Duo dicam tempor denique eu, qui in vidit conceptam, ad eum wisi patrioque reprehendunt.',
+    text: 'Front-end / дизайнер. Макет в Figma, стилизация, главная страница, авторизация, статистика словаря, рефакторинг.',
     image: vaz,
     github: 'va-z',
   },
   {
     name: 'Виктор Башинчеев',
-    text: 'Duo dicam tempor denique eu, qui in vidit conceptam, ad eum wisi patrioque reprehendunt.',
+    text: 'Full-stack разработчик. Разрабатывал back-end и мини-игру Puzzle.',
     image: reagentjs,
     github: 'reagentjs',
   },
@@ -62,7 +62,7 @@ export const team = [
 export const miniGameLocations = [
   '/savannah',
   '/puzzle',
-  '/audiochallange',
+  '/audiochallenge',
   '/sprint',
 ];
 

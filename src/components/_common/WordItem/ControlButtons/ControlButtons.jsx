@@ -11,14 +11,13 @@ import {
   deleteWordFromDifficult,
   addWordToDeleted,
 } from '../../../../store/textBookReducer/userWordsActionCreators';
-import checkIfWordInDifficult from '../../../../store/textBookReducer/checkIfWordInDifficult';
 //
 import styles from './ControlButtons.style';
 
 const ControlButtons = ({
   word,
-  userWords,
   userId,
+  isDifficult,
   token,
   isAuth,
   showControls,
@@ -27,11 +26,6 @@ const ControlButtons = ({
   const classes = styles();
   const dispatch = useDispatch();
   const [isLoading, toggleIsLoading] = React.useState(false);
-  const [isDifficult, toggleIsDifficult] = React.useState(false);
-
-  React.useEffect(() => {
-    toggleIsDifficult(userId && checkIfWordInDifficult(word, userWords));
-  }, [userWords, word]);
 
   const handleDelete = () => {
     dispatch(addWordToDeleted(word.id, userId, token));
@@ -78,10 +72,9 @@ ControlButtons.defaultProps = {
 
 ControlButtons.propTypes = {
   word: PropTypes.instanceOf(Object).isRequired,
-  userWords: PropTypes.instanceOf(Array).isRequired,
-
   showControls: PropTypes.bool.isRequired,
   isAuth: PropTypes.bool.isRequired,
+  isDifficult: PropTypes.bool.isRequired,
 
   userId: PropTypes.string,
   token: PropTypes.string,

@@ -7,9 +7,12 @@ import {
   MenuItem,
 } from '@material-ui/core';
 import { Bookmark } from '@material-ui/icons';
-import { textBookConstants } from '../../../../constants/textBookConstants';
+import { textBookConstants, linkTypes } from '../../../../constants/textBookConstants';
+import { useAuth } from '../../../../contexts/AuthContext';
 
 const GroupsMenu = React.memo(({ className, setGroupNumber, setTextBookHeaderTitle }) => {
+  const { isAuth } = useAuth();
+  const { LINK_PRIVATE } = linkTypes;
   const { getTextBookLinks } = textBookConstants;
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
@@ -37,19 +40,36 @@ const GroupsMenu = React.memo(({ className, setGroupNumber, setTextBookHeaderTit
         onClose={handleClose}
       >
         {
-          menuItems.map((item) => (
-            <MenuItem
-              key={item.id}
-              onClick={() => {
-                item.onClickAction();
-                setTextBookHeaderTitle(item.text);
-                setAnchorEl(null);
-                history.push(item.link);
-              }}
-            >
-              {item.text}
-            </MenuItem>
-          ))
+          menuItems.map((item) => {
+            if (item.type === LINK_PRIVATE) {
+              return isAuth && (
+                <MenuItem
+                  key={item.id}
+                  onClick={() => {
+                    item.onClickAction();
+                    setTextBookHeaderTitle(item.text);
+                    setAnchorEl(null);
+                    history.push(item.link);
+                  }}
+                >
+                  {item.text}
+                </MenuItem>
+              );
+            }
+            return (
+              <MenuItem
+                key={item.id}
+                onClick={() => {
+                  item.onClickAction();
+                  setTextBookHeaderTitle(item.text);
+                  setAnchorEl(null);
+                  history.push(item.link);
+                }}
+              >
+                {item.text}
+              </MenuItem>
+            );
+          })
         }
       </Menu>
     </>
