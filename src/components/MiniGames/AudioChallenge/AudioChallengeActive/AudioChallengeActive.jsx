@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Container, Button, Grid, Typography, Divider, IconButton,
+  Container, Button, Grid, Typography, Divider, IconButton, Box,
 } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,8 +14,25 @@ const useStyles = makeStyles(() => ({
   audioChallengeActiveGridItem: {
     textAlign: 'center',
   },
+  audioChallengeActiveQDiv: {
+    minHeight: '160px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  audioChallengeActiveInfoDiv: {
+    minHeight: '100px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   audioChallengeActiveQ: {
     margin: '1rem',
+  },
+  audioChallengeActiveIcon: {
+    fontSize: '2.5rem',
   },
   audioChallengeActiveImg: {
     borderRadius: '100%',
@@ -128,24 +145,29 @@ const SprintActive = ({
       <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item xs={12} className={classes.audioChallengeActiveGridItem}>
           {!isCurrQAnswered ? (
-            <Typography variant="h5" className={classes.audioChallengeActiveQ}>
-              <IconButton onClick={() => wordAudio(questionsArr[questionNum].audio).play()}>
-                <VolumeUpIcon />
-              </IconButton>
-            </Typography>
+            <Box className={classes.audioChallengeActiveQDiv}>
+              <Typography variant="h5" className={classes.audioChallengeActiveQ}>
+                <IconButton onClick={() => wordAudio(questionsArr[questionNum].audio).play()}>
+                  <VolumeUpIcon className={classes.audioChallengeActiveIcon} />
+                </IconButton>
+              </Typography>
+            </Box>
           ) : (
-            <>
+            <Box className={classes.audioChallengeActiveQDiv}>
               <img
                 src={`${ApiUrl}/${questionsArr[questionNum].image}`}
                 alt={questionsArr[questionNum].word}
                 className={classes.audioChallengeActiveImg}
               />
               <Typography variant="h5" className={classes.audioChallengeActiveQ}>
+                <IconButton onClick={() => wordAudio(questionsArr[questionNum].audio).play()}>
+                  <VolumeUpIcon />
+                </IconButton>
                 {questionsArr[questionNum].word}
                 {' - '}
                 {questionsArr[questionNum].translation}
               </Typography>
-            </>
+            </Box>
           )}
           {mixedAnswersArr[questionNum].map((el, index) => (
             <Button
@@ -162,19 +184,21 @@ const SprintActive = ({
             </Button>
           ))}
           <Divider className={classes.audioChallengeActiveHr} />
-          <Typography className={classes.audioChallengeActiveP}>
-            {`Серия верных ответов: ${streak}.`}
-          </Typography>
-          {isCurrQAnswered ? (
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.audioChallengeActiveBtn}
-              onClick={showNextQuestion}
-            >
-              Далее
-            </Button>
-          ) : null}
+          <Box className={classes.audioChallengeActiveInfoDiv}>
+            <Typography className={classes.audioChallengeActiveP}>
+              {`Серия верных ответов: ${streak}.`}
+            </Typography>
+            {isCurrQAnswered ? (
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.audioChallengeActiveBtn}
+                onClick={showNextQuestion}
+              >
+                Далее
+              </Button>
+            ) : null}
+          </Box>
         </Grid>
       </Grid>
     </Container>
