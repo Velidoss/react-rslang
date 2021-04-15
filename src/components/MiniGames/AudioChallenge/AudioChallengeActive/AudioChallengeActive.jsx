@@ -133,6 +133,9 @@ const SprintActive = ({
     setStreak(0);
     setIsCurrQAnswered(true);
     setCurrAnswerNum(-1);
+    if (isAuth) {
+      dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'audioChallenge', 'wrong'));
+    }
   };
 
   const handleKeypress = (e) => {
