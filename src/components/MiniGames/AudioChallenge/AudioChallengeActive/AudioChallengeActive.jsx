@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     textAlign: 'center',
   },
   audioChallengeActiveQDiv: {
-    minHeight: '160px',
+    minHeight: '170px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
