@@ -97,6 +97,19 @@ const SprintActive = ({
     setCurrAnswerNum(answerI);
   };
 
+  const handleKeypress = (e) => {
+    if ([1, 2, 3, 4, 5].includes(Number(e.key))) {
+      handleAnswer(Number(e.key) - 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keypress', handleKeypress);
+    return () => {
+      window.removeEventListener('keypress', handleKeypress);
+    };
+  }, [isCurrQAnswered]);
+
   const getBtnClassName = (index) => {
     const isCorrect = questionsArr[questionNum].word === mixedAnswersArr[questionNum][index].word;
     if (isCorrect && currAnswerNum === index) {
@@ -139,6 +152,7 @@ const SprintActive = ({
               color="secondary"
               className={isCurrQAnswered ? getBtnClassName(index) : classes.audioChallengeActiveBtn}
               onClick={() => handleAnswer(index)}
+              disabled={isCurrQAnswered && currAnswerNum !== index}
             >
               {index + 1}
               {'. '}
