@@ -39,6 +39,12 @@ const useStyles = makeStyles({
     },
   },
 
+  answers: {
+    '& ul': {
+      listStyleType: 'none',
+    },
+  },
+
   '@keyframes strafe': {
     '0%': {
       transform: 'translateX(0%)',

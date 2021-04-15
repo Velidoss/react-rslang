@@ -26,6 +26,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   const [movesCounter, setMovesCounter] = useState(-1);
   const [rightAnswers, setRightAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [answersState, setAnswersState] = useState({ right: [], wrong: [] });
 
   const isGameActive = () => movesCounter < data.length;
 
@@ -76,13 +77,27 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
     }
   }, [movesCounter]);
 
+  const isAnswersStateIncludesObject = (obj) => (
+    answersState.wrong.some((item) => item.word === obj.word)
+  );
+
   const submitAnswer = (rightOrWrong) => {
+    const currentObject = { ...data[randomIndexes[movesCounter]] };
+
     if (rightOrWrong === 'right') {
       setRightAnswers(rightAnswers + 1);
       setMovesCounter(movesCounter + 1);
+
+      if (!isAnswersStateIncludesObject(currentObject)) {
+        setAnswersState({ ...answersState, right: answersState.right.concat(currentObject) });
+      }
     } else {
       addClassWrong();
       setWrongAnswers(wrongAnswers + 1);
+
+      if (!isAnswersStateIncludesObject(currentObject)) {
+        setAnswersState({ ...answersState, wrong: answersState.wrong.concat(currentObject) });
+      }
     }
   };
 
@@ -154,8 +169,10 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
       />
 
       <Answers
-        right={rightAnswers}
-        wrong={wrongAnswers}
+        isGameActive={isGameActive()}
+        rightQuantity={rightAnswers}
+        wrongQuantity={wrongAnswers}
+        answersState={{ ...answersState }}
       />
     </>
   );
