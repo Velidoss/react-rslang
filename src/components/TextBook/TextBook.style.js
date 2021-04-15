@@ -22,38 +22,38 @@ const useTextBookStyles = makeStyles((theme) => ({
 
     '& .list--0': {
       backgroundColor: theme.palette.type === 'dark'
-        ? '#B185DB'
-        : '#A1EF7A',
+        ? '#43373D'
+        : '#F6F4F5',
     },
 
     '& .list--1': {
       backgroundColor: theme.palette.type === 'dark'
-        ? '#A06CD5'
-        : '#B0EF8E',
+        ? '#2A4879'
+        : '#C3D2EA',
     },
 
     '& .list--2': {
       backgroundColor: theme.palette.type === 'dark'
-        ? '#9163CB'
-        : '#BAF19C',
+        ? '#595B33'
+        : '#D1D3B1',
     },
 
     '& .list--3': {
       backgroundColor: theme.palette.type === 'dark'
-        ? '#815AC0'
-        : '#D0F4BA',
+        ? '#A36A00'
+        : '#FFE1A8',
     },
 
     '& .list--4': {
       backgroundColor: theme.palette.type === 'dark'
-        ? '#7251B5'
-        : '#EAF8DA',
+        ? '#6F4B0B'
+        : '#F1BF6A',
     },
 
     '& .list--5': {
       backgroundColor: theme.palette.type === 'dark'
-        ? '#6247AA'
-        : '#EFFAFB',
+        ? '#651523'
+        : '#F1BCC5',
     },
 
     '& .pagination-wrapper': {

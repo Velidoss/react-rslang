@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { IconButton, CircularProgress } from '@material-ui/core';
+import { IconButton, Tooltip, CircularProgress } from '@material-ui/core';
 //
 import { Star } from '@material-ui/icons';
 //
@@ -22,12 +22,14 @@ const WordInDifficultsButton = React.memo(({
   }
 
   return (
-    <IconButton
-      className={clsx(isDifficult && classes.active)}
-      onClick={isDifficult ? removeWordFromDifficult : addWordToDifficult}
-    >
-      <Star className={clsx(isDifficult && classes.activeIcon)} />
-    </IconButton>
+    <Tooltip title="сложные">
+      <IconButton
+        className={clsx(isDifficult && classes.active)}
+        onClick={isDifficult ? removeWordFromDifficult : addWordToDifficult}
+      >
+        <Star className={clsx(isDifficult && classes.activeIcon)} />
+      </IconButton>
+    </Tooltip>
   );
 });
 

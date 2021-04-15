@@ -7,7 +7,6 @@ import {
   Typography,
   Divider,
   Collapse,
-  Badge,
 } from '@material-ui/core';
 //
 import { WordImage } from './WordImage';
@@ -45,33 +44,23 @@ const WordItem = ({
     <ListItem className={classes.root}>
       <Grid container direction="row" spacing={2}>
         <Grid item xs={3} sm={2} lg={1}>
-          <WordImage imgSrc={word.image} />
+          <WordImage imgSrc={word.image} isDifficult={isDifficult} />
         </Grid>
         <Grid item container xs={9} sm={10} lg={11}>
           <Grid item xs={12}>
             <Box className={classes.wordHeader}>
               <Box className={classes.wordMainWrapper}>
-                <Badge
-                  invisible={!isDifficult}
-                  badgeContent="Сложное"
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                  color="error"
-                >
-                  <div className={classes.wordMain}>
-                    <WordPlayButton
-                      audio={word.audio}
-                      audioMeaning={word.audioMeaning}
-                      audioExample={word.audioExample}
-                    />
-                    <Typography variant="h5">
-                      <span className={classes.wordName}>{word.word}</span>
-                      <span className={classes.wordTranscription}>{word.transcription}</span>
-                    </Typography>
-                  </div>
-                </Badge>
+                <div className={classes.wordMain}>
+                  <WordPlayButton
+                    audio={word.audio}
+                    audioMeaning={word.audioMeaning}
+                    audioExample={word.audioExample}
+                  />
+                  <Typography variant="h5">
+                    <span className={classes.wordName}>{word.word}</span>
+                    <span className={classes.wordTranscription}>{word.transcription}</span>
+                  </Typography>
+                </div>
               </Box>
               <Box className={classes.wordControls}>
                 <ControlButtons
