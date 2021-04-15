@@ -13,6 +13,7 @@ const getUserLearningWords = async (userId, authToken, page) => {
     params: {
       page,
       wordsPerPage: 20,
+      filter: '{"$or":[{ "userWord.difficulty": "hard"}, {"userWord.difficulty": "easy"}]}',
     },
   }).catch((error) => {
     console.log(error);

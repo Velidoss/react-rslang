@@ -8,7 +8,7 @@ const SavannahResult = ({ right, wrong, eraseGameState }) => {
   const classes = savannahStyles();
 
   return (
-    <Grid direction="column" align="center">
+    <Grid container direction="column" align="center">
       <Grid container item direction="column">
         <Typography variant="h6" className={classes.resultText}>{`${calculatePercentage(right, wrong)}%`}</Typography>
         <Typography variant="h6" className={classes.resultText}>{`Верные ответы: ${right}`}</Typography>
