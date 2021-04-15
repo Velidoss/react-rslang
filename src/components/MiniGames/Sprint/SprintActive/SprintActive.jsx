@@ -12,6 +12,9 @@ import BatteryCharging50Icon from '@material-ui/icons/BatteryCharging50';
 import BatteryCharging20Icon from '@material-ui/icons/BatteryCharging20';
 import './sprintActiveStyles.css';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../../../../contexts/AuthContext';
+import { setWordGameStatistics } from '../../../../store/textBookReducer/userWordsActionCreators';
 
 const useStyles = makeStyles(() => ({
   sprintActiveBtn: {
@@ -66,6 +69,8 @@ const SprintActive = ({
   questionsArr, mixedAnswersArr, questionNum, setQuestionNum, answersState, setAnswersState,
   points, setPoints, finishGame,
 }) => {
+  const dispatch = useDispatch();
+  const { auth: { token, userId }, isAuth } = useAuth();
   const [streak, setStreak] = useState(1);
   const [pointsPerAnswer, setPointsPerAnswer] = useState(pointsStep1);
   const [lastAnswerState, setLastAnswerState] = useState('none');
@@ -111,6 +116,9 @@ const SprintActive = ({
       }
       setPoints(points + pointsPerAnswer);
       setStreak(streak + 1);
+      if (isAuth) {
+        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', answer));
+      }
       setLastAnswerState('right');
     } else if ((!isCorrect && answer === 'right') || (isCorrect && answer === 'wrong')) {
       setAnswersState({
@@ -120,6 +128,9 @@ const SprintActive = ({
       setStreak(1);
       setPointsPerAnswer(pointsStep1);
       setLastAnswerState('wrong');
+      if (isAuth) {
+        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', answer));
+      }
     }
 
     showNextQuestion();
@@ -205,6 +216,7 @@ SprintActive.propTypes = {
   questionsArr: PropTypes.arrayOf(PropTypes.shape({
     word: PropTypes.string.isRequired,
     translation: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   mixedAnswersArr: PropTypes.arrayOf(PropTypes.shape({
     word: PropTypes.string.isRequired,

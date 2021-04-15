@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Button, IconButton } from '@material-ui/core';
+import {
+  Container, Button, IconButton, Typography, LinearProgress, Grid,
+} from '@material-ui/core';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import useCounter from '../hooks/useCounter';
 import wordAudio from '../../../../common/wordAudio';
+import savannahStyles from '../savannahStyles';
 
 const SavannahActive = ({ makeAnswer, words, finishGame }) => {
+  const classes = savannahStyles();
   const [wordGroup, setWordGroup] = useState(0);
   const [timeForAnswer, setTimeForAnswer] = useState(5);
 
@@ -30,23 +34,33 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
       {
         words[wordGroup].filter((word) => word.question)
           .map((question) => (
-            <div key={question.id}>
-              {question.word}
-              {' '}
-              <IconButton onClick={() => wordAudio(question.audio).play()}>
-                <VolumeUpIcon />
-              </IconButton>
+            <div key={question.id} className={classes.container}>
+              <Typography component="h6" align="center" className={classes.word}>
+                {question.word}
+                <IconButton onClick={() => wordAudio(question.audio).play()}>
+                  <VolumeUpIcon />
+                </IconButton>
+              </Typography>
             </div>
           ))
       }
-      {timeForAnswer}
-      {
-      words[wordGroup].map((word) => (
-        <Button key={word.id} onClick={() => onCLick(words[wordGroup], word.id, word.word)}>
-          {word.wordTranslate}
-        </Button>
-      ))
-    }
+      <LinearProgress className={classes.progress} variant="determinate" value={timeForAnswer * 20} />
+      <Grid container className={classes.wordsList} spacing={4}>
+        {
+          words[wordGroup].map((word) => (
+            <Button
+              key={word.id}
+              variant="outlined"
+              color="primary"
+              className={classes.questionWord}
+              onClick={() => onCLick(words[wordGroup], word.id, word.word)}
+            >
+              {word.wordTranslate}
+            </Button>
+          ))
+        }
+      </Grid>
+
     </Container>
   ) : <div />;
 };
