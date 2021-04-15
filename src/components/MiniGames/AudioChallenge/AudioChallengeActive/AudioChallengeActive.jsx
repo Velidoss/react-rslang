@@ -102,10 +102,16 @@ const SprintActive = ({
     }
 
     const isCorrect = questionsArr[questionNum].word === mixedAnswersArr[questionNum][answerI].word;
+    const wordObj = {
+      word: questionsArr[questionNum].word,
+      translation: questionsArr[questionNum].translation,
+      audio: questionsArr[questionNum].audio,
+    };
+
     if (isCorrect) {
       setAnswersState({
         ...answersState,
-        right: [...answersState.right, questionsArr[questionNum].word],
+        right: [...answersState.right, wordObj],
       });
       if (isAuth) {
         dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'audioChallenge', 'right'));
@@ -114,28 +120,36 @@ const SprintActive = ({
     } else if (!isCorrect) {
       setAnswersState({
         ...answersState,
-        wrong: [...answersState.wrong, questionsArr[questionNum].word],
+        wrong: [...answersState.wrong, wordObj],
       });
       if (isAuth) {
         dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'audioChallenge', 'wrong'));
       }
       setStreak(0);
     }
+
     setIsCurrQAnswered(true);
     setCurrAnswerNum(answerI);
   };
 
   const giveUp = () => {
+    const wordObj = {
+      word: questionsArr[questionNum].word,
+      translation: questionsArr[questionNum].translation,
+      audio: questionsArr[questionNum].audio,
+    };
     setAnswersState({
       ...answersState,
-      wrong: [...answersState.wrong, questionsArr[questionNum].word],
+      wrong: [...answersState.wrong, wordObj],
     });
-    setStreak(0);
-    setIsCurrQAnswered(true);
-    setCurrAnswerNum(-1);
+
     if (isAuth) {
       dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'audioChallenge', 'wrong'));
     }
+
+    setStreak(0);
+    setIsCurrQAnswered(true);
+    setCurrAnswerNum(-1);
   };
 
   const handleKeypress = (e) => {
@@ -256,8 +270,16 @@ SprintActive.propTypes = {
   questionNum: PropTypes.number.isRequired,
   setQuestionNum: PropTypes.func.isRequired,
   answersState: PropTypes.shape({
-    right: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    wrong: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    right: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+    wrong: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired,
   setAnswersState: PropTypes.func.isRequired,
   finishGame: PropTypes.func.isRequired,
