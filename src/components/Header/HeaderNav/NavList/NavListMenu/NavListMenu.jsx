@@ -8,10 +8,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { HeaderButton } from '../../../../_common';
 import ChooseLevel from '../../../../MiniGames/ChooseLevel/ChooseLevel';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   modalContainer: {
     width: '380px',
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.type === 'dark'
+      ? '#43373D'
+      : '#F6F4F5',
     padding: '1rem',
     margin: '2rem auto',
     borderRadius: '0.5rem',
