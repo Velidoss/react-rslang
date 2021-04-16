@@ -102,10 +102,15 @@ const SprintActive = ({
 
   const handleAnswer = (answer) => {
     const isCorrect = questionsArr[questionNum].word === mixedAnswersArr[questionNum].word;
+    const wordObj = {
+      word: questionsArr[questionNum].word,
+      translation: questionsArr[questionNum].translation,
+      audio: questionsArr[questionNum].audio,
+    };
     if ((isCorrect && answer === 'right') || (!isCorrect && answer === 'wrong')) {
       setAnswersState({
         ...answersState,
-        right: [...answersState.right, questionsArr[questionNum].word],
+        right: [...answersState.right, wordObj],
       });
       if (streak >= 9) {
         setPointsPerAnswer(pointsStep4);
@@ -117,19 +122,19 @@ const SprintActive = ({
       setPoints(points + pointsPerAnswer);
       setStreak(streak + 1);
       if (isAuth) {
-        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', answer));
+        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', 'right'));
       }
       setLastAnswerState('right');
     } else if ((!isCorrect && answer === 'right') || (isCorrect && answer === 'wrong')) {
       setAnswersState({
         ...answersState,
-        wrong: [...answersState.wrong, questionsArr[questionNum].word],
+        wrong: [...answersState.wrong, wordObj],
       });
       setStreak(1);
       setPointsPerAnswer(pointsStep1);
       setLastAnswerState('wrong');
       if (isAuth) {
-        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', answer));
+        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', 'wrong'));
       }
     }
 
@@ -217,6 +222,7 @@ SprintActive.propTypes = {
     word: PropTypes.string.isRequired,
     translation: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
+    audio: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   mixedAnswersArr: PropTypes.arrayOf(PropTypes.shape({
     word: PropTypes.string.isRequired,
@@ -225,8 +231,16 @@ SprintActive.propTypes = {
   questionNum: PropTypes.number.isRequired,
   setQuestionNum: PropTypes.func.isRequired,
   answersState: PropTypes.shape({
-    right: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    wrong: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    right: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+    wrong: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired,
   setAnswersState: PropTypes.func.isRequired,
   points: PropTypes.number.isRequired,
