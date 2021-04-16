@@ -70,7 +70,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SprintActive = ({
+const AudioChallengeActive = ({
   questionsArr, mixedAnswersArr, questionNum, setQuestionNum, answersState, setAnswersState,
   finishGame,
 }) => {
@@ -253,7 +253,7 @@ const SprintActive = ({
   );
 };
 
-SprintActive.propTypes = {
+AudioChallengeActive.propTypes = {
   questionsArr: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     word: PropTypes.string.isRequired,
@@ -286,4 +286,4 @@ SprintActive.propTypes = {
   finishGame: PropTypes.func.isRequired,
 };
 
-export default SprintActive;
+export default AudioChallengeActive;
