@@ -1,11 +1,16 @@
 import React from 'react';
-import PropTypes, { arrayOf } from 'prop-types';
-import { Button, Typography, Divider } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import {
+  Button, Typography, Divider, IconButton, Box,
+} from '@material-ui/core';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { makeStyles } from '@material-ui/core/styles';
+import wordAudio from '../../../../common/wordAudio';
 
 const useStyles = makeStyles(() => ({
-  audioChallengeResultMT: {
+  audioChallengeResultBox: {
     marginTop: '1rem',
+    textAlign: 'center',
   },
   audioChallengeResultP: {
     textAlign: 'center',
@@ -17,10 +22,10 @@ const useStyles = makeStyles(() => ({
     width: '40vw',
     margin: '1rem',
   },
-  audioChallengeResultSpanR: {
+  audioChallengeResultPRight: {
     borderBottom: '2px dashed #e03e87',
   },
-  audioChallengeResultSpanW: {
+  audioChallengeResultPWrong: {
     borderBottom: '2px dashed #2f2f2f',
   },
 }));
@@ -33,22 +38,44 @@ const AudioChallengeResult = ({ answersState, startGame }) => {
 
   return (
     <>
-      <Typography className={`${classes.audioChallengeResultMT} ${classes.audioChallengeResultP}`}>
-        <span className={classes.audioChallengeResultSpanR}>
+      <Box className={classes.audioChallengeResultBox}>
+        <Typography variant="h6" className={classes.audioChallengeResultPRight}>
           Верные ответы (
           {answersState.right.length}
-          ):
-        </span>
-        <span>{` ${answersState.right.join(', ') || 'нет'}.`}</span>
-      </Typography>
-      <Typography className={classes.audioChallengeResultP}>
-        <span className={classes.audioChallengeResultSpanW}>
+          )
+        </Typography>
+        {
+          answersState.right.map((answer) => (
+            <Typography key={answer.word}>
+              <IconButton onClick={() => wordAudio(answer.audio).play()}>
+                <VolumeUpIcon />
+              </IconButton>
+              {answer.word}
+              {' - '}
+              {answer.translation}
+            </Typography>
+          ))
+        }
+      </Box>
+      <Box className={classes.audioChallengeResultBox}>
+        <Typography variant="h6" className={classes.audioChallengeResultPWrong}>
           Неверные ответы (
           {answersState.wrong.length}
-          ):
-        </span>
-        <span>{` ${answersState.wrong.join(', ') || 'нет'}.`}</span>
-      </Typography>
+          )
+        </Typography>
+        {
+          answersState.wrong.map((answer) => (
+            <Typography key={answer.word}>
+              <IconButton onClick={() => wordAudio(answer.audio).play()}>
+                <VolumeUpIcon />
+              </IconButton>
+              {answer.word}
+              {' - '}
+              {answer.translation}
+            </Typography>
+          ))
+        }
+      </Box>
       <Divider className={classes.audioChallengeResultHr} />
       <Typography className={classes.audioChallengeResultP}>
         <span>Итого: </span>
@@ -70,8 +97,16 @@ const AudioChallengeResult = ({ answersState, startGame }) => {
 
 AudioChallengeResult.propTypes = {
   answersState: PropTypes.shape({
-    right: arrayOf(PropTypes.string).isRequired,
-    wrong: arrayOf(PropTypes.string).isRequired,
+    right: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+    wrong: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired,
   startGame: PropTypes.func.isRequired,
 };

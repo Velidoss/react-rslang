@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { setWordGameStatistics } from '../../../../store/textBookReducer/userWordsActionCreators';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   sprintActiveBtn: {
     margin: '1rem',
   },
@@ -30,6 +30,21 @@ const useStyles = makeStyles(() => ({
   sprintActivePIconSpan: {
     bottom: '3px',
     position: 'relative',
+  },
+  sprintActiveMain: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '360px',
+    padding: '1rem 0',
+    margin: '0 auto',
+    borderRadius: '0.5rem',
+  },
+  sprintActiveMainRight: {
+    backgroundColor: theme.palette.type === 'dark' ? 'darkolivegreen' : '#ccffb9cc',
+  },
+  sprintActiveMainWrong: {
+    backgroundColor: theme.palette.type === 'dark' ? 'darkred' : '#ffb9b9cc',
   },
 }));
 
@@ -75,12 +90,14 @@ const SprintActive = ({
   const [pointsPerAnswer, setPointsPerAnswer] = useState(pointsStep1);
   const [lastAnswerState, setLastAnswerState] = useState('none');
 
-  let mainBgClassName = 'sprint-active__main';
+  const classes = useStyles();
+
+  let mainBgClassName = classes.sprintActiveMain;
 
   if (lastAnswerState === 'right') {
-    mainBgClassName += ' sprint-active__main--right';
+    mainBgClassName += ` ${classes.sprintActiveMainRight}`;
   } else if (lastAnswerState === 'wrong') {
-    mainBgClassName += ' sprint-active__main--wrong';
+    mainBgClassName += ` ${classes.sprintActiveMainWrong}`;
   }
 
   useEffect(() => {
@@ -89,8 +106,6 @@ const SprintActive = ({
     }, 300);
     return () => clearTimeout(timer);
   }, [lastAnswerState]);
-
-  const classes = useStyles();
 
   const showNextQuestion = () => {
     if (questionsArr.length > questionNum + 1) {
@@ -102,10 +117,15 @@ const SprintActive = ({
 
   const handleAnswer = (answer) => {
     const isCorrect = questionsArr[questionNum].word === mixedAnswersArr[questionNum].word;
+    const wordObj = {
+      word: questionsArr[questionNum].word,
+      translation: questionsArr[questionNum].translation,
+      audio: questionsArr[questionNum].audio,
+    };
     if ((isCorrect && answer === 'right') || (!isCorrect && answer === 'wrong')) {
       setAnswersState({
         ...answersState,
-        right: [...answersState.right, questionsArr[questionNum].word],
+        right: [...answersState.right, wordObj],
       });
       if (streak >= 9) {
         setPointsPerAnswer(pointsStep4);
@@ -117,19 +137,19 @@ const SprintActive = ({
       setPoints(points + pointsPerAnswer);
       setStreak(streak + 1);
       if (isAuth) {
-        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', answer));
+        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', 'right'));
       }
       setLastAnswerState('right');
     } else if ((!isCorrect && answer === 'right') || (isCorrect && answer === 'wrong')) {
       setAnswersState({
         ...answersState,
-        wrong: [...answersState.wrong, questionsArr[questionNum].word],
+        wrong: [...answersState.wrong, wordObj],
       });
       setStreak(1);
       setPointsPerAnswer(pointsStep1);
       setLastAnswerState('wrong');
       if (isAuth) {
-        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', answer));
+        dispatch(setWordGameStatistics(userId, token, questionsArr[questionNum].id, 'sprint', 'wrong'));
       }
     }
 
@@ -175,7 +195,6 @@ const SprintActive = ({
               <Button
                 onClick={() => handleAnswer('right')}
                 endIcon={<ArrowForwardIcon />}
-                color="primary"
                 className={classes.sprintActiveBtn}
                 variant="outlined"
               >
@@ -217,6 +236,7 @@ SprintActive.propTypes = {
     word: PropTypes.string.isRequired,
     translation: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
+    audio: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   mixedAnswersArr: PropTypes.arrayOf(PropTypes.shape({
     word: PropTypes.string.isRequired,
@@ -225,8 +245,16 @@ SprintActive.propTypes = {
   questionNum: PropTypes.number.isRequired,
   setQuestionNum: PropTypes.func.isRequired,
   answersState: PropTypes.shape({
-    right: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    wrong: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    right: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+    wrong: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired,
   setAnswersState: PropTypes.func.isRequired,
   points: PropTypes.number.isRequired,

@@ -1,3 +1,7 @@
+import axios from 'axios';
+import DataAccessConstants from '../../../constants/DataAccessConstants';
+import miniGamesConstants from '../../../constants/miniGamesConstants';
+
 const shuffle = (array) => {
   const shuffledArray = [...array];
   for (let i = 0; i < array.length; i += 1) {
@@ -10,11 +14,15 @@ const shuffle = (array) => {
 };
 
 const createAudioChallengeWordsArr = (array) => {
-  const sprintWordsArr = [];
-  array.forEach((el) => sprintWordsArr.push({
-    id: el.id, word: el.word, translation: el.wordTranslate, audio: el.audio, image: el.image,
+  const audioChallengeWordsArr = [];
+  array.forEach((el) => audioChallengeWordsArr.push({
+    id: el.id || el._id,
+    word: el.word,
+    translation: el.wordTranslate,
+    audio: el.audio,
+    image: el.image,
   }));
-  return sprintWordsArr;
+  return audioChallengeWordsArr;
 };
 
 const createAArr = (array) => {
@@ -33,4 +41,26 @@ const createQnAArrays = (initArray) => {
   return { qArray, aArray };
 };
 
-export default createQnAArrays;
+const getUserWords = async (userId, authToken, group = 0, page = 0) => {
+  const { ApiUrl } = DataAccessConstants;
+  const response = await axios({
+    method: 'get',
+    url: `${ApiUrl}/users/${userId}/aggregatedWords`,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    params: {
+      group,
+      wordsPerPage: miniGamesConstants.audioChallengeWordsNum * (page + 1),
+      filter: { $or: [{ 'userWord.optional.deleted': null }, { 'userWord.optional.deleted': false }] },
+    },
+  }).catch((error) => {
+    console.log(error);
+    return {};
+  });
+
+  const res = response.data ? response.data[0].paginatedResults : [];
+  return res.filter((el) => el.page <= page).reverse();
+};
+
+export { createQnAArrays, getUserWords };
