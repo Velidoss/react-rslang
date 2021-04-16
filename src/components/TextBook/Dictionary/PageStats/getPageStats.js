@@ -5,7 +5,7 @@ export default (words, userWords) => words.reduce((acc, { id }) => {
     return acc;
   }
 
-  if (userWord.difficulty === 'hard' && userWord.optional?.deleted === false) {
+  if (userWord.difficulty === 'hard' && userWord.optional && userWord.optional?.deleted === false) {
     acc['Изучаемых слов'] += 1;
   }
 
@@ -24,9 +24,9 @@ export default (words, userWords) => words.reduce((acc, { id }) => {
     acc['Неправильных ответов'] += userWord.optional.puzzle.wrong;
   }
 
-  if (userWord.optional?.audiochallenge) {
-    acc['Правильных ответов'] += userWord.optional.audiochallenge.right;
-    acc['Неправильных ответов'] += userWord.optional.audiochallenge.wrong;
+  if (userWord.optional?.audioChallenge) {
+    acc['Правильных ответов'] += userWord.optional.audioChallenge.right;
+    acc['Неправильных ответов'] += userWord.optional.audioChallenge.wrong;
   }
 
   return acc;
