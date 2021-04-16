@@ -72,7 +72,7 @@ const DeletedWords = ({
             )
         }
         <div className="links-wrapper">
-          <MiniGameLinks />
+          <MiniGameLinks group="0" page={pageNumber} linkSrc="deleted" />
         </div>
       </>
     );
