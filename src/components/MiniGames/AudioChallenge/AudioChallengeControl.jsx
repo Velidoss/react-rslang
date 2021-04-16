@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Button, CircularProgress, Container,
+  Button, CircularProgress, Container, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AudioChallengeActive from './AudioChallengeActive/AudioChallengeActive';
@@ -39,11 +39,16 @@ const AudioChallengeControl = () => {
   const pageNum = (location.state && location.state.page) ? location.state.page : 0;
 
   const getWordsArray = async () => {
+    let data = [];
     if (isAuth) {
       const userWords = await getUserWords(userId, token, groupNum, pageNum);
-      setWordsArray(userWords.slice(0, miniGamesConstants.audioChallengeWordsNum));
+      data = userWords.slice(0, miniGamesConstants.audioChallengeWordsNum);
     } else {
-      const data = await getWords(groupNum, pageNum);
+      data = await getWords(groupNum, pageNum);
+    }
+    if (!data.length) {
+      setGameState('GAME_STATE_ERROR');
+    } else {
       setWordsArray(data);
     }
   };
@@ -112,6 +117,14 @@ const AudioChallengeControl = () => {
             answersState={answersState}
             startGame={startGame}
           />
+        </Container>
+      );
+    case 'GAME_STATE_ERROR':
+      return (
+        <Container className={classes.wrapperContainer}>
+          <Typography>
+            Ой, что-то пошло не так...
+          </Typography>
         </Container>
       );
   }

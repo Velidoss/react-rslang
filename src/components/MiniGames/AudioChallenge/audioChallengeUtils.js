@@ -51,7 +51,7 @@ const getUserWords = async (userId, authToken, group = 0, page = 0) => {
     },
     params: {
       group,
-      wordsPerPage: miniGamesConstants.audioChallengeWordsNum,
+      wordsPerPage: miniGamesConstants.audioChallengeWordsNum * (page + 1),
       filter: { $or: [{ 'userWord.optional.deleted': null }, { 'userWord.optional.deleted': false }] },
     },
   }).catch((error) => {
