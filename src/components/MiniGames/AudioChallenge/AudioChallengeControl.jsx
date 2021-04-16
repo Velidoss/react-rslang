@@ -6,8 +6,10 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import AudioChallengeActive from './AudioChallengeActive/AudioChallengeActive';
 import AudioChallengeResult from './AudioChallengeResult/AudioChallengeResult';
-import createQnAArrays from './audioChallengeUtils';
+import { createQnAArrays, getUserWords } from './audioChallengeUtils';
 import getWords from '../../../api/getWords';
+import { useAuth } from '../../../contexts/AuthContext';
+import miniGamesConstants from '../../../constants/miniGamesConstants';
 
 const useStyles = makeStyles(() => ({
   wrapperContainer: {
@@ -30,13 +32,20 @@ const AudioChallengeControl = () => {
 
   const classes = useStyles();
 
+  const { auth: { token, userId }, isAuth } = useAuth();
+
   const location = useLocation();
   const groupNum = (location.state && location.state.group) ? location.state.group : 0;
   const pageNum = (location.state && location.state.page) ? location.state.page : 0;
 
   const getWordsArray = async () => {
-    const data = await getWords(groupNum, pageNum);
-    setWordsArray(data);
+    if (isAuth) {
+      const userWords = await getUserWords(userId, token, groupNum, pageNum);
+      setWordsArray(userWords.slice(0, miniGamesConstants.audioChallengeWordsNum));
+    } else {
+      const data = await getWords(groupNum, pageNum);
+      setWordsArray(data);
+    }
   };
 
   useEffect(() => {
