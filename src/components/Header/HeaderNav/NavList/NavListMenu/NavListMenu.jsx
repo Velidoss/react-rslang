@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 //
 import { HeaderButton } from '../../../../_common';
 import ChooseLevel from '../../../../MiniGames/ChooseLevel/ChooseLevel';
+//
+import { removeLocalStorageItem } from '../../../../../utils/loсalStorage';
 
 const useStyles = makeStyles(() => ({
   modalContainer: {
@@ -50,6 +52,7 @@ const NavListMenu = ({ label, links }) => {
   };
 
   const handleGameClick = (path, name) => {
+    removeLocalStorageItem('textBookLocation');
     setGamePath(path);
     setGameName(name);
     handleOpenModal();
@@ -79,7 +82,7 @@ const NavListMenu = ({ label, links }) => {
           links.map(({ label: itemLabel, path }) => (
             <MenuItem
               key={itemLabel}
-              onClick={() => handleGameClick(path, itemLabel)}
+              onClick={() => { handleGameClick(path, itemLabel); }}
             >
               {itemLabel}
             </MenuItem>

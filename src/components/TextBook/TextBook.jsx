@@ -9,12 +9,14 @@ import { DifficultWords } from './DifficultWords';
 import { LearningWords } from './LearningWords';
 import { DeletedWords } from './DeletedWords';
 import { Loader } from '../_common';
-
+//
 import { getTextBookWords } from '../../store/textBookReducer/TextBookActionCreators';
 import { fetchUserDeletedWords, fetchUserWords } from '../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../contexts/AuthContext';
+//
+import { getLocalStorageItem, setLocalStorageItem } from '../../utils/loсalStorage';
 //
 import styles from './TextBook.style';
 
@@ -25,7 +27,9 @@ const TextBook = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(0);
   const {
-    words, showControls, showTranslation,
+    words,
+    showControls,
+    showTranslation,
   } = useSelector(textBookSelector);
   const {
     auth: {
@@ -45,6 +49,18 @@ const TextBook = () => {
       dispatch(fetchUserDeletedWords(userId, token));
     }
   }, [userId, token]);
+
+  useEffect(() => {
+    const textBookLocation = getLocalStorageItem('textBookLocation', { pageNumber, groupNumber });
+
+    setPageNumber(textBookLocation.pageNumber);
+    setGroupNumber(textBookLocation.groupNumber);
+    setLocalStorageItem('textBookLocation', textBookLocation);
+  }, []);
+
+  useEffect(() => {
+    setLocalStorageItem('textBookLocation', { pageNumber, groupNumber });
+  }, [pageNumber, groupNumber]);
 
   useEffect(() => (
     isAuth
