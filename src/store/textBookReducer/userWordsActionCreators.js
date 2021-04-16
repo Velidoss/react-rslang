@@ -28,19 +28,19 @@ export const setUserWords = (wordsList) => ({
   payload: wordsList,
 });
 
-export const setUserDeletedWords = (wordsList) => ({
+export const setUserDeletedWords = (wordsList, wordsQuantity) => ({
   type: GET_DELETED_WORDS,
-  payload: wordsList,
+  payload: { wordsList, wordsQuantity },
 });
 
-export const setUserDifficultWords = (wordsList) => ({
+export const setUserDifficultWords = (wordsList, wordsQuantity) => ({
   type: GET_DIFFICULT_WORDS,
-  payload: wordsList,
+  payload: { wordsList, wordsQuantity },
 });
 
-export const setUserLearningWords = (wordsList) => ({
+export const setUserLearningWords = (wordsList, wordsQuantity) => ({
   type: GET_USER_LEARNING_WORDS,
-  payload: wordsList,
+  payload: { wordsList, wordsQuantity },
 });
 
 export const addUserWord = (wordToAdd) => ({
@@ -77,19 +77,21 @@ export const fetchUserWords = (userId, authToken) => async (dispatch) => {
 export const fetchLearningWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getUserLearningWords(userId, authToken, page);
   return words && words[0].paginatedResults.length > 0
-  && dispatch(setUserLearningWords(words[0].paginatedResults));
+  && dispatch(setUserLearningWords(words[0].paginatedResults, words[0].totalCount[0].count));
 };
 
 export const fetchUserDeletedWords = (userId, authToken, page = 0) => async (dispatch) => {
   const deletedWords = await getDeletedWords(userId, authToken, page);
   return deletedWords && deletedWords[0].paginatedResults.length > 0
-  && dispatch(setUserDeletedWords(deletedWords[0].paginatedResults));
+  && dispatch(setUserDeletedWords(
+    deletedWords[0].paginatedResults, deletedWords[0].totalCount[0].count,
+  ));
 };
 
 export const fetchUserDifficultWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getDifficultWords(userId, authToken, page);
   return words && words[0].paginatedResults.length > 0
-  && dispatch(setUserDifficultWords(words[0].paginatedResults));
+  && dispatch(setUserDifficultWords(words[0].paginatedResults, words[0].totalCount[0].count));
 };
 
 export const addWordToDifficult = (wordId, userId, authToken) => async (dispatch) => {

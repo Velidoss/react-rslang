@@ -3,20 +3,20 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { List } from '@material-ui/core';
 //
-import LearningWordsPagination from './LearningWordsPagination/LearningWordsPagination';
 import { WordItem, NoAuthPlaceholder } from '../../_common';
 //
 import { fetchLearningWords } from '../../../store/textBookReducer/userWordsActionCreators';
 import textBookSelector from '../../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../../contexts/AuthContext';
+import UserWordsPagination from '../../_common/UserWordsPagination/UserWordsPagination';
 
 const LearningWords = ({
   showTranslation,
 }) => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
-  const { learningWords, userWords } = useSelector(textBookSelector);
+  const { learningWords, learningWordsQuantity, userWords } = useSelector(textBookSelector);
   const {
     auth: {
       userId,
@@ -29,7 +29,7 @@ const LearningWords = ({
 
   useEffect(() => userId && token && dispatch(
     fetchLearningWords(userId, token, pageNumber),
-  ), [userId, token]);
+  ), [userId, token, pageNumber]);
 
   return !isAuth
     ? <NoAuthPlaceholder />
@@ -54,11 +54,11 @@ const LearningWords = ({
           </List>
         </div>
         {
-        learningWords.length > 20
+        learningWordsQuantity > 20
           && (
             <div className="pagination-wrapper">
-              <LearningWordsPagination
-                wordsCount={learningWords.length}
+              <UserWordsPagination
+                wordsCount={learningWordsQuantity}
                 currentPage={pageNumber}
                 changePage={changePage}
               />

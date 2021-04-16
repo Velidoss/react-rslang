@@ -6,7 +6,6 @@ import {
 } from '@material-ui/core';
 //
 import { MiniGameLinks } from '../MiniGameLinks';
-import DifficultWordsPagination from './DifficultWordsPagination/DifficultWordsPagination';
 //
 import { WordItem, NoAuthPlaceholder } from '../../_common';
 //
@@ -17,13 +16,14 @@ import {
 import textBookSelector from '../../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../../contexts/AuthContext';
+import UserWordsPagination from '../../_common/UserWordsPagination/UserWordsPagination';
 
 const DifficultWords = ({
   showControls, showTranslation,
 }) => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
-  const { difficultWords, userWords } = useSelector(textBookSelector);
+  const { difficultWords, difficultWordsQuantity, userWords } = useSelector(textBookSelector);
   const {
     auth: {
       userId,
@@ -36,7 +36,7 @@ const DifficultWords = ({
 
   useEffect(() => userId && token && dispatch(
     fetchUserDifficultWords(userId, token, pageNumber),
-  ), [userId, token]);
+  ), [userId, token, pageNumber]);
 
   return !isAuth
     ? <NoAuthPlaceholder />
@@ -62,11 +62,11 @@ const DifficultWords = ({
           </List>
         </div>
         {
-        difficultWords.length > 20
+        difficultWordsQuantity > 20
           && (
             <div className="pagination-wrapper">
-              <DifficultWordsPagination
-                wordsCount={difficultWords.length}
+              <UserWordsPagination
+                wordsCount={difficultWordsQuantity}
                 currentPage={pageNumber}
                 changePage={changePage}
               />
