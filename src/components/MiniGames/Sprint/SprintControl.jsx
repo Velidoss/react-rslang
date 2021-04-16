@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Button, CircularProgress, Container,
+  Button, CircularProgress, Container, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SprintActive from './SprintActive/SprintActive';
 import SprintResult from './SprintResult/SprintResult';
-import createQnAArrays from './sprintUtils';
+import { createQnAArrays, getUserWords } from './sprintUtils';
 import getAllWordsCurrPrevPages from '../../../utils/getAllWordsCurrPrevPages';
+import { useAuth } from '../../../contexts/AuthContext';
 
 const useStyles = makeStyles(() => ({
-  sprintResultP: {
-    textAlign: 'center',
-    margin: '1rem',
-  },
   wrapperContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -35,19 +32,30 @@ const SprintControl = () => {
 
   const classes = useStyles();
 
+  const { auth: { token, userId }, isAuth } = useAuth();
+
   const location = useLocation();
+  const groupNum = (location.state && location.state.group) ? location.state.group : 0;
+  const pageNum = (location.state && location.state.page) ? location.state.page : 0;
 
   const getWordsArray = async () => {
-    const groupNum = location.state.group || 0;
-    const pageNum = location.state.page || 0;
-    const data = await getAllWordsCurrPrevPages(groupNum, pageNum);
-    setWordsArray(data);
+    let data = [];
+    if (isAuth) {
+      data = await getUserWords(userId, token, groupNum, pageNum);
+    } else {
+      data = await getAllWordsCurrPrevPages(groupNum, pageNum);
+    }
+    if (!data.length) {
+      setGameState('GAME_STATE_ERROR');
+    } else {
+      setWordsArray(data);
+    }
   };
 
   useEffect(() => {
     setGameState('GAME_STATE_LOADING');
     getWordsArray();
-  }, [location.state.group, location.state.page]);
+  }, [groupNum, pageNum]);
 
   useEffect(() => {
     if (!wordsArray || !wordsArray.length) return;
@@ -112,6 +120,14 @@ const SprintControl = () => {
             points={points}
             startGame={startGame}
           />
+        </Container>
+      );
+    case 'GAME_STATE_ERROR':
+      return (
+        <Container className={classes.wrapperContainer}>
+          <Typography>
+            Ой, что-то пошло не так...
+          </Typography>
         </Container>
       );
   }
