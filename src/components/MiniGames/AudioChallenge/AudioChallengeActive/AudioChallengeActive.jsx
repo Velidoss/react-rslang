@@ -239,7 +239,6 @@ const SprintActive = ({
             ) : (
               <Button
                 variant="outlined"
-                color="primary"
                 className={classes.audioChallengeActiveBtn}
                 onClick={giveUp}
                 key="give-up"
