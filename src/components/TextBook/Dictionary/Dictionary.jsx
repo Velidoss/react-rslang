@@ -31,9 +31,13 @@ const Dictionary = ({
 
   return (
     <>
-      <div className="stats-wrapper">
-        <PageStats words={words} userWords={userWords} />
-      </div>
+      {
+        isAuth && (
+          <div className="stats-wrapper">
+            <PageStats words={words} userWords={userWords} />
+          </div>
+        )
+      }
       <div className="list-wrapper">
         <List className={clsx('list', `list--${groupNumber}`)}>
           {words.map((word) => (
