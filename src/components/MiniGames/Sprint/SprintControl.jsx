@@ -93,7 +93,7 @@ const SprintControl = () => {
     case 'GAME_STATE_LOADING':
       return (
         <Container className={classes.wrapperContainer}>
-          <CircularProgress />
+          <CircularProgress color="secondary" />
         </Container>
       );
     case 'GAME_STATE_ACTIVE':
