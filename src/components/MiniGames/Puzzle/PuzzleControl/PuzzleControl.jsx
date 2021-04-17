@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import getRandomKey from '../../../../utils/getRandomKey';
 import Puzzle from '../Puzzle/Puzzle';
 
 const PuzzleControl = () => {
-  const getRandomKey = () => Math.random().toString();
   const [uniqueKey, setUniqueKey] = useState(getRandomKey());
   const resetGame = () => setUniqueKey(getRandomKey());
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Container, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import getRandomKey from '../../../utils/getRandomKey';
 import miniGamesConstants from '../../../constants/miniGamesConstants';
 
 const useStyles = makeStyles(() => ({
@@ -13,7 +14,6 @@ const useStyles = makeStyles(() => ({
 
 const ChooseLevel = ({ gamePath, gameName, handleCloseModal }) => {
   const classes = useStyles();
-  const getRandomKey = () => Math.random().toString();
   const randomPageNum = Math.floor(Math.random() * miniGamesConstants.pagesNum);
 
   return (
