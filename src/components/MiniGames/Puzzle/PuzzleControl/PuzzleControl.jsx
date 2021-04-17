@@ -1,52 +1,27 @@
-import React, { useState } from 'react';
-import { Container, Typography, Button } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import getRandomKey from '../../../../utils/getRandomKey';
 import Puzzle from '../Puzzle/Puzzle';
-import DataAccessConstants from '../../../../constants/DataAccessConstants';
-import useStyles from '../styles/styles';
-
-const { GROUPS_QUANTITY } = DataAccessConstants;
 
 const PuzzleControl = () => {
-  const styles = useStyles();
-
-  const getRandomKey = () => Math.random().toString();
   const [uniqueKey, setUniqueKey] = useState(getRandomKey());
-
-  const [difficulty, setDifficulty] = useState(null);
-  const selectDifficulty = () => setDifficulty(null);
   const resetGame = () => setUniqueKey(getRandomKey());
 
+  const location = useLocation();
+  const groupNum = (location.state && location.state.group) ? location.state.group : 0;
+  const pageNum = (location.state && location.state.page) ? location.state.page : 0;
+
+  useEffect(() => {
+    resetGame();
+  }, [groupNum, pageNum]);
+
   return (
-    <Container className={styles.root}>
-      {
-        difficulty === null
-          ? (
-            <>
-              <Typography variant="h5">
-                Уровень сложности:
-              </Typography>
-              {Array(GROUPS_QUANTITY).fill(0).map((item, index) => (
-                <Button
-                  key={getRandomKey()}
-                  onClick={() => setDifficulty(index)}
-                  variant="contained"
-                  color="secondary"
-                  className="button"
-                >
-                  {index + 1}
-                </Button>
-              ))}
-            </>
-          ) : (
-            <Puzzle
-              key={uniqueKey}
-              difficulty={difficulty}
-              selectDifficulty={selectDifficulty}
-              resetGame={resetGame}
-            />
-          )
-      }
-    </Container>
+    <Puzzle
+      key={uniqueKey}
+      groupNum={groupNum}
+      pageNum={pageNum}
+      resetGame={resetGame}
+    />
   );
 };
 

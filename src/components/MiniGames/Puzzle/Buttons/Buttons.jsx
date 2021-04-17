@@ -1,52 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 
 const Buttons = ({
-  isGameActive, checkIsAnswerRight, checkButton, selectDifficulty, resetGame,
+  isGameActive, checkIsAnswerRight, checkButton, resetGame, rightQuantity, wrongQuantity,
 }) => (
-  <div className="buttons__block">
+  <>
     {
       isGameActive
         ? (
-          <Button
-            onClick={checkIsAnswerRight}
-            variant="contained"
-            color="secondary"
-            ref={checkButton}
-          >
-            Проверить
-          </Button>
-        ) : (
           <>
             <Button
-              onClick={selectDifficulty}
+              onClick={checkIsAnswerRight}
               variant="contained"
               color="secondary"
+              ref={checkButton}
               className="button"
             >
-              Выбрать сложность
+              Проверить
             </Button>
-            <Button
-              onClick={resetGame}
-              variant="contained"
-              color="primary"
-              className="button"
-            >
-              Перезапустить игру
-            </Button>
+            <Typography>
+              <span>Верных ответов: </span>
+              <span>{rightQuantity}</span>
+            </Typography>
+            <Typography>
+              <span>Неверных ответов: </span>
+              <span>{wrongQuantity}</span>
+            </Typography>
           </>
+        ) : (
+          <Button
+            onClick={resetGame}
+            variant="contained"
+            color="secondary"
+            className="button"
+          >
+            Сыграть еще раз
+          </Button>
         )
     }
-  </div>
+  </>
 );
 
 Buttons.propTypes = {
   isGameActive: PropTypes.bool.isRequired,
   checkIsAnswerRight: PropTypes.func.isRequired,
   checkButton: PropTypes.instanceOf(Object).isRequired,
-  selectDifficulty: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
+  rightQuantity: PropTypes.number.isRequired,
+  wrongQuantity: PropTypes.number.isRequired,
 };
 
 export default Buttons;

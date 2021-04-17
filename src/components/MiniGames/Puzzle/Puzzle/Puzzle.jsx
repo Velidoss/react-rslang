@@ -1,22 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Typography } from '@material-ui/core';
+import { Container, CircularProgress, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
 import Field from '../Field/Field';
 import Buttons from '../Buttons/Buttons';
-import Answers from '../Answers/Answers';
-import DataAccessConstants from '../../../../constants/DataAccessConstants';
+import Result from '../Result/Result';
 import puzzleConstants from '../../../../constants/puzzleConstants';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { setWordGameStatistics } from '../../../../store/textBookReducer/userWordsActionCreators';
+import useStyles from '../styles/styles';
 
-const { PAGES_QUANTITY } = DataAccessConstants;
 const { ANIMATION_DURATION } = puzzleConstants;
 
-const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
+const Puzzle = ({ groupNum, pageNum, resetGame }) => {
   const dispatch = useDispatch();
   const { auth: { token, userId }, isAuth } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,6 +30,9 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   const [movesCounter, setMovesCounter] = useState(-1);
   const [rightAnswers, setRightAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [answersState, setAnswersState] = useState({ right: [], wrong: [] });
+
+  const styles = useStyles();
 
   const isGameActive = () => movesCounter < data.length;
 
@@ -60,9 +62,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   };
 
   useEffect(() => {
-    const randomPage = Math.floor(Math.random() * PAGES_QUANTITY);
-
-    getWords(difficulty, randomPage).then((words) => {
+    getWords(groupNum, pageNum).then((words) => {
       setData(words);
       const randomArr = createArrOfRandomIndexes(words.length);
       setRandomIndexes(randomArr);
@@ -81,22 +81,45 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
     }
   }, [movesCounter]);
 
+  const isAnswersStateIncludesObject = (wordObj) => (
+    answersState.wrong.some((word) => word.word === wordObj.word)
+  );
+
   const submitAnswer = (rightOrWrong) => {
+    const wordObj = {
+      word: data[randomIndexes[movesCounter]].word,
+      wordTranslate: data[randomIndexes[movesCounter]].wordTranslate,
+      audio: data[randomIndexes[movesCounter]].audio,
+    };
+
     if (rightOrWrong === 'right') {
       if (isAuth) {
         dispatch(setWordGameStatistics(userId, token, data[randomIndexes[movesCounter]].id, 'puzzle', 'right'));
       }
       setRightAnswers(rightAnswers + 1);
       setMovesCounter(movesCounter + 1);
+
+      if (!isAnswersStateIncludesObject(wordObj)) {
+        setAnswersState({
+          ...answersState,
+          right: [...answersState.right, wordObj],
+        });
+      }
     } else {
       if (isAuth) {
         dispatch(setWordGameStatistics(userId, token, data[randomIndexes[movesCounter]].id, 'puzzle', 'wrong'));
       }
       addClassWrong();
       setWrongAnswers(wrongAnswers + 1);
+
+      if (!isAnswersStateIncludesObject(wordObj)) {
+        setAnswersState({
+          ...answersState,
+          wrong: [...answersState.wrong, wordObj],
+        });
+      }
     }
   };
-  console.log(data[randomIndexes[movesCounter]] && data[randomIndexes[movesCounter]].id);
 
   const convertForComparsion = (word) => word.toLowerCase().replace('.', '').replace(',', '');
 
@@ -131,11 +154,15 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   };
 
   if (!isLoaded) {
-    return <CircularProgress />;
+    return (
+      <Container>
+        <CircularProgress color="secondary" />
+      </Container>
+    );
   }
 
   return (
-    <>
+    <Container className={styles.root}>
       {
         isGameActive()
           ? (
@@ -161,21 +188,24 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
         isGameActive={isGameActive()}
         checkIsAnswerRight={checkIsAnswerRight}
         checkButton={checkButton}
-        selectDifficulty={selectDifficulty}
         resetGame={resetGame}
+        rightQuantity={rightAnswers}
+        wrongQuantity={wrongAnswers}
       />
 
-      <Answers
-        right={rightAnswers}
-        wrong={wrongAnswers}
-      />
-    </>
+      {
+        isGameActive()
+          ? null
+          : <Result answersState={{ ...answersState }} />
+      }
+
+    </Container>
   );
 };
 
 Puzzle.propTypes = {
-  difficulty: PropTypes.number.isRequired,
-  selectDifficulty: PropTypes.func.isRequired,
+  groupNum: PropTypes.number.isRequired,
+  pageNum: PropTypes.number.isRequired,
   resetGame: PropTypes.func.isRequired,
 };
 
