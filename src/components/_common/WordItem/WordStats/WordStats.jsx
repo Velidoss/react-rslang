@@ -36,7 +36,7 @@ const WordStats = ({ word }) => {
               <Grid item key={title}>
                 <Chip
                   avatar={React.createElement(icon)}
-                  label={`${title}: сыграно ${gameStats[statName].metInGame} | верно ${gameStats[statName].right} | неверно ${gameStats[statName].wrong}`}
+                  label={`${title}: сыграно ${gameStats[statName].metInGame || 0} | верно ${gameStats[statName].right || 0} | неверно ${gameStats[statName].wrong || 0}`}
                   clickable
                 />
               </Grid>

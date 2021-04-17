@@ -10,23 +10,23 @@ export default (words, userWords) => words.reduce((acc, { id }) => {
   }
 
   if (userWord.optional?.savannah) {
-    acc['Правильных ответов'] += userWord.optional.savannah.right;
-    acc['Неправильных ответов'] += userWord.optional.savannah.wrong;
+    acc['Правильных ответов'] += userWord.optional.savannah.right || 0;
+    acc['Неправильных ответов'] += userWord.optional.savannah.wrong || 0;
   }
 
   if (userWord.optional?.sprint) {
-    acc['Правильных ответов'] += userWord.optional.sprint.right;
-    acc['Неправильных ответов'] += userWord.optional.sprint.wrong;
+    acc['Правильных ответов'] += userWord.optional.sprint.right || 0;
+    acc['Неправильных ответов'] += userWord.optional.sprint.wrong || 0;
   }
 
   if (userWord.optional?.puzzle) {
-    acc['Правильных ответов'] += userWord.optional.puzzle.right;
-    acc['Неправильных ответов'] += userWord.optional.puzzle.wrong;
+    acc['Правильных ответов'] += userWord.optional.puzzle.right || 0;
+    acc['Неправильных ответов'] += userWord.optional.puzzle.wrong || 0;
   }
 
   if (userWord.optional?.audioChallenge) {
-    acc['Правильных ответов'] += userWord.optional.audioChallenge.right;
-    acc['Неправильных ответов'] += userWord.optional.audioChallenge.wrong;
+    acc['Правильных ответов'] += userWord.optional.audioChallenge.right || 0;
+    acc['Неправильных ответов'] += userWord.optional.audioChallenge.wrong || 0;
   }
 
   return acc;
