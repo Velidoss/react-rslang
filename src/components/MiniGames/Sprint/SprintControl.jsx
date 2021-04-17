@@ -6,7 +6,9 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import SprintActive from './SprintActive/SprintActive';
 import SprintResult from './SprintResult/SprintResult';
-import { createQnAArrays, getUserWords } from './sprintUtils';
+import {
+  createQnAArrays, getUserWordsSprint, getDeletedWordsSprint, getDifficultWordsSprint,
+} from './sprintUtils';
 import getAllWordsCurrPrevPages from '../../../utils/getAllWordsCurrPrevPages';
 import { useAuth } from '../../../contexts/AuthContext';
 
@@ -37,11 +39,18 @@ const SprintControl = () => {
   const location = useLocation();
   const groupNum = (location.state && location.state.group) ? location.state.group : 0;
   const pageNum = (location.state && location.state.page) ? location.state.page : 0;
+  const linkSrc = (location.state && location.state.linkSrc) ? location.state.linkSrc : 0;
 
   const getWordsArray = async () => {
     let data = [];
     if (isAuth) {
-      data = await getUserWords(userId, token, groupNum, pageNum);
+      if (linkSrc === 'deleted') {
+        data = await getDeletedWordsSprint(userId, token, pageNum);
+      } else if (linkSrc === 'difficult') {
+        data = await getDifficultWordsSprint(userId, token, pageNum);
+      } else {
+        data = await getUserWordsSprint(userId, token, groupNum, pageNum);
+      }
     } else {
       data = await getAllWordsCurrPrevPages(groupNum, pageNum);
     }
@@ -127,6 +136,8 @@ const SprintControl = () => {
         <Container className={classes.wrapperContainer}>
           <Typography>
             Ой, что-то пошло не так...
+            <br />
+            Быть может, все слова уже выучены? :)
           </Typography>
         </Container>
       );

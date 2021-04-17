@@ -6,7 +6,10 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import AudioChallengeActive from './AudioChallengeActive/AudioChallengeActive';
 import AudioChallengeResult from './AudioChallengeResult/AudioChallengeResult';
-import { createQnAArrays, getUserWords } from './audioChallengeUtils';
+import {
+  createQnAArrays, getUserWordsAudioChallenge, getDifficultWordsAudioChallenge,
+  getDeletedWordsAudioChallenge,
+} from './audioChallengeUtils';
 import getWords from '../../../api/getWords';
 import { useAuth } from '../../../contexts/AuthContext';
 import miniGamesConstants from '../../../constants/miniGamesConstants';
@@ -37,12 +40,21 @@ const AudioChallengeControl = () => {
   const location = useLocation();
   const groupNum = (location.state && location.state.group) ? location.state.group : 0;
   const pageNum = (location.state && location.state.page) ? location.state.page : 0;
+  const linkSrc = (location.state && location.state.linkSrc) ? location.state.linkSrc : '';
 
   const getWordsArray = async () => {
     let data = [];
     if (isAuth) {
-      const userWords = await getUserWords(userId, token, groupNum, pageNum);
-      data = userWords.slice(0, miniGamesConstants.audioChallengeWordsNum);
+      if (linkSrc === 'deleted') {
+        const userWords = await getDeletedWordsAudioChallenge(userId, token, pageNum);
+        data = userWords.slice(0, miniGamesConstants.audioChallengeWordsNum);
+      } else if (linkSrc === 'difficult') {
+        const userWords = await getDifficultWordsAudioChallenge(userId, token, pageNum);
+        data = userWords.slice(0, miniGamesConstants.audioChallengeWordsNum);
+      } else {
+        const userWords = await getUserWordsAudioChallenge(userId, token, groupNum, pageNum);
+        data = userWords.slice(0, miniGamesConstants.audioChallengeWordsNum);
+      }
     } else {
       data = await getWords(groupNum, pageNum);
     }
@@ -124,6 +136,8 @@ const AudioChallengeControl = () => {
         <Container className={classes.wrapperContainer}>
           <Typography>
             Ой, что-то пошло не так...
+            <br />
+            Быть может, все слова уже выучены? :)
           </Typography>
         </Container>
       );

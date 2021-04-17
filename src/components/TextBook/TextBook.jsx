@@ -25,6 +25,7 @@ const TextBook = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch();
   const [pageNumber, setPageNumber] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [groupNumber, setGroupNumber] = useState(0);
   const {
     words,
@@ -62,15 +63,18 @@ const TextBook = () => {
     setLocalStorageItem('textBookLocation', { pageNumber, groupNumber });
   }, [pageNumber, groupNumber]);
 
-  useEffect(() => (
-    isAuth
-      ? dispatch(getTextBookWords(groupNumber, pageNumber, userId, token))
-      : dispatch(getTextBookWords(groupNumber, pageNumber))
-  ), [groupNumber, pageNumber, isAuth]);
+  useEffect(() => {
+    if (isAuth) {
+      setLoading(false);
+      return dispatch(getTextBookWords(groupNumber, pageNumber, userId, token));
+    }
+    setLoading(false);
+    return dispatch(getTextBookWords(groupNumber, pageNumber));
+  }, [groupNumber, pageNumber, isAuth]);
 
   return (
     <Container maxWidth="xl" className={classes.root}>
-      {words.length === 0 && <Loader />}
+      {loading && <Loader />}
       <div className="header-wrapper">
         <TextBookHeader
           groupNumber={groupNumber}
