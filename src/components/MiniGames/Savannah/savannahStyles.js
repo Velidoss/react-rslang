@@ -51,4 +51,12 @@ export default makeStyles({
   savnnahResultPWrong: {
     borderBottom: '2px dashed #2f2f2f',
   },
+  wrapperContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '60vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '2rem auto',
+  },
 });
