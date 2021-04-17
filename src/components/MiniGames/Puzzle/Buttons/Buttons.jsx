@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 
 const Buttons = ({
-  isGameActive, checkIsAnswerRight, checkButton, selectDifficulty, resetGame,
+  isGameActive, checkIsAnswerRight, checkButton, resetGame,
 }) => (
   <div className="buttons__block">
     {
@@ -18,24 +18,14 @@ const Buttons = ({
             Проверить
           </Button>
         ) : (
-          <>
-            <Button
-              onClick={selectDifficulty}
-              variant="contained"
-              color="secondary"
-              className="button"
-            >
-              Выбрать сложность
-            </Button>
-            <Button
-              onClick={resetGame}
-              variant="contained"
-              color="primary"
-              className="button"
-            >
-              Перезапустить игру
-            </Button>
-          </>
+          <Button
+            onClick={resetGame}
+            variant="contained"
+            color="secondary"
+            className="button"
+          >
+            Перезапустить игру
+          </Button>
         )
     }
   </div>
@@ -45,7 +35,6 @@ Buttons.propTypes = {
   isGameActive: PropTypes.bool.isRequired,
   checkIsAnswerRight: PropTypes.func.isRequired,
   checkButton: PropTypes.instanceOf(Object).isRequired,
-  selectDifficulty: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
 };
 

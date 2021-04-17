@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Typography } from '@material-ui/core';
+import { Container, CircularProgress, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
@@ -8,15 +8,14 @@ import removeLast from '../../../../utils/removeLast';
 import Field from '../Field/Field';
 import Buttons from '../Buttons/Buttons';
 import Answers from '../Answers/Answers';
-import DataAccessConstants from '../../../../constants/DataAccessConstants';
 import puzzleConstants from '../../../../constants/puzzleConstants';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { setWordGameStatistics } from '../../../../store/textBookReducer/userWordsActionCreators';
+import useStyles from '../styles/styles';
 
-const { PAGES_QUANTITY } = DataAccessConstants;
 const { ANIMATION_DURATION } = puzzleConstants;
 
-const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
+const Puzzle = ({ groupNum, pageNum, resetGame }) => {
   const dispatch = useDispatch();
   const { auth: { token, userId }, isAuth } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -32,6 +31,8 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   const [rightAnswers, setRightAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [answersState, setAnswersState] = useState({ right: [], wrong: [] });
+
+  const styles = useStyles();
 
   const isGameActive = () => movesCounter < data.length;
 
@@ -61,9 +62,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   };
 
   useEffect(() => {
-    const randomPage = Math.floor(Math.random() * PAGES_QUANTITY);
-
-    getWords(difficulty, randomPage).then((words) => {
+    getWords(groupNum, pageNum).then((words) => {
       setData(words);
       const randomArr = createArrOfRandomIndexes(words.length);
       setRandomIndexes(randomArr);
@@ -111,7 +110,6 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
       }
     }
   };
-  console.log(data[randomIndexes[movesCounter]] && data[randomIndexes[movesCounter]].id);
 
   const convertForComparsion = (word) => word.toLowerCase().replace('.', '').replace(',', '');
 
@@ -150,7 +148,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
   }
 
   return (
-    <>
+    <Container className={styles.root}>
       {
         isGameActive()
           ? (
@@ -176,7 +174,6 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
         isGameActive={isGameActive()}
         checkIsAnswerRight={checkIsAnswerRight}
         checkButton={checkButton}
-        selectDifficulty={selectDifficulty}
         resetGame={resetGame}
       />
 
@@ -186,13 +183,13 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
         wrongQuantity={wrongAnswers}
         answersState={{ ...answersState }}
       />
-    </>
+    </Container>
   );
 };
 
 Puzzle.propTypes = {
-  difficulty: PropTypes.number.isRequired,
-  selectDifficulty: PropTypes.func.isRequired,
+  groupNum: PropTypes.number.isRequired,
+  pageNum: PropTypes.number.isRequired,
   resetGame: PropTypes.func.isRequired,
 };
 
