@@ -78,8 +78,16 @@ Answers.propTypes = {
   rightQuantity: PropTypes.number.isRequired,
   wrongQuantity: PropTypes.number.isRequired,
   answersState: PropTypes.shape({
-    right: PropTypes.arrayOf(Object).isRequired,
-    wrong: PropTypes.arrayOf(Object).isRequired,
+    right: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      wordTranslate: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+    wrong: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      wordTranslate: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired,
 };
 

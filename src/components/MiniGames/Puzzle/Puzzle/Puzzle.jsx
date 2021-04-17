@@ -81,12 +81,16 @@ const Puzzle = ({ groupNum, pageNum, resetGame }) => {
     }
   }, [movesCounter]);
 
-  const isAnswersStateIncludesObject = (obj) => (
-    answersState.wrong.some((word) => word._id === obj._id)
+  const isAnswersStateIncludesObject = (wordObj) => (
+    answersState.wrong.some((word) => word.word === wordObj.word)
   );
 
   const submitAnswer = (rightOrWrong) => {
-    const currentObject = { ...data[randomIndexes[movesCounter]] };
+    const wordObj = {
+      word: data[randomIndexes[movesCounter]].word,
+      wordTranslate: data[randomIndexes[movesCounter]].wordTranslate,
+      audio: data[randomIndexes[movesCounter]].audio,
+    };
 
     if (rightOrWrong === 'right') {
       if (isAuth) {
@@ -95,8 +99,11 @@ const Puzzle = ({ groupNum, pageNum, resetGame }) => {
       setRightAnswers(rightAnswers + 1);
       setMovesCounter(movesCounter + 1);
 
-      if (!isAnswersStateIncludesObject(currentObject)) {
-        setAnswersState({ ...answersState, right: answersState.right.concat(currentObject) });
+      if (!isAnswersStateIncludesObject(wordObj)) {
+        setAnswersState({
+          ...answersState,
+          right: [...answersState.right, wordObj],
+        });
       }
     } else {
       if (isAuth) {
@@ -105,8 +112,11 @@ const Puzzle = ({ groupNum, pageNum, resetGame }) => {
       addClassWrong();
       setWrongAnswers(wrongAnswers + 1);
 
-      if (!isAnswersStateIncludesObject(currentObject)) {
-        setAnswersState({ ...answersState, wrong: answersState.wrong.concat(currentObject) });
+      if (!isAnswersStateIncludesObject(wordObj)) {
+        setAnswersState({
+          ...answersState,
+          wrong: [...answersState.wrong, wordObj],
+        });
       }
     }
   };
@@ -144,7 +154,11 @@ const Puzzle = ({ groupNum, pageNum, resetGame }) => {
   };
 
   if (!isLoaded) {
-    return <CircularProgress />;
+    return (
+      <Container>
+        <CircularProgress />
+      </Container>
+    );
   }
 
   return (
