@@ -1,6 +1,13 @@
 import axios from 'axios';
+import getAllDeletedWords from '../../../api/getAllDeletedWords';
 import DataAccessConstants from '../../../constants/DataAccessConstants';
 import miniGamesConstants from '../../../constants/miniGamesConstants';
+import userWordsConstants from '../../../constants/userWordsConstants';
+import filterTextBookWords from '../../../utils/filterTextBookWords';
+import getAllWordsCurrPrevPages from '../../../utils/getAllWordsCurrPrevPages';
+
+const { WORD_DELETED, WORD_HARD } = userWordsConstants;
+const { ApiUrl } = DataAccessConstants;
 
 const shuffle = (array) => {
   const shuffledArray = [...array];
@@ -45,8 +52,18 @@ const createQnAArrays = (initArray) => {
   return { qArray, aArray };
 };
 
-const getUserWords = async (userId, authToken, group = 0, page = 0) => {
-  const { ApiUrl } = DataAccessConstants;
+const getUserWordsSprint = async (userId, authToken, group = 0, page = 0) => {
+  const words = await getAllWordsCurrPrevPages(group, page);
+  const res = [];
+  if (userId && authToken) {
+    const deletedWords = await getAllDeletedWords(userId, authToken);
+    words.forEach((word) => res.push(filterTextBookWords(word, deletedWords[0].paginatedResults)));
+  }
+
+  return res;
+};
+
+const getDeletedWordsSprint = async (userId, authToken, page = 0) => {
   const response = await axios({
     method: 'get',
     url: `${ApiUrl}/users/${userId}/aggregatedWords`,
@@ -54,9 +71,8 @@ const getUserWords = async (userId, authToken, group = 0, page = 0) => {
       Authorization: `Bearer ${authToken}`,
     },
     params: {
-      group,
       wordsPerPage: miniGamesConstants.sprintWordsNum * (page + 1),
-      filter: { $or: [{ 'userWord.optional.deleted': null }, { 'userWord.optional.deleted': false }] },
+      filter: { 'userWord.optional.deleted': WORD_DELETED },
     },
   }).catch((error) => {
     console.log(error);
@@ -64,7 +80,7 @@ const getUserWords = async (userId, authToken, group = 0, page = 0) => {
   });
 
   const res = [];
-  const tmp = response.data ? response.data[0].paginatedResults.filter((w) => w.page <= page) : [];
+  const tmp = response.data ? response.data[0].paginatedResults : [];
   const len = tmp.length / miniGamesConstants.sprintWordsNum;
   for (let i = 0; i < len; i += 1) {
     res.push(tmp.splice(-miniGamesConstants.sprintWordsNum));
@@ -72,4 +88,31 @@ const getUserWords = async (userId, authToken, group = 0, page = 0) => {
   return res;
 };
 
-export { createQnAArrays, getUserWords };
+const getDifficultWordsSprint = async (userId, authToken, page = 0) => {
+  const response = await axios({
+    method: 'get',
+    url: `${ApiUrl}/users/${userId}/aggregatedWords`,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    params: {
+      wordsPerPage: miniGamesConstants.sprintWordsNum * (page + 1),
+      filter: { 'userWord.difficulty': WORD_HARD },
+    },
+  }).catch((error) => {
+    console.log(error);
+    return {};
+  });
+
+  const res = [];
+  const tmp = response.data ? response.data[0].paginatedResults : [];
+  const len = tmp.length / miniGamesConstants.sprintWordsNum;
+  for (let i = 0; i < len; i += 1) {
+    res.push(tmp.splice(-miniGamesConstants.sprintWordsNum));
+  }
+  return res;
+};
+
+export {
+  createQnAArrays, getUserWordsSprint, getDeletedWordsSprint, getDifficultWordsSprint,
+};

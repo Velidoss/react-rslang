@@ -61,7 +61,7 @@ const Dictionary = ({
         />
       </div>
       <div className="links-wrapper">
-        <MiniGameLinks />
+        <MiniGameLinks group={groupNumber} page={pageNumber} linkSrc="dictionary" />
       </div>
     </>
   );
