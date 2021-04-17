@@ -17,7 +17,7 @@ const WordInDifficultsButton = React.memo(({
 
   if (isLoading) {
     return (
-      <CircularProgress />
+      <CircularProgress color="secondary" />
     );
   }
 

@@ -156,7 +156,7 @@ const Puzzle = ({ groupNum, pageNum, resetGame }) => {
   if (!isLoaded) {
     return (
       <Container>
-        <CircularProgress />
+        <CircularProgress color="secondary" />
       </Container>
     );
   }
