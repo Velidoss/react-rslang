@@ -33,18 +33,8 @@ const useStyles = makeStyles({
       },
     },
 
-    '& .buttons__block': {
-      marginBottom: '2rem',
-    },
-
     '& .check__button-wrong': {
       animation: `$strafe ${ANIMATION_DURATION}ms linear`,
-    },
-  },
-
-  answers: {
-    '& ul': {
-      listStyleType: 'none',
     },
   },
 

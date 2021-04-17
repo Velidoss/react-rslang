@@ -7,7 +7,7 @@ import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
 import Field from '../Field/Field';
 import Buttons from '../Buttons/Buttons';
-import Answers from '../Answers/Answers';
+import Result from '../Result/Result';
 import puzzleConstants from '../../../../constants/puzzleConstants';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { setWordGameStatistics } from '../../../../store/textBookReducer/userWordsActionCreators';
@@ -189,14 +189,16 @@ const Puzzle = ({ groupNum, pageNum, resetGame }) => {
         checkIsAnswerRight={checkIsAnswerRight}
         checkButton={checkButton}
         resetGame={resetGame}
-      />
-
-      <Answers
-        isGameActive={isGameActive()}
         rightQuantity={rightAnswers}
         wrongQuantity={wrongAnswers}
-        answersState={{ ...answersState }}
       />
+
+      {
+        isGameActive()
+          ? null
+          : <Result answersState={{ ...answersState }} />
+      }
+
     </Container>
   );
 };
