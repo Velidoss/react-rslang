@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Container, CircularProgress, Typography } from '@material-ui/core';
+import {
+  Container, CircularProgress, Typography, Button,
+} from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
@@ -153,6 +156,8 @@ const Puzzle = ({ groupNum, pageNum, resetGame }) => {
     }
   };
 
+  const handle = useFullScreenHandle();
+
   if (!isLoaded) {
     return (
       <Container>
@@ -162,44 +167,50 @@ const Puzzle = ({ groupNum, pageNum, resetGame }) => {
   }
 
   return (
-    <Container className={styles.root}>
-      {
-        isGameActive()
-          ? (
-            <>
-              <Typography variant="h5">
-                {data[randomIndexes[movesCounter]]?.textExampleTranslate}
-              </Typography>
-              <Field
-                chosen={chosen}
-                choice={choice}
-                moveTo={moveTo}
-              />
-            </>
-          )
-          : (
-            <Typography variant="h5">
-              Игра завершена!
-            </Typography>
-          )
-      }
+    <>
+      <Button onClick={handle.enter}>
+        Enter fullscreen
+      </Button>
+      <FullScreen handle={handle}>
+        <Container className={styles.root}>
+          {
+            isGameActive()
+              ? (
+                <>
+                  <Typography variant="h5">
+                    {data[randomIndexes[movesCounter]]?.textExampleTranslate}
+                  </Typography>
+                  <Field
+                    chosen={chosen}
+                    choice={choice}
+                    moveTo={moveTo}
+                  />
+                </>
+              )
+              : (
+                <Typography variant="h5">
+                  Игра завершена!
+                </Typography>
+              )
+          }
 
-      <Buttons
-        isGameActive={isGameActive()}
-        checkIsAnswerRight={checkIsAnswerRight}
-        checkButton={checkButton}
-        resetGame={resetGame}
-        rightQuantity={rightAnswers}
-        wrongQuantity={wrongAnswers}
-      />
+          <Buttons
+            isGameActive={isGameActive()}
+            checkIsAnswerRight={checkIsAnswerRight}
+            checkButton={checkButton}
+            resetGame={resetGame}
+            rightQuantity={rightAnswers}
+            wrongQuantity={wrongAnswers}
+          />
 
-      {
-        isGameActive()
-          ? null
-          : <Result answersState={{ ...answersState }} />
-      }
-
-    </Container>
+          {
+            isGameActive()
+              ? null
+              : <Result answersState={{ ...answersState }} />
+          }
+        </Container>
+      </FullScreen>
+    </>
   );
 };
 

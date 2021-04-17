@@ -18,6 +18,7 @@
     "react": "17.0.1",
     "react-countdown-circle-timer": "~2.5.1",
     "react-dom": "17.0.1",
+    "react-full-screen": "^1.0.2",
     "react-hook-form": "^6.15.5",
     "react-redux": "7.2.2",
     "react-render-ctrl": "^2.1.0",
