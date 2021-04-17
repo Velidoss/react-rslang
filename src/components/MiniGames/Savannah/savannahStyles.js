@@ -31,4 +31,24 @@ export default makeStyles({
   resultButton: {
     margin: '5px auto',
   },
+  savnnahResultBox: {
+    marginTop: '1rem',
+    textAlign: 'center',
+  },
+  savnnahResultBtn: {
+    margin: '1rem',
+  },
+  savnnahResultP: {
+    textAlign: 'center',
+  },
+  savnnahResultHr: {
+    width: '40vw',
+    margin: '1rem',
+  },
+  savnnahResultPRight: {
+    borderBottom: '2px dashed #e03e87',
+  },
+  savnnahResultPWrong: {
+    borderBottom: '2px dashed #2f2f2f',
+  },
 });
