@@ -22,10 +22,11 @@ const useStyles = makeStyles(() => ({
   wrapperContainer: {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '60vh',
+    minHeight: 'calc(100vh - 64px)',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: '2rem auto',
+    margin: '0 auto',
+    backgroundImage: 'url("https://www.vecteezy.com/free-vector/savanna")',
   },
 }));
 

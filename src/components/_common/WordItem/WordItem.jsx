@@ -101,7 +101,15 @@ const WordItem = ({
           </Grid>
           <Collapse in={openStats}>
             <Divider />
-            <WordStats />
+            <WordStats
+              word={
+                userWords.length > 0
+                  ? userWords.find(
+                    (userWord) => userWord.wordId === word.id || userWord.wordId === word._id,
+                  )
+                  : null
+              }
+            />
           </Collapse>
         </Grid>
       </Grid>
@@ -117,6 +125,7 @@ WordItem.defaultProps = {
 
 WordItem.propTypes = {
   word: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     audio: PropTypes.string.isRequired,

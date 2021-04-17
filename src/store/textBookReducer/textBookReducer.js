@@ -23,8 +23,11 @@ const initialState = {
   showControls: true,
   userWords: [],
   learningWords: [],
+  learningWordsQuantity: 0,
   deletedWords: [],
+  deletedWordsQuantity: 0,
   difficultWords: [],
+  difficultWordsQuantity: 0,
 };
 
 const { WORD_EASY, WORD_HARD, WORD_DELETED } = userWordsConstants;
@@ -104,13 +107,25 @@ const textBookReducer = (state = initialState, { type, payload }) => {
     case GET_USER_WORDS:
       return { ...state, userWords: [...payload] };
     case GET_DIFFICULT_WORDS:
-      return { ...state, difficultWords: [...payload] };
+      return {
+        ...state,
+        difficultWords: [...payload.wordsList],
+        difficultWordsQuantity: payload.wordsQuantity,
+      };
     case GET_DELETED_WORDS:
-      return { ...state, deletedWords: [...payload] };
+      return {
+        ...state,
+        deletedWords: [...payload.wordsList],
+        deletedWordsQuantity: payload.wordsQuantity,
+      };
     case ADD_USER_WORD:
       return { ...state, userWords: [...state.userWords, payload] };
     case GET_USER_LEARNING_WORDS:
-      return { ...state, learningWords: [...payload] };
+      return {
+        ...state,
+        learningWords: [...payload.wordsList],
+        learningWordsQuantity: payload.wordsQuantity,
+      };
     case SET_WORD_AS_DIFFICULT:
       return setWordAsDifficult(state, payload);
     case UNSET_WORD_AS_DIFFICULT:

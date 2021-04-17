@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { List } from '@material-ui/core';
 //
 import { MiniGameLinks } from '../MiniGameLinks';
-import DeletedWordsPagination from './DeletedWordsPagination/DeletedWordsPagination';
 //
 import { WordItem, NoAuthPlaceholder } from '../../_common';
 //
@@ -15,13 +14,14 @@ import {
 import textBookSelector from '../../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../../contexts/AuthContext';
+import UserWordsPagination from '../../_common/UserWordsPagination/UserWordsPagination';
 
 const DeletedWords = ({
   showControls, showTranslation,
 }) => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = React.useState(0);
-  const { deletedWords, userWords } = useSelector(textBookSelector);
+  const { deletedWords, deletedWordsQuantity, userWords } = useSelector(textBookSelector);
   const {
     auth: {
       userId,
@@ -34,7 +34,7 @@ const DeletedWords = ({
 
   React.useEffect(() => {
     dispatch(fetchUserDeletedWords(userId, token, pageNumber));
-  }, [userId, token]);
+  }, [userId, token, pageNumber]);
 
   return !isAuth
     ? <NoAuthPlaceholder />
@@ -60,11 +60,11 @@ const DeletedWords = ({
           </List>
         </div>
         {
-          deletedWords.length > 20
+          deletedWordsQuantity > 20
             && (
               <div className="pagination-wrapper">
-                <DeletedWordsPagination
-                  wordsCount={deletedWords.length}
+                <UserWordsPagination
+                  wordsCount={deletedWordsQuantity}
                   currentPage={pageNumber}
                   changePage={changePage}
                 />

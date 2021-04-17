@@ -1,26 +1,31 @@
 import React from 'react';
-import PropTypes, { arrayOf } from 'prop-types';
-import { Button, Typography, Divider } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import {
+  Button, Typography, Divider, Box, IconButton,
+} from '@material-ui/core';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { makeStyles } from '@material-ui/core/styles';
+import wordAudio from '../../../../common/wordAudio';
 
 const useStyles = makeStyles(() => ({
+  sprintResultBox: {
+    marginTop: '1rem',
+    textAlign: 'center',
+  },
   sprintResultBtn: {
     margin: '1rem',
   },
   sprintResultP: {
     textAlign: 'center',
   },
-  sprintResultMT: {
-    marginTop: '1rem',
-  },
   sprintResultHr: {
     width: '40vw',
     margin: '1rem',
   },
-  sprintResultSpanR: {
+  sprintResultPRight: {
     borderBottom: '2px dashed #e03e87',
   },
-  sprintResultSpanW: {
+  sprintResultPWrong: {
     borderBottom: '2px dashed #2f2f2f',
   },
 }));
@@ -33,22 +38,44 @@ const SprintResult = ({ answersState, points, startGame }) => {
 
   return (
     <>
-      <Typography className={`${classes.sprintResultMT} ${classes.sprintResultP}`}>
-        <span className={classes.sprintResultSpanR}>
+      <Box className={classes.sprintResultBox}>
+        <Typography variant="h6" className={classes.sprintResultPRight}>
           Верные ответы (
           {answersState.right.length}
-          ):
-        </span>
-        <span>{` ${answersState.right.join(', ') || 'нет'}.`}</span>
-      </Typography>
-      <Typography className={classes.sprintResultP}>
-        <span className={classes.sprintResultSpanW}>
+          )
+        </Typography>
+        {
+          answersState.right.map((answer) => (
+            <Typography key={answer.word}>
+              <IconButton onClick={() => wordAudio(answer.audio).play()}>
+                <VolumeUpIcon />
+              </IconButton>
+              {answer.word}
+              {' - '}
+              {answer.translation}
+            </Typography>
+          ))
+        }
+      </Box>
+      <Box className={classes.sprintResultBox}>
+        <Typography variant="h6" className={classes.sprintResultPWrong}>
           Неверные ответы (
           {answersState.wrong.length}
-          ):
-        </span>
-        <span>{` ${answersState.wrong.join(', ') || 'нет'}.`}</span>
-      </Typography>
+          )
+        </Typography>
+        {
+          answersState.wrong.map((answer) => (
+            <Typography key={answer.word}>
+              <IconButton onClick={() => wordAudio(answer.audio).play()}>
+                <VolumeUpIcon />
+              </IconButton>
+              {answer.word}
+              {' - '}
+              {answer.translation}
+            </Typography>
+          ))
+        }
+      </Box>
       <Divider className={classes.sprintResultHr} />
       <Typography className={classes.sprintResultP}>
         <span>Итого: </span>
@@ -74,8 +101,16 @@ const SprintResult = ({ answersState, points, startGame }) => {
 
 SprintResult.propTypes = {
   answersState: PropTypes.shape({
-    right: arrayOf(PropTypes.string).isRequired,
-    wrong: arrayOf(PropTypes.string).isRequired,
+    right: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+    wrong: PropTypes.arrayOf(PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      translation: PropTypes.string.isRequired,
+      audio: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired,
   points: PropTypes.number.isRequired,
   startGame: PropTypes.func.isRequired,

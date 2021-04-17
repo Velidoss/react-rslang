@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
-  Button, CircularProgress, Container,
+  Button, CircularProgress, Container, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AudioChallengeActive from './AudioChallengeActive/AudioChallengeActive';
 import AudioChallengeResult from './AudioChallengeResult/AudioChallengeResult';
-import createQnAArrays from './audioChallengeUtils';
+import { createQnAArrays, getUserWords } from './audioChallengeUtils';
 import getWords from '../../../api/getWords';
+import { useAuth } from '../../../contexts/AuthContext';
 import miniGamesConstants from '../../../constants/miniGamesConstants';
 
 const useStyles = makeStyles(() => ({
@@ -30,16 +32,31 @@ const AudioChallengeControl = () => {
 
   const classes = useStyles();
 
+  const { auth: { token, userId }, isAuth } = useAuth();
+
+  const location = useLocation();
+  const groupNum = (location.state && location.state.group) ? location.state.group : 0;
+  const pageNum = (location.state && location.state.page) ? location.state.page : 0;
+
   const getWordsArray = async () => {
-    const randomGroupNum = Math.floor(Math.random() * miniGamesConstants.groupsNum);
-    const randomPageNum = Math.floor(Math.random() * miniGamesConstants.pagesNum);
-    const data = await getWords(randomGroupNum, randomPageNum);
-    setWordsArray(data);
+    let data = [];
+    if (isAuth) {
+      const userWords = await getUserWords(userId, token, groupNum, pageNum);
+      data = userWords.slice(0, miniGamesConstants.audioChallengeWordsNum);
+    } else {
+      data = await getWords(groupNum, pageNum);
+    }
+    if (!data.length) {
+      setGameState('GAME_STATE_ERROR');
+    } else {
+      setWordsArray(data);
+    }
   };
 
   useEffect(() => {
+    setGameState('GAME_STATE_LOADING');
     getWordsArray();
-  }, []);
+  }, [groupNum, pageNum]);
 
   useEffect(() => {
     if (!wordsArray || !wordsArray.length) return;
@@ -76,7 +93,7 @@ const AudioChallengeControl = () => {
     case 'GAME_STATE_LOADING':
       return (
         <Container className={classes.wrapperContainer}>
-          <CircularProgress />
+          <CircularProgress color="secondary" />
         </Container>
       );
     case 'GAME_STATE_ACTIVE':
@@ -100,6 +117,14 @@ const AudioChallengeControl = () => {
             answersState={answersState}
             startGame={startGame}
           />
+        </Container>
+      );
+    case 'GAME_STATE_ERROR':
+      return (
+        <Container className={classes.wrapperContainer}>
+          <Typography>
+            Ой, что-то пошло не так...
+          </Typography>
         </Container>
       );
   }

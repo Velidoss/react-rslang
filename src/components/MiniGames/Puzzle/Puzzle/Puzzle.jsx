@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgress, Typography } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import getWords from '../../../../api/getWords';
 import shuffleArr from '../../../../utils/shuffleArr';
 import removeLast from '../../../../utils/removeLast';
@@ -9,11 +10,15 @@ import Buttons from '../Buttons/Buttons';
 import Answers from '../Answers/Answers';
 import DataAccessConstants from '../../../../constants/DataAccessConstants';
 import puzzleConstants from '../../../../constants/puzzleConstants';
+import { useAuth } from '../../../../contexts/AuthContext';
+import { setWordGameStatistics } from '../../../../store/textBookReducer/userWordsActionCreators';
 
 const { PAGES_QUANTITY } = DataAccessConstants;
 const { ANIMATION_DURATION } = puzzleConstants;
 
 const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
+  const dispatch = useDispatch();
+  const { auth: { token, userId }, isAuth } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
 
   const [data, setData] = useState([]);
@@ -85,6 +90,9 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
     const currentObject = { ...data[randomIndexes[movesCounter]] };
 
     if (rightOrWrong === 'right') {
+      if (isAuth) {
+        dispatch(setWordGameStatistics(userId, token, data[randomIndexes[movesCounter]].id, 'puzzle', 'right'));
+      }
       setRightAnswers(rightAnswers + 1);
       setMovesCounter(movesCounter + 1);
 
@@ -92,6 +100,9 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
         setAnswersState({ ...answersState, right: answersState.right.concat(currentObject) });
       }
     } else {
+      if (isAuth) {
+        dispatch(setWordGameStatistics(userId, token, data[randomIndexes[movesCounter]].id, 'puzzle', 'wrong'));
+      }
       addClassWrong();
       setWrongAnswers(wrongAnswers + 1);
 
@@ -100,6 +111,7 @@ const Puzzle = ({ difficulty, selectDifficulty, resetGame }) => {
       }
     }
   };
+  console.log(data[randomIndexes[movesCounter]] && data[randomIndexes[movesCounter]].id);
 
   const convertForComparsion = (word) => word.toLowerCase().replace('.', '').replace(',', '');
 
