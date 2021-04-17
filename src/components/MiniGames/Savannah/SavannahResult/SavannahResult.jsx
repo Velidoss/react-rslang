@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Typography, Box, IconButton, Divider,
+  Button, Typography, Box, IconButton, Divider, Container,
 } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
 import savannahStyles from '../savannahStyles';
@@ -12,9 +12,9 @@ const SavannahResult = ({
 }) => {
   const calculatePercentage = (x, y) => ((x / (x + y)) * 100).toFixed(2);
   const classes = savannahStyles();
-  console.log(answersState);
+
   return (
-    <>
+    <Container className={classes.wrapperContainer}>
       <Box className={classes.savannahResultBox}>
         <Typography variant="h6" className={classes.savannahResultPRight}>
           Верные ответы (
@@ -68,7 +68,7 @@ const SavannahResult = ({
           Сыграть еще раз
         </Button>
       </Typography>
-    </>
+    </Container>
   );
 };
 

@@ -11,7 +11,6 @@ import savannahStyles from '../savannahStyles';
 const SavannahActive = ({
   makeAnswer, words, finishGame,
 }) => {
-  console.log(words);
   const classes = savannahStyles();
   const [wordGroup, setWordGroup] = useState(0);
   const [timeForAnswer, setTimeForAnswer] = useState(5);
@@ -56,7 +55,6 @@ const SavannahActive = ({
             <Button
               key={word.id}
               variant="outlined"
-              color="primary"
               className={classes.questionWord}
               onClick={() => onCLick(words[wordGroup], word.id, word)}
             >
