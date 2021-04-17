@@ -34,7 +34,7 @@ const Answers = ({
                   <ul>
                     {
                       answersState.wrong.map((word) => (
-                        <li>
+                        <li key={word.id}>
                           <Typography noWrap>
                             <IconButton onClick={() => wordAudio(word.audio).play()}>
                               <VolumeUpIcon />
@@ -54,7 +54,7 @@ const Answers = ({
             <ul>
               {
                 answersState.right.map((word) => (
-                  <li>
+                  <li key={word.id}>
                     <Typography noWrap>
                       <IconButton onClick={() => wordAudio(word.audio).play()}>
                         <VolumeUpIcon />
@@ -78,8 +78,8 @@ Answers.propTypes = {
   rightQuantity: PropTypes.number.isRequired,
   wrongQuantity: PropTypes.number.isRequired,
   answersState: PropTypes.shape({
-    right: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    wrong: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    right: PropTypes.arrayOf(Object).isRequired,
+    wrong: PropTypes.arrayOf(Object).isRequired,
   }).isRequired,
 };
 
