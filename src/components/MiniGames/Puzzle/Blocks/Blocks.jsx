@@ -12,7 +12,7 @@ const Blocks = ({ blocks, action }) => {
 
         return (
           <Button
-            variant="contained"
+            variant="outlined"
             color="inherit"
             key={id}
             onClick={action}
