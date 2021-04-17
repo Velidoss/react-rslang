@@ -61,14 +61,16 @@ const TextBook = () => {
 
   useEffect(() => {
     setLocalStorageItem('textBookLocation', { pageNumber, groupNumber });
-    setLoading(false);
   }, [pageNumber, groupNumber]);
 
-  useEffect(() => (
-    isAuth
-      ? dispatch(getTextBookWords(groupNumber, pageNumber, userId, token))
-      : dispatch(getTextBookWords(groupNumber, pageNumber))
-  ), [groupNumber, pageNumber, isAuth]);
+  useEffect(() => {
+    if (isAuth) {
+      setLoading(false);
+      return dispatch(getTextBookWords(groupNumber, pageNumber, userId, token));
+    }
+    setLoading(false);
+    return dispatch(getTextBookWords(groupNumber, pageNumber));
+  }, [groupNumber, pageNumber, isAuth]);
 
   return (
     <Container maxWidth="xl" className={classes.root}>

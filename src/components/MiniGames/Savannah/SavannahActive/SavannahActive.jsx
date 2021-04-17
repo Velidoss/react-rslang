@@ -8,18 +8,23 @@ import useCounter from '../hooks/useCounter';
 import wordAudio from '../../../../common/wordAudio';
 import savannahStyles from '../savannahStyles';
 
-const SavannahActive = ({ makeAnswer, words, finishGame }) => {
+const SavannahActive = ({
+  makeAnswer, words, finishGame,
+}) => {
+  console.log(words);
   const classes = savannahStyles();
   const [wordGroup, setWordGroup] = useState(0);
   const [timeForAnswer, setTimeForAnswer] = useState(5);
 
-  const onCLick = (group, wordId, answer) => {
-    makeAnswer(group, wordId, answer);
+  const onCLick = (group, wordId, answeredWord) => {
+    makeAnswer(group, wordId, answeredWord);
     setWordGroup(wordGroup + 1);
     setTimeForAnswer(5);
   };
 
-  const timeOutAnswer = () => onCLick(words[wordGroup], null);
+  const timeOutAnswer = () => onCLick(
+    words[wordGroup], null, words[wordGroup].filter((word) => word.question)[0],
+  );
 
   useEffect(() => {
     if (wordGroup > 0 && wordGroup === words.length) {
@@ -53,7 +58,7 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
               variant="outlined"
               color="primary"
               className={classes.questionWord}
-              onClick={() => onCLick(words[wordGroup], word.id, word.word)}
+              onClick={() => onCLick(words[wordGroup], word.id, word)}
             >
               {word.wordTranslate}
             </Button>
@@ -67,7 +72,9 @@ const SavannahActive = ({ makeAnswer, words, finishGame }) => {
 
 SavannahActive.propTypes = {
   makeAnswer: PropTypes.func.isRequired,
-  words: PropTypes.arrayOf({}).isRequired,
+  words: PropTypes.arrayOf({
+
+  }).isRequired,
   finishGame: PropTypes.func.isRequired,
 };
 

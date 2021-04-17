@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles, Container } from '@material-ui/core';
 import savannahConstants from '../../../../constants/savannahConstants';
@@ -36,7 +36,7 @@ const SavannahControl = () => {
   const dispatch = useDispatch();
   const { auth: { token, userId }, isAuth } = useAuth();
   const state = useSelector(savannahSelector);
-
+  const [answersState, setAnswersState] = useState({ right: [], wrong: [] });
   const classes = useStyles();
 
   const { GAME_STATE_START, GAME_STATE_ACTIVE, GAME_STATE_RESULT } = savannahConstants.gameStates;
@@ -47,26 +47,45 @@ const SavannahControl = () => {
     setGameActive(getRandomNumber(5), getRandomNumber(30), userId, token, 40),
   );
 
-  const dipatchRightAnswer = (wordId, answer) => {
+  const dipatchRightAnswer = (wordId, answer, answeredWord) => {
     dispatch(setRightAnswer());
+    setAnswersState({
+      ...answersState,
+      right: [...answersState.right, {
+        word: answeredWord.word,
+        translation: answeredWord.wordTranslate,
+        audio: answeredWord.audio,
+      }],
+    });
     if (isAuth) {
       dispatch(setWordGameStatistics(userId, token, wordId, 'savannah', answer));
     }
   };
 
-  const dipatchWrongAnswer = (wordId, answer) => {
+  const dipatchWrongAnswer = (wordId, answer, answeredWord) => {
     dispatch(setWrongAnswer());
+    setAnswersState({
+      ...answersState,
+      wrong: [...answersState.wrong, {
+        word: answeredWord.word,
+        translation: answeredWord.wordTranslate,
+        audio: answeredWord.audio,
+      }],
+    });
     if (isAuth) {
       dispatch(setWordGameStatistics(userId, token, wordId, 'savannah', answer));
     }
   };
 
-  const makeAnswer = (wordGroup, wordId, answer) => {
-    const result = checkIfAnswerIsRight(wordGroup, answer);
+  const makeAnswer = (wordGroup, wordId, answeredWord) => {
+    const result = checkIfAnswerIsRight(wordGroup, answeredWord.word);
+    if (!wordId) {
+      return dipatchWrongAnswer(answeredWord.id, WORD_ANSWER_WRONG, answeredWord);
+    }
 
     return result
-      ? dipatchRightAnswer(wordId, WORD_ANSWER_RIGHT)
-      : dipatchWrongAnswer(wordId, WORD_ANSWER_WRONG);
+      ? dipatchRightAnswer(wordId, WORD_ANSWER_RIGHT, answeredWord)
+      : dipatchWrongAnswer(wordId, WORD_ANSWER_WRONG, answeredWord);
   };
 
   const finishGame = () => {
@@ -98,6 +117,7 @@ const SavannahControl = () => {
             eraseGameState={() => dispatch(eraseGameState())}
             right={state.rightAnswers}
             wrong={state.wrongAnswers}
+            answersState={answersState}
           />
         </Container>
 
