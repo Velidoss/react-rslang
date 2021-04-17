@@ -74,7 +74,7 @@ const DifficultWords = ({
           )
       }
         <div className="links-wrapper">
-          <MiniGameLinks group="0" page={pageNumber} linkSrc="difficult" />
+          <MiniGameLinks group={0} page={pageNumber} linkSrc="difficult" />
         </div>
       </>
     );
