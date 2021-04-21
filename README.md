@@ -37,4 +37,11 @@
 
 ##### https://github.com/reagentjs/react-rslang-backend
 
- - инструкция по запуску бэка
+ - `git clone git@github.com:reagentjs/react-rslang-backend.git`
+ - `git cd ./react-rslang-backend`
+ - `yarn`
+ - добавьте файл .env и вставьте переменные: 
+      - данные для хранения аватара пользователя в cloudinary: CLOUDINARY_URL, CLOUDINARY_AVATAR_UPLOAD_PRESET 
+      - MONGO_CONNECTION_STRING
+      - данные для jwt: JWT_SECRET_KEY, JWT_REFRESH_SECRET_KEY
+ - `yarn start`
