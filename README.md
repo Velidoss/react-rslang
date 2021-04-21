@@ -18,9 +18,9 @@
 
 ### Организация совместной работы
 
-Figma: https://www.figma.com/file/jNGgTkgsuC2kyPo49QXuFx/design?node-id=0%3A1
-Trello: https://trello.com/b/fsxnILl6/rs-lang
-RACI-матрица: https://docs.google.com/spreadsheets/d/15KhXPU6rxArJ1ToJTn2mU3bzdA-enRxqdPKNdD7YfdI/edit#gid=0
+- Figma: https://www.figma.com/file/jNGgTkgsuC2kyPo49QXuFx/design?node-id=0%3A1
+- Trello: https://trello.com/b/fsxnILl6/rs-lang
+- RACI-матрица: https://docs.google.com/spreadsheets/d/15KhXPU6rxArJ1ToJTn2mU3bzdA-enRxqdPKNdD7YfdI/edit#gid=0
 
 ### Запуск приложения
 
