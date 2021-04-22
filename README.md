@@ -5,9 +5,12 @@
 ### Стэк технологий
 
  - React
- - Redux
+ - Redux, redux-thunk
  - Node.js
  - Material UI
+ - React-router-dom
+ - Axios
+ - React-hook-form
 
 ### Команда
 
