@@ -20,7 +20,7 @@ const WordTextBlock = ({ text, translation, isTranslationOn }) => (
 WordTextBlock.propTypes = {
   text: PropTypes.string.isRequired,
   translation: PropTypes.string.isRequired,
-  isTranslationOn: PropTypes.string.isRequired,
+  isTranslationOn: PropTypes.bool.isRequired,
 };
 
 export { WordTextBlock };

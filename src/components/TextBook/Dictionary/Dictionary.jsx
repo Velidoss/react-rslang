@@ -69,7 +69,7 @@ const Dictionary = ({
 
 Dictionary.propTypes = {
   words: PropTypes.arrayOf({
-    id: PropTypes.number.isRequired,
+    _id: PropTypes.number.isRequired,
   }).isRequired,
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,

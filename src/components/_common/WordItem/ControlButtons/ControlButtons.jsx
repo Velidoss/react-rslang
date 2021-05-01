@@ -68,17 +68,17 @@ ControlButtons.defaultProps = {
   userId: null,
   token: null,
   restoreCallback: null,
+  isDifficult: null,
 };
 
 ControlButtons.propTypes = {
   word: PropTypes.instanceOf(Object).isRequired,
   showControls: PropTypes.bool.isRequired,
   isAuth: PropTypes.bool.isRequired,
-  isDifficult: PropTypes.bool.isRequired,
-
   userId: PropTypes.string,
   token: PropTypes.string,
   restoreCallback: PropTypes.func,
+  isDifficult: PropTypes.bool,
 };
 
 export { ControlButtons };

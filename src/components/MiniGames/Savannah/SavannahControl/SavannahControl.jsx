@@ -114,7 +114,10 @@ const SavannahControl = () => {
       return (
         <Container className={classes.wrapperContainer}>
           <SavannahResult
-            eraseGameState={() => dispatch(eraseGameState())}
+            eraseGameState={() => {
+              setAnswersState({ right: [], wrong: [] });
+              dispatch(eraseGameState());
+            }}
             right={state.rightAnswers}
             wrong={state.wrongAnswers}
             answersState={answersState}

@@ -18,7 +18,7 @@ const WordImage = ({ imgSrc, isDifficult }) => {
         <Image
           src={`${ApiUrl}/${imgSrc}`}
           alt="illustration"
-          cover="true"
+          cover
         />
       </div>
       {isDifficult && <Typography color="error" variant="body2" align="center">сложное</Typography>}
@@ -26,9 +26,13 @@ const WordImage = ({ imgSrc, isDifficult }) => {
   );
 };
 
+WordImage.defaultProps = {
+  isDifficult: null,
+};
+
 WordImage.propTypes = {
   imgSrc: PropTypes.string.isRequired,
-  isDifficult: PropTypes.bool.isRequired,
+  isDifficult: PropTypes.bool,
 };
 
 export { WordImage };

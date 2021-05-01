@@ -125,8 +125,8 @@ WordItem.defaultProps = {
 
 WordItem.propTypes = {
   word: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string,
+    id: PropTypes.string,
     image: PropTypes.string.isRequired,
     audio: PropTypes.string.isRequired,
     audioMeaning: PropTypes.string.isRequired,
@@ -147,7 +147,6 @@ WordItem.propTypes = {
   showControls: PropTypes.bool.isRequired,
   showTranslation: PropTypes.bool.isRequired,
   isAuth: PropTypes.bool.isRequired,
-
   userId: PropTypes.string,
   token: PropTypes.string,
   restoreCallback: PropTypes.func,

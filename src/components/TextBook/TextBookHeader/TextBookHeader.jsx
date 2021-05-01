@@ -20,7 +20,7 @@ const TextBookHeader = ({ groupNumber, setGroupNumber }) => {
   }, [pathname]);
 
   return (
-    <Box container className={classes.root}>
+    <Box className={classes.root}>
       <GroupsMenu
         setGroupNumber={setGroupNumber}
         className={classes.settingsButton}
