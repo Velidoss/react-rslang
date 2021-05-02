@@ -1,10 +1,12 @@
-const determineQuestionWord = (wordGroup) => {
+import ITextBookWord from '../interfaces/ITextBookWord';
+
+const determineQuestionWord = (wordGroup: ITextBookWord[]) => {
   const groupWithQuestion = [...wordGroup];
   groupWithQuestion[Math.round(Math.random() * 3)].question = true;
   return groupWithQuestion;
 };
 
-const createWordsForSavannah = (words) => {
+const createWordsForSavannah = (words: ITextBookWord[]) => {
   const arrayForGame = [];
   let count = 0;
   let wordGroup = [];

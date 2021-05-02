@@ -1,4 +1,4 @@
-function getLocalStorageItem(key, defaultValue) {
+function getLocalStorageItem(key: string, defaultValue: string) {
   try {
     const item = window.localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
@@ -7,11 +7,11 @@ function getLocalStorageItem(key, defaultValue) {
   }
 }
 
-function setLocalStorageItem(key, value) {
+function setLocalStorageItem(key: string, value: string) {
   window.localStorage.setItem(key, JSON.stringify(value));
 }
 
-function removeLocalStorageItem(key) {
+function removeLocalStorageItem(key: string) {
   window.localStorage.removeItem(key);
 }
 

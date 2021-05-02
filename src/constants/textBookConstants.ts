@@ -6,6 +6,7 @@ import {
 } from '@material-ui/icons';
 //
 import * as images from '../assets/images';
+import ITextBookLink from '../interfaces/ITextBookLink';
 
 export const linkTypes = {
   LINK_PUBLIC: 'LINK_PUBLIC',
@@ -14,7 +15,7 @@ export const linkTypes = {
 
 export const textBookConstants = {
   TEXTBOOK_PAGES_QUANTITY: 30,
-  getTextBookLinks: (setGroupNumber) => ([
+  getTextBookLinks: (setGroupNumber: Function): ITextBookLink[] => ([
     {
       id: 0,
       link: '/textbook',

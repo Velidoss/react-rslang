@@ -2,8 +2,8 @@ import getWords from '../../api/getWords';
 import {
   FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS, DELETE_WORD,
 } from './textBookReducerActions';
-import filterTextBookWords from '../../utils/filterTextBookWords';
 import getAllDeletedWords from '../../api/getAllDeletedWords';
+import filterTextBookWords from '../../utils/filterTextBookWords.ts';
 
 export const fetchWordsAC = (words) => ({
   type: FETCH_TEXTBOOK_WORDS,
