@@ -1,8 +1,4 @@
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-} from './loginReducerActionTypes';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from './loginReducerActionTypes';
 
 const initialState = {
   isReady: false,

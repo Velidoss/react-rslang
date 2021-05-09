@@ -12,9 +12,7 @@ export default makeStyles((theme) => ({
   },
   modalContainer: {
     width: '380px',
-    backgroundColor: theme.palette.type === 'dark'
-      ? '#43373D'
-      : '#F6F4F5',
+    backgroundColor: theme.palette.type === 'dark' ? '#43373D' : '#F6F4F5',
     padding: '1rem',
     margin: '2rem auto',
     borderRadius: '0.5rem',

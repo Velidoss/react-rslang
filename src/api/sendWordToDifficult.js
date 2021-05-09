@@ -12,8 +12,7 @@ const sendWordToDifficult = async (userId, authToken, wordId) => {
   if (status === 200) {
     putWordData(userId, authToken, wordId, { difficulty: WORD_HARD });
   } else {
-    postWordData(userId, authToken, wordId,
-      { difficulty: WORD_HARD });
+    postWordData(userId, authToken, wordId, { difficulty: WORD_HARD });
   }
   return status;
 };

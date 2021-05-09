@@ -1,9 +1,4 @@
-import {
-  Pets,
-  DirectionsRun,
-  Headset,
-  Extension,
-} from '@material-ui/icons';
+import { Pets, DirectionsRun, Headset, Extension } from '@material-ui/icons';
 //
 import * as images from '../assets/images';
 import ITextBookLink from '../interfaces/ITextBookLink';
@@ -15,7 +10,7 @@ export const linkTypes = {
 
 export const textBookConstants = {
   TEXTBOOK_PAGES_QUANTITY: 30,
-  getTextBookLinks: (setGroupNumber: Function): ITextBookLink[] => ([
+  getTextBookLinks: (setGroupNumber: Function): ITextBookLink[] => [
     {
       id: 0,
       link: '/textbook',
@@ -79,16 +74,11 @@ export const textBookConstants = {
       onClickAction: () => {},
       type: linkTypes.LINK_PRIVATE,
     },
-  ]),
+  ],
 };
 
 const {
-  minigames: {
-    sprint,
-    savannah,
-    audioChallenge,
-    puzzle,
-  },
+  minigames: { sprint, savannah, audioChallenge, puzzle },
 } = images;
 
 export const miniGameLinksConfig = [
@@ -118,7 +108,20 @@ export const miniGameLinksConfig = [
   },
 ];
 
-export const statChipConfig = [
+const statChipItemsTypes = {
+  sprintStats: true,
+  savannahStats: true,
+  puzzleStats: true,
+  audioChallengeStats: true,
+};
+
+interface IStatChipItem {
+  title: string;
+  icon: any;
+  statName: keyof typeof statChipItemsTypes;
+}
+
+export const statChipConfig: IStatChipItem[] = [
   {
     title: 'Спринт',
     icon: DirectionsRun,
@@ -138,6 +141,7 @@ export const statChipConfig = [
     title: 'Паззл',
     icon: Extension,
     statName: 'puzzleStats',
-  }];
+  },
+];
 
 export const TEXTBOOK_PAGES_QUANTITY = 30;

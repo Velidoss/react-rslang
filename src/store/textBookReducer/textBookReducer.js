@@ -1,9 +1,4 @@
-import {
-  FETCH_TEXTBOOK_WORDS,
-  TOGGLE_TRANSLATION,
-  TOGGLE_CONTROLS,
-  DELETE_WORD,
-} from './textBookReducerActions';
+import { FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS, DELETE_WORD } from './textBookReducerActions';
 import userWordsConstants from '../../constants/userWordsConstants';
 import {
   GET_USER_WORDS,
@@ -50,11 +45,7 @@ const unsetWordAsDifficult = (state, payload) => ({
     }
     return word;
   }),
-  difficultWords: [
-    ...state.difficultWords.filter(
-      (word) => word._id !== payload.wordId && word,
-    ),
-  ],
+  difficultWords: [...state.difficultWords.filter((word) => word._id !== payload.wordId && word)],
 });
 
 const setWordAsDeleted = (state, payload) => ({
@@ -75,11 +66,7 @@ const unsetWordAsDeleted = (state, payload) => ({
     }
     return word;
   }),
-  deletedWords: [
-    ...state.deletedWords.filter(
-      (word) => word._id !== payload.wordId && word,
-    ),
-  ],
+  deletedWords: [...state.deletedWords.filter((word) => word._id !== payload.wordId && word)],
 });
 
 const textBookReducer = (state = initialState, { type, payload }) => {

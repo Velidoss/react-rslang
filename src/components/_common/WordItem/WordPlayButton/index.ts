@@ -1,0 +1,1 @@
+export { WordPlayButton } from './WordPlayButton';

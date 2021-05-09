@@ -21,39 +21,27 @@ const useTextBookStyles = makeStyles((theme) => ({
     },
 
     '& .list--0': {
-      backgroundColor: theme.palette.type === 'dark'
-        ? '#43373D'
-        : '#F6F4F5',
+      backgroundColor: theme.palette.type === 'dark' ? '#43373D' : '#F6F4F5',
     },
 
     '& .list--1': {
-      backgroundColor: theme.palette.type === 'dark'
-        ? '#2A4879'
-        : '#C3D2EA',
+      backgroundColor: theme.palette.type === 'dark' ? '#2A4879' : '#C3D2EA',
     },
 
     '& .list--2': {
-      backgroundColor: theme.palette.type === 'dark'
-        ? '#595B33'
-        : '#D1D3B1',
+      backgroundColor: theme.palette.type === 'dark' ? '#595B33' : '#D1D3B1',
     },
 
     '& .list--3': {
-      backgroundColor: theme.palette.type === 'dark'
-        ? '#A36A00'
-        : '#FFE1A8',
+      backgroundColor: theme.palette.type === 'dark' ? '#A36A00' : '#FFE1A8',
     },
 
     '& .list--4': {
-      backgroundColor: theme.palette.type === 'dark'
-        ? '#6F4B0B'
-        : '#F1BF6A',
+      backgroundColor: theme.palette.type === 'dark' ? '#6F4B0B' : '#F1BF6A',
     },
 
     '& .list--5': {
-      backgroundColor: theme.palette.type === 'dark'
-        ? '#651523'
-        : '#F1BCC5',
+      backgroundColor: theme.palette.type === 'dark' ? '#651523' : '#F1BCC5',
     },
 
     '& .pagination-wrapper': {

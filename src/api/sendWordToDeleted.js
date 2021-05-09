@@ -15,7 +15,8 @@ const sendWordToDeleted = async (userId, authToken, wordId) => {
   } else {
     const newUserWord = await getWordById(wordId);
     postWordData(userId, authToken, wordId, {
-      difficulty: WORD_EASY, optional: { deleted: WORD_DELETED, wordData: { ...newUserWord } },
+      difficulty: WORD_EASY,
+      optional: { deleted: WORD_DELETED, wordData: { ...newUserWord } },
     });
   }
 

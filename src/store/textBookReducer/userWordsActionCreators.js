@@ -70,28 +70,34 @@ export const unsetUserWordDeleted = (wordId) => ({
 
 export const fetchUserWords = (userId, authToken) => async (dispatch) => {
   const words = await getUserWords(userId, authToken);
-  return words && words.length > 0
-  && dispatch(setUserWords(words));
+  return words && words.length > 0 && dispatch(setUserWords(words));
 };
 
 export const fetchLearningWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getUserLearningWords(userId, authToken, page);
-  return words && words[0].paginatedResults.length > 0
-  && dispatch(setUserLearningWords(words[0].paginatedResults, words[0].totalCount[0].count));
+  return (
+    words &&
+    words[0].paginatedResults.length > 0 &&
+    dispatch(setUserLearningWords(words[0].paginatedResults, words[0].totalCount[0].count))
+  );
 };
 
 export const fetchUserDeletedWords = (userId, authToken, page = 0) => async (dispatch) => {
   const deletedWords = await getDeletedWords(userId, authToken, page);
-  return deletedWords && deletedWords[0].paginatedResults.length > 0
-  && dispatch(setUserDeletedWords(
-    deletedWords[0].paginatedResults, deletedWords[0].totalCount[0].count,
-  ));
+  return (
+    deletedWords &&
+    deletedWords[0].paginatedResults.length > 0 &&
+    dispatch(setUserDeletedWords(deletedWords[0].paginatedResults, deletedWords[0].totalCount[0].count))
+  );
 };
 
 export const fetchUserDifficultWords = (userId, authToken, page = 0) => async (dispatch) => {
   const words = await getDifficultWords(userId, authToken, page);
-  return words && words[0].paginatedResults.length > 0
-  && dispatch(setUserDifficultWords(words[0].paginatedResults, words[0].totalCount[0].count));
+  return (
+    words &&
+    words[0].paginatedResults.length > 0 &&
+    dispatch(setUserDifficultWords(words[0].paginatedResults, words[0].totalCount[0].count))
+  );
 };
 
 export const addWordToDifficult = (wordId, userId, authToken) => async (dispatch) => {
@@ -125,8 +131,6 @@ export const removeWordFromDeleted = (wordId, userId, authToken) => async (dispa
   }
 };
 
-export const setWordGameStatistics = (
-  userId, authToken, wordId, gameName, answer,
-) => async () => {
+export const setWordGameStatistics = (userId, authToken, wordId, gameName, answer) => async () => {
   await sendWordGameStatistics(userId, authToken, wordId, gameName, answer);
 };

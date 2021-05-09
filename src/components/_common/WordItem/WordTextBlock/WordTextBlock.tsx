@@ -1,8 +1,13 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 
-const WordTextBlock = ({ text, translation, isTranslationOn }) => (
+interface WordtextBlockProps {
+  text: string;
+  translation: string;
+  isTranslationOn: boolean;
+}
+
+const WordTextBlock: React.FC<WordtextBlockProps> = ({ text, translation, isTranslationOn }) => (
   <>
     <Typography variant="subtitle2">
       <span dangerouslySetInnerHTML={{ __html: text }} />
@@ -16,11 +21,5 @@ const WordTextBlock = ({ text, translation, isTranslationOn }) => (
     }
   </>
 );
-
-WordTextBlock.propTypes = {
-  text: PropTypes.string.isRequired,
-  translation: PropTypes.string.isRequired,
-  isTranslationOn: PropTypes.bool.isRequired,
-};
 
 export { WordTextBlock };

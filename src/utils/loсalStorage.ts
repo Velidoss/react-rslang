@@ -15,8 +15,4 @@ function removeLocalStorageItem(key: string) {
   window.localStorage.removeItem(key);
 }
 
-export {
-  getLocalStorageItem,
-  setLocalStorageItem,
-  removeLocalStorageItem,
-};
+export { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem };

@@ -1,29 +1,24 @@
 import axios from 'axios';
 //
 import DataAccessConstants from '../../constants/DataAccessConstants';
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-} from './loginReducerActionTypes';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from './loginReducerActionTypes';
 
 const {
   ApiUrl,
-  ApiEndPoints: {
-    SIGN_IN,
-  },
+  ApiEndPoints: { SIGN_IN },
 } = DataAccessConstants;
 
 const request = () => ({ type: LOGIN_REQUEST });
 const success = () => ({ type: LOGIN_SUCCESS });
 const failure = (message) => ({ type: LOGIN_FAILURE, payload: message });
 
-const sendData = (data) => axios({
-  data,
-  method: 'post',
-  url: `${ApiUrl}${SIGN_IN}`,
-  headers: { 'Content-Type': 'multipart/form-data' },
-});
+const sendData = (data) =>
+  axios({
+    data,
+    method: 'post',
+    url: `${ApiUrl}${SIGN_IN}`,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
 
 export const loginAC = (data) => (dispatch) => {
   dispatch(request());
@@ -35,19 +30,17 @@ export const loginAC = (data) => (dispatch) => {
       }
 
       const {
-        data: {
-          token,
-          refreshToken,
-          name,
-          userId,
-          avatar,
-        },
+        data: { token, refreshToken, name, userId, avatar },
       } = res;
 
       dispatch(success());
 
       return {
-        token, refreshToken, name, userId, avatar,
+        token,
+        refreshToken,
+        name,
+        userId,
+        avatar,
       };
     })
     .catch((err) => {

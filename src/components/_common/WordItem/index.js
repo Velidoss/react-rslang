@@ -1,1 +1,0 @@
-export { WordItem } from './WordItem';

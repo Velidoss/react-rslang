@@ -4,7 +4,6 @@ const savannahConstants = {
     GAME_STATE_ACTIVE: 'GAME_STATE_ACTIVE',
     GAME_STATE_RESULT: 'GAME_STATE_RESULT',
   },
-
 };
 
 export default savannahConstants;

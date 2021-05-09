@@ -1,8 +1,4 @@
-import {
-  AVATAR_REQUEST,
-  AVATAR_SUCCESS,
-  AVATAR_FAILURE,
-} from './avatarReducerActionTypes';
+import { AVATAR_REQUEST, AVATAR_SUCCESS, AVATAR_FAILURE } from './avatarReducerActionTypes';
 
 const initialState = {
   isReady: false,

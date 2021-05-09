@@ -1,7 +1,5 @@
 import getWords from '../../api/getWords';
-import {
-  FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS, DELETE_WORD,
-} from './textBookReducerActions';
+import { FETCH_TEXTBOOK_WORDS, TOGGLE_TRANSLATION, TOGGLE_CONTROLS, DELETE_WORD } from './textBookReducerActions';
 import getAllDeletedWords from '../../api/getAllDeletedWords';
 import filterTextBookWords from '../../utils/filterTextBookWords.ts';
 

@@ -1,12 +1,4 @@
-import {
-  Home,
-  MenuBook,
-  Pets,
-  DirectionsRun,
-  Headset,
-  Extension,
-  Equalizer,
-} from '@material-ui/icons';
+import { Home, MenuBook, Pets, DirectionsRun, Headset, Extension, Equalizer } from '@material-ui/icons';
 
 export const navLinks = [
   {

@@ -12,11 +12,7 @@ import getRegisteredGameWords from '../../api/getRegisteredGameWords';
 import addAggregatedWordId from '../textBookReducer/addAggregatedWordId';
 
 const {
-  gameStates:
-  {
-    GAME_STATE_ACTIVE,
-    GAME_STATE_RESULT,
-  },
+  gameStates: { GAME_STATE_ACTIVE, GAME_STATE_RESULT },
 } = savannahConstants;
 
 export const fetchWordsAC = (words) => ({
@@ -46,9 +42,7 @@ export const eraseGameState = () => ({
   type: ERASE_GAME_STATE,
 });
 
-export const setGameActive = (
-  group, page, userId, authToken, wordsQuantity,
-) => async (dispatch) => {
+export const setGameActive = (group, page, userId, authToken, wordsQuantity) => async (dispatch) => {
   if (userId && authToken) {
     const response = await getRegisteredGameWords(userId, authToken, group, wordsQuantity);
     dispatch(fetchWordsAC(addAggregatedWordId(response)));

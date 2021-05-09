@@ -3,7 +3,7 @@ import DataAccessConstants from '../../../../constants/DataAccessConstants';
 
 const { ApiUrl } = DataAccessConstants;
 
-const readFewAudios = (...audios) => {
+const readFewAudios = (...audios: string[]): void => {
   let audioIndex = 0;
   const audioToPlay = wordAudio(`${audios[audioIndex]}`);
 

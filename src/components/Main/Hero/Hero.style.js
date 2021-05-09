@@ -3,9 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import * as images from '../../../assets/images/index';
 
 const {
-  main: {
-    heroBackground,
-  },
+  main: { heroBackground },
 } = images;
 
 export default makeStyles((theme) => ({

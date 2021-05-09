@@ -14,5 +14,5 @@ export default interface IDeletedWord {
   transcription: string;
   word: string;
   wordTranslate: string;
-  userWord : object;
-};
+  userWord: object;
+}

@@ -3,9 +3,7 @@ import postWordData from './postWordData';
 import userWordsConstants from '../constants/userWordsConstants';
 import getOneAggregatedWord from './getOneAggregatedWord';
 
-const {
-  WORD_EASY, WORD_ANSWER_RIGHT, WORD_ANSWER_WRONG,
-} = userWordsConstants;
+const { WORD_EASY, WORD_ANSWER_RIGHT, WORD_ANSWER_WRONG } = userWordsConstants;
 
 const sendWordGameStatistics = async (userId, authToken, wordId, gameName, answer) => {
   const isWordInUserWords = await getOneAggregatedWord(userId, authToken, wordId);
@@ -13,13 +11,17 @@ const sendWordGameStatistics = async (userId, authToken, wordId, gameName, answe
   const wordData = {};
   switch (answer) {
     case WORD_ANSWER_RIGHT:
-      if (!isWordInUserWords.data
-        || !isWordInUserWords.data[0].userWord
-        || !isWordInUserWords.data[0].userWord.optional
-        || !isWordInUserWords.data[0].userWord.optional[gameName]) {
+      if (
+        !isWordInUserWords.data ||
+        !isWordInUserWords.data[0].userWord ||
+        !isWordInUserWords.data[0].userWord.optional ||
+        !isWordInUserWords.data[0].userWord.optional[gameName]
+      ) {
         wordData.optional = {
           [gameName]: {
-            wrong: 0, right: 1, metInGame: 1,
+            wrong: 0,
+            right: 1,
+            metInGame: 1,
           },
         };
         break;
@@ -33,13 +35,17 @@ const sendWordGameStatistics = async (userId, authToken, wordId, gameName, answe
       };
       break;
     case WORD_ANSWER_WRONG:
-      if (!isWordInUserWords.data
-        || !isWordInUserWords.data[0].userWord
-        || !isWordInUserWords.data[0].userWord.optional
-        || !isWordInUserWords.data[0].userWord.optional[gameName]) {
+      if (
+        !isWordInUserWords.data ||
+        !isWordInUserWords.data[0].userWord ||
+        !isWordInUserWords.data[0].userWord.optional ||
+        !isWordInUserWords.data[0].userWord.optional[gameName]
+      ) {
         wordData.optional = {
           [gameName]: {
-            wrong: 1, right: 0, metInGame: 1,
+            wrong: 1,
+            right: 0,
+            metInGame: 1,
           },
         };
         break;
@@ -53,13 +59,17 @@ const sendWordGameStatistics = async (userId, authToken, wordId, gameName, answe
       };
       break;
     default:
-      if (!isWordInUserWords.data
-        || !isWordInUserWords.data[0].userWord
-        || !isWordInUserWords.data[0].userWord.optional
-        || !isWordInUserWords.data[0].userWord.optional[gameName]) {
+      if (
+        !isWordInUserWords.data ||
+        !isWordInUserWords.data[0].userWord ||
+        !isWordInUserWords.data[0].userWord.optional ||
+        !isWordInUserWords.data[0].userWord.optional[gameName]
+      ) {
         wordData.optional = {
           [gameName]: {
-            wrong: 0, right: 0, metInGame: 1,
+            wrong: 0,
+            right: 0,
+            metInGame: 1,
           },
         };
         break;
@@ -77,11 +87,9 @@ const sendWordGameStatistics = async (userId, authToken, wordId, gameName, answe
     if (isWordInUserWords.data[0].userWord) {
       return putWordData(userId, authToken, wordId, wordData);
     }
-    postWordData(userId, authToken, wordId,
-      { difficulty: WORD_EASY, ...wordData });
+    postWordData(userId, authToken, wordId, { difficulty: WORD_EASY, ...wordData });
   } else {
-    postWordData(userId, authToken, wordId,
-      { difficulty: WORD_EASY, ...wordData });
+    postWordData(userId, authToken, wordId, { difficulty: WORD_EASY, ...wordData });
   }
   return status;
 };

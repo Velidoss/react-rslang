@@ -2,13 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 //
-import {
-  Header,
-  Footer,
-  Account,
-  Main,
-  TextBook,
-} from './components';
+import { Header, Footer, Account, Main, TextBook } from './components';
 import Statistics from './components/Statistics/Statistics';
 import SavannahControl from './components/MiniGames/Savannah/SavannahControl/SavannahControl';
 import SprintControl from './components/MiniGames/Sprint/SprintControl';
@@ -32,6 +26,9 @@ function App() {
     <div className={classes.root}>
       <Header />
       <Switch>
+
+
+        
         <Route path="/textbook" component={TextBook} />
         <Route path="/statistics" component={Statistics} />
         <Route path="/savannah" component={SavannahControl} />

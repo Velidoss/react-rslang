@@ -1,15 +1,16 @@
 import {
-  SET_GAME_STATE, FETCH_WORDS, SET_RIGHT_ANSWER, SET_WRONG_ANSWER, ERASE_GAME_STATE,
+  SET_GAME_STATE,
+  FETCH_WORDS,
+  SET_RIGHT_ANSWER,
+  SET_WRONG_ANSWER,
+  ERASE_GAME_STATE,
   FETCH_MORE_WORDS,
 } from './savannahReducerActions';
 import savannahConstants from '../../constants/savannahConstants';
 import createWordsForSavannah from '../../utils/createWordsForSavannah';
 
 const {
-  gameStates:
-  {
-    GAME_STATE_START,
-  },
+  gameStates: { GAME_STATE_START },
 } = savannahConstants;
 
 const initialState = {

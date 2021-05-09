@@ -22,13 +22,15 @@ const shuffle = (array) => {
 
 const createAudioChallengeWordsArr = (array) => {
   const audioChallengeWordsArr = [];
-  array.forEach((el) => audioChallengeWordsArr.push({
-    id: el.id || el._id,
-    word: el.word,
-    translation: el.wordTranslate,
-    audio: el.audio,
-    image: el.image,
-  }));
+  array.forEach((el) =>
+    audioChallengeWordsArr.push({
+      id: el.id || el._id,
+      word: el.word,
+      translation: el.wordTranslate,
+      audio: el.audio,
+      image: el.image,
+    }),
+  );
   return audioChallengeWordsArr;
 };
 
@@ -100,7 +102,4 @@ const getDifficultWordsAudioChallenge = async (userId, authToken, page = 0) => {
   return res.reverse();
 };
 
-export {
-  createQnAArrays, getUserWordsAudioChallenge, getDeletedWordsAudioChallenge,
-  getDifficultWordsAudioChallenge,
-};
+export { createQnAArrays, getUserWordsAudioChallenge, getDeletedWordsAudioChallenge, getDifficultWordsAudioChallenge };

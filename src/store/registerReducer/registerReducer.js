@@ -1,8 +1,4 @@
-import {
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-} from './registerReducerActionTypes';
+import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from './registerReducerActionTypes';
 
 const initialState = {
   isReady: false,

@@ -1,32 +1,27 @@
 import axios from 'axios';
 //
 import DataAccessConstants from '../../constants/DataAccessConstants';
-import {
-  AVATAR_REQUEST,
-  AVATAR_SUCCESS,
-  AVATAR_FAILURE,
-} from './avatarReducerActionTypes';
+import { AVATAR_REQUEST, AVATAR_SUCCESS, AVATAR_FAILURE } from './avatarReducerActionTypes';
 
 const {
   ApiUrl,
-  ApiEndPoints: {
-    AVATAR_UPLOAD,
-  },
+  ApiEndPoints: { AVATAR_UPLOAD },
 } = DataAccessConstants;
 
 const request = () => ({ type: AVATAR_REQUEST });
 const success = () => ({ type: AVATAR_SUCCESS });
 const failure = (message) => ({ type: AVATAR_FAILURE, payload: message });
 
-const sendData = (userId, token, data) => axios({
-  data,
-  method: 'put',
-  url: `${ApiUrl}${AVATAR_UPLOAD}${userId}`,
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    Authorization: `Bearer ${token}`,
-  },
-});
+const sendData = (userId, token, data) =>
+  axios({
+    data,
+    method: 'put',
+    url: `${ApiUrl}${AVATAR_UPLOAD}${userId}`,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
 export const avatarUpdateAC = (userId, token, data) => (dispatch) => {
   dispatch(request());
@@ -39,7 +34,9 @@ export const avatarUpdateAC = (userId, token, data) => (dispatch) => {
 
       dispatch(success());
 
-      const { data: { avatar } } = res;
+      const {
+        data: { avatar },
+      } = res;
 
       return avatar;
     })

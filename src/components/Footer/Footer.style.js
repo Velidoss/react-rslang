@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
     width: 'auto',
     height: theme.mixins.toolbar.minHeight * 0.65,
     [theme.breakpoints.down('md')]: {
-      height: theme.mixins.toolbar.minHeight * 0.40,
+      height: theme.mixins.toolbar.minHeight * 0.4,
     },
   },
 

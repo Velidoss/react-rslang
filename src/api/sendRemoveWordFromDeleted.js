@@ -13,7 +13,8 @@ const sendRemoveWordFromDeleted = async (userId, authToken, wordId) => {
     putWordData(userId, authToken, wordId, { optional: { deleted: false } });
   } else {
     postWordData(userId, authToken, wordId, {
-      difficulty: WORD_EASY, optional: { deleted: false },
+      difficulty: WORD_EASY,
+      optional: { deleted: false },
     });
   }
   return reponse;

@@ -1,10 +1,10 @@
+import IGameStats from './IGameStats';
+
 export default interface ITextBookWord {
-  question?: any;
   audio: string;
   audioExample: string;
   audioMeaning: string;
   group: number;
-  id: string;
   image: string;
   page: number;
   textExample: string;
@@ -14,4 +14,13 @@ export default interface ITextBookWord {
   transcription: string;
   word: string;
   wordTranslate: string;
-};
+  _id: string;
+  id?: string;
+  question?: any;
+  optional?: {
+    savannah?: IGameStats;
+    sprint?: IGameStats;
+    puzzle?: IGameStats;
+    audioChallenge?: IGameStats;
+  };
+}

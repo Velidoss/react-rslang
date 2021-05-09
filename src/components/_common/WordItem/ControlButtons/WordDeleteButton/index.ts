@@ -1,0 +1,1 @@
+export { WordDeleteButton } from './WordDeleteButton';

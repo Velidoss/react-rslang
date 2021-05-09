@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {
   Box,
   Grid,
@@ -19,15 +18,28 @@ import { WordPlayButton } from './WordPlayButton';
 import checkIfWordInDifficult from '../../../store/textBookReducer/checkIfWordInDifficult';
 //
 import styles from './WordItem.style';
+import ITextBookWord from './../../../interfaces/ITextBookWord';
+import IUserWord from './../../../interfaces/IUserWord';
 
-const WordItem = ({
+interface WordItemProps {
+  word: ITextBookWord;
+  userWords: any; // does not allow me to get word statistics if I put 'IUserWord[]'
+  showControls: boolean;
+  showTranslation: boolean;
+  userId?: string;
+  token?: string;
+  isAuth?: boolean;
+  restoreCallback: () => void;
+}
+
+const WordItem: React.FC<WordItemProps> = ({
   word,
   userWords,
   showControls,
   showTranslation,
   userId,
   token,
-  isAuth,
+  isAuth = false,
   restoreCallback,
 }) => {
   const classes = styles();
@@ -38,7 +50,7 @@ const WordItem = ({
 
   React.useEffect(() => {
     toggleIsDifficult(userId && checkIfWordInDifficult(word, userWords));
-  }, [word, userWords]);
+  }, [word, userWords, userId]);
 
   return (
     <ListItem className={classes.root}>
@@ -105,7 +117,7 @@ const WordItem = ({
               word={
                 userWords.length > 0
                   ? userWords.find(
-                    (userWord) => userWord.wordId === word.id || userWord.wordId === word._id,
+                    (userWord: IUserWord) => userWord.wordId === word.id || userWord.wordId === word._id,
                   )
                   : null
               }
@@ -115,41 +127,6 @@ const WordItem = ({
       </Grid>
     </ListItem>
   );
-};
-
-WordItem.defaultProps = {
-  userId: null,
-  token: null,
-  restoreCallback: null,
-};
-
-WordItem.propTypes = {
-  word: PropTypes.shape({
-    _id: PropTypes.string,
-    id: PropTypes.string,
-    image: PropTypes.string.isRequired,
-    audio: PropTypes.string.isRequired,
-    audioMeaning: PropTypes.string.isRequired,
-    audioExample: PropTypes.string.isRequired,
-    word: PropTypes.string.isRequired,
-    wordTranslate: PropTypes.string.isRequired,
-    transcription: PropTypes.string.isRequired,
-    textExample: PropTypes.string.isRequired,
-    textExampleTranslate: PropTypes.string.isRequired,
-    textMeaning: PropTypes.string.isRequired,
-    textMeaningTranslate: PropTypes.string.isRequired,
-  }).isRequired,
-
-  userWords: PropTypes.arrayOf({
-    _id: PropTypes.number.isRequired,
-  }).isRequired,
-
-  showControls: PropTypes.bool.isRequired,
-  showTranslation: PropTypes.bool.isRequired,
-  isAuth: PropTypes.bool.isRequired,
-  userId: PropTypes.string,
-  token: PropTypes.string,
-  restoreCallback: PropTypes.func,
 };
 
 export { WordItem };

@@ -24,9 +24,14 @@ const createSprintWordsArr = (array) => {
   const sprintWordsArr = [];
   for (let i = 0; i < array.length; i += 1) {
     const tmpArr = [];
-    array[i].forEach((el) => tmpArr.push({
-      id: el.id || el._id, word: el.word, translation: el.wordTranslate, audio: el.audio,
-    }));
+    array[i].forEach((el) =>
+      tmpArr.push({
+        id: el.id || el._id,
+        word: el.word,
+        translation: el.wordTranslate,
+        audio: el.audio,
+      }),
+    );
     sprintWordsArr.push(tmpArr);
   }
   return sprintWordsArr;
@@ -35,8 +40,9 @@ const createSprintWordsArr = (array) => {
 const createQnAArraysForPage = (array) => {
   const qArrayForPage = shuffle([...array]);
   const shuffledQArray = shuffle([...qArrayForPage]);
-  const aArrayForPage = qArrayForPage
-    .map((_el, i) => (Math.round(Math.random()) ? qArrayForPage[i] : shuffledQArray[i]));
+  const aArrayForPage = qArrayForPage.map((_el, i) =>
+    Math.round(Math.random()) ? qArrayForPage[i] : shuffledQArray[i],
+  );
   return { qArrayForPage, aArrayForPage };
 };
 
@@ -113,6 +119,4 @@ const getDifficultWordsSprint = async (userId, authToken, page = 0) => {
   return res;
 };
 
-export {
-  createQnAArrays, getUserWordsSprint, getDeletedWordsSprint, getDifficultWordsSprint,
-};
+export { createQnAArrays, getUserWordsSprint, getDeletedWordsSprint, getDifficultWordsSprint };

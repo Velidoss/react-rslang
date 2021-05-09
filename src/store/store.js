@@ -8,16 +8,15 @@ import registerReducer from './registerReducer/registerReducer';
 import avatarReducer from './avatarReducer/avatarReducer';
 import textBookReducer from './textBookReducer/textBookReducer';
 
-const store = createStore(combineReducers(
-  {
+const store = createStore(
+  combineReducers({
     savannahReducer,
     textBookReducer,
     avatar: avatarReducer,
     login: loginReducer,
     register: registerReducer,
-  },
-), composeWithDevTools(
-  applyMiddleware(thunk),
-));
+  }),
+  composeWithDevTools(applyMiddleware(thunk)),
+);
 
 export default store;

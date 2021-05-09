@@ -40,9 +40,13 @@ const AudioContextState = ({ children }) => {
   };
 
   return (
-    <AudioContext.Provider value={{
-      audioUrl, changeAudioUrl, stopAudioPlay, readFewAudios,
-    }}
+    <AudioContext.Provider
+      value={{
+        audioUrl,
+        changeAudioUrl,
+        stopAudioPlay,
+        readFewAudios,
+      }}
     >
       {children}
     </AudioContext.Provider>
