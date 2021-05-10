@@ -1,12 +1,25 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { Link, Typography } from '@material-ui/core';
 //
 import styles from './ImageLink.style';
 
-const ImageLink = ({
+interface ImageLinkProps {
+  className: string;
+  title: string;
+  path: {
+    pathname: string,
+    state: { 
+      group: number, 
+      page: number,
+      linkSrc: string, 
+    },
+  };
+  img: string;
+}
+
+const ImageLink: React.FC<ImageLinkProps> = ({
   className,
   title,
   path,
@@ -25,13 +38,6 @@ const ImageLink = ({
       <img src={img} alt={title} className={clsx(classes.image, classes.content)} />
     </Link>
   );
-};
-
-ImageLink.propTypes = {
-  className: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  img: PropTypes.string.isRequired,
 };
 
 export { ImageLink };
