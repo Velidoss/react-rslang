@@ -29,7 +29,7 @@ interface WordItemProps {
   userId?: string;
   token?: string;
   isAuth?: boolean;
-  restoreCallback: () => void;
+  restoreCallback?: () => void;
 }
 
 const WordItem: React.FC<WordItemProps> = ({

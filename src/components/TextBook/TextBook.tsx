@@ -24,9 +24,9 @@ const TextBook = () => {
   const classes = styles();
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  const [pageNumber, setPageNumber] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [groupNumber, setGroupNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [groupNumber, setGroupNumber] = useState<number>(0);
   const {
     words,
     showControls,
@@ -40,7 +40,7 @@ const TextBook = () => {
     isAuth,
   } = useAuth();
 
-  const changePage = (_, number) => {
+  const changePage = (_: any, number: number): void => {
     setPageNumber(number - 1);
   };
 
@@ -49,7 +49,7 @@ const TextBook = () => {
       dispatch(fetchUserWords(userId, token));
       dispatch(fetchUserDeletedWords(userId, token));
     }
-  }, [userId, token]);
+  }, [userId, token, dispatch]);
 
   useEffect(() => {
     const textBookLocation = getLocalStorageItem('textBookLocation', { pageNumber, groupNumber });
@@ -63,13 +63,14 @@ const TextBook = () => {
     setLocalStorageItem('textBookLocation', { pageNumber, groupNumber });
   }, [pageNumber, groupNumber]);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (isAuth) {
       setLoading(false);
-      return dispatch(getTextBookWords(groupNumber, pageNumber, userId, token));
+      dispatch(getTextBookWords(groupNumber, pageNumber, userId, token));
+    } else {
+      setLoading(false);
+      dispatch(getTextBookWords(groupNumber, pageNumber));
     }
-    setLoading(false);
-    return dispatch(getTextBookWords(groupNumber, pageNumber));
   }, [groupNumber, pageNumber, isAuth]);
 
   return (
@@ -104,7 +105,6 @@ const TextBook = () => {
           path={`${match.url}/learning`}
           render={() => (
             <LearningWords
-              showControls={showControls}
               showTranslation={showTranslation}
             />
           )}

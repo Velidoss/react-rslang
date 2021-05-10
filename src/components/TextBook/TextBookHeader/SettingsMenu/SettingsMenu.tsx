@@ -15,13 +15,17 @@ import textBookSelector from '../../../../store/selectors/textBookSelector';
 import { changeTranslationStateAC, fetchControlsStateAC } from '../../../../store/textBookReducer/TextBookActionCreators';
 import { useAuth } from '../../../../contexts/AuthContext';
 
-const SettingsMenu = ({ className }) => {
+interface SettingsMenuProps {
+  className?: string;
+}
+
+const SettingsMenu: React.FC<SettingsMenuProps> = ({ className }) => {
   const { isAuth } = useAuth();
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { showTranslation, showControls } = useSelector(textBookSelector);
 
-  const handleClick = (event) => { setAnchorEl(event.currentTarget); };
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => { setAnchorEl(event.currentTarget); };
   const handleClose = () => { setAnchorEl(null); };
 
   return (
@@ -66,18 +70,9 @@ const SettingsMenu = ({ className }) => {
           </MenuItem>
           )
         }
-
       </Menu>
     </>
   );
-};
-
-SettingsMenu.defaultProps = {
-  className: null,
-};
-
-SettingsMenu.propTypes = {
-  className: PropTypes.string,
 };
 
 export { SettingsMenu };

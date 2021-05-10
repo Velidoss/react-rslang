@@ -1,4 +1,4 @@
-const determinateHeaderTitle = (pathname, groupNumber) => {
+const determinateHeaderTitle = (pathname: string, groupNumber: number) => {
   switch (pathname) {
     case '/textbook/learning':
       return 'Изучаемые слова';

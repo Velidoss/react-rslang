@@ -5,11 +5,9 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-
   settingsButton: {
     marginRight: theme.spacing(1),
   },
-
   groupButton: {
     marginRight: theme.spacing(3),
   },

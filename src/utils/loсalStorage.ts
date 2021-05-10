@@ -1,4 +1,6 @@
-function getLocalStorageItem(key: string, defaultValue: string) {
+import ItextBookLSLocation from './../constants/ItextBookLSLocation';
+
+function getLocalStorageItem(key: string, defaultValue: ItextBookLSLocation) {
   try {
     const item = window.localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
@@ -7,7 +9,7 @@ function getLocalStorageItem(key: string, defaultValue: string) {
   }
 }
 
-function setLocalStorageItem(key: string, value: string) {
+function setLocalStorageItem(key: string, value: ItextBookLSLocation) {
   window.localStorage.setItem(key, JSON.stringify(value));
 }
 

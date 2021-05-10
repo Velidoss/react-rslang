@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
 import {
   IconButton,
   Menu,
@@ -10,14 +9,20 @@ import { Bookmark } from '@material-ui/icons';
 import { textBookConstants, linkTypes } from '../../../../constants/textBookConstants';
 import { useAuth } from '../../../../contexts/AuthContext';
 
-const GroupsMenu = React.memo(({ className, setGroupNumber, setTextBookHeaderTitle }) => {
+interface GroupsMenuProps {
+  className?: string;
+  setGroupNumber: (value: number | ((prevValue: number) => number)) => void;
+  setTextBookHeaderTitle: (text: string) => void;
+}
+
+const GroupsMenu: React.FC<GroupsMenuProps> = React.memo(({ className, setGroupNumber, setTextBookHeaderTitle }) => {
   const { isAuth } = useAuth();
   const { LINK_PRIVATE } = linkTypes;
   const { getTextBookLinks } = textBookConstants;
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const history = useHistory();
 
-  const handleClick = (event) => { setAnchorEl(event.currentTarget); };
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => { setAnchorEl(event.currentTarget); };
   const handleClose = () => { setAnchorEl(null); };
   const menuItems = getTextBookLinks(setGroupNumber);
 
@@ -75,15 +80,5 @@ const GroupsMenu = React.memo(({ className, setGroupNumber, setTextBookHeaderTit
     </>
   );
 });
-
-GroupsMenu.defaultProps = {
-  className: null,
-};
-
-GroupsMenu.propTypes = {
-  className: PropTypes.string,
-  setGroupNumber: PropTypes.func.isRequired,
-  setTextBookHeaderTitle: PropTypes.func.isRequired,
-};
 
 export { GroupsMenu };

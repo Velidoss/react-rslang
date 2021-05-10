@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { List } from '@material-ui/core';
 //
@@ -10,8 +9,13 @@ import textBookSelector from '../../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../../contexts/AuthContext';
 import UserWordsPagination from '../../_common/UserWordsPagination/UserWordsPagination';
+import ITextBookWord from './../../../interfaces/ITextBookWord';
 
-const LearningWords = ({
+interface LearningWordsProps {
+  showTranslation: boolean;
+}
+
+const LearningWords: React.FC<LearningWordsProps> = ({
   showTranslation,
 }) => {
   const dispatch = useDispatch();
@@ -25,11 +29,11 @@ const LearningWords = ({
     isAuth,
   } = useAuth();
 
-  const changePage = (_, number) => { setPageNumber(number - 1); };
+  const changePage = (_: any, number: number) => { setPageNumber(number - 1); };
 
   useEffect(() => userId && token && dispatch(
     fetchLearningWords(userId, token, pageNumber),
-  ), [userId, token, pageNumber]);
+  ), [userId, token, pageNumber, dispatch]);
 
   return !isAuth
     ? <NoAuthPlaceholder />
@@ -38,7 +42,7 @@ const LearningWords = ({
         <div className="list-wrapper">
           <List className="list">
             {
-            learningWords.map((word) => (
+            learningWords.map((word: ITextBookWord) => (
               <WordItem
                 key={word._id}
                 word={word}
@@ -67,10 +71,6 @@ const LearningWords = ({
       }
       </>
     );
-};
-
-LearningWords.propTypes = {
-  showTranslation: PropTypes.bool.isRequired,
 };
 
 export { LearningWords };
