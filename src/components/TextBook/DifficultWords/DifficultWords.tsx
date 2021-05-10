@@ -17,8 +17,14 @@ import textBookSelector from '../../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../../contexts/AuthContext';
 import UserWordsPagination from '../../_common/UserWordsPagination/UserWordsPagination';
+import ITextBookWord from './../../../interfaces/ITextBookWord';
 
-const DifficultWords = ({
+interface DifficultWordsProps {
+  showControls: boolean; 
+  showTranslation: boolean;
+}
+
+const DifficultWords: React.FC<DifficultWordsProps> = ({
   showControls, showTranslation,
 }) => {
   const dispatch = useDispatch();
@@ -32,11 +38,11 @@ const DifficultWords = ({
     isAuth,
   } = useAuth();
 
-  const changePage = (_, number) => setPageNumber(number - 1);
+  const changePage = (_: any, number: number) => setPageNumber(number - 1);
 
   useEffect(() => userId && token && dispatch(
     fetchUserDifficultWords(userId, token, pageNumber),
-  ), [userId, token, pageNumber]);
+  ), [userId, token, pageNumber, dispatch]);
 
   return !isAuth
     ? <NoAuthPlaceholder />
@@ -45,7 +51,7 @@ const DifficultWords = ({
         <div className="list-wrapper">
           <List className="list">
             {
-            difficultWords.map((word) => (
+            difficultWords.map((word: ITextBookWord) => (
               <WordItem
                 key={word._id}
                 word={word}
@@ -78,11 +84,6 @@ const DifficultWords = ({
         </div>
       </>
     );
-};
-
-DifficultWords.propTypes = {
-  showControls: PropTypes.bool.isRequired,
-  showTranslation: PropTypes.bool.isRequired,
 };
 
 export { DifficultWords };
