@@ -1,10 +1,16 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 //
 import getPageStats from './getPageStats';
+import ITextBookWord from '../../../../interfaces/ITextBookWord';
+import IUserWord from './../../../../interfaces/IUserWord';
 
-const PageStats = React.memo(({ words, userWords }) => (
+interface PageStatsProps {
+  words: ITextBookWord[];
+  userWords: IUserWord[];
+}
+
+const PageStats: React.FC<PageStatsProps> = React.memo(({ words, userWords }) => (
   <>
     {
       Object.entries(getPageStats(words, userWords)).map(([label, value]) => (
@@ -15,10 +21,5 @@ const PageStats = React.memo(({ words, userWords }) => (
     }
   </>
 ));
-
-PageStats.propTypes = {
-  words: PropTypes.instanceOf(Array).isRequired,
-  userWords: PropTypes.instanceOf(Array).isRequired,
-};
 
 export { PageStats };

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { List } from '@material-ui/core';
@@ -11,8 +10,18 @@ import { PageStats } from './PageStats';
 import textBookSelector from '../../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../../contexts/AuthContext';
+import ITextBookWord from './../../../interfaces/ITextBookWord';
 
-const Dictionary = ({
+interface DictionaryProps {
+  words: ITextBookWord[];
+  showControls: boolean;
+  showTranslation: boolean;
+  pageNumber: number;
+  groupNumber: number;
+  changePage: (_: any, number: number) => void;
+}
+
+const Dictionary: React.FC<DictionaryProps> = ({
   words,
   showControls,
   showTranslation,
@@ -65,17 +74,6 @@ const Dictionary = ({
       </div>
     </>
   );
-};
-
-Dictionary.propTypes = {
-  words: PropTypes.arrayOf({
-    _id: PropTypes.number.isRequired,
-  }).isRequired,
-  showControls: PropTypes.bool.isRequired,
-  showTranslation: PropTypes.bool.isRequired,
-  pageNumber: PropTypes.number.isRequired,
-  groupNumber: PropTypes.number.isRequired,
-  changePage: PropTypes.func.isRequired,
 };
 
 export { Dictionary };
