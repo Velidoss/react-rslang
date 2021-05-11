@@ -4,7 +4,7 @@ import logoRSLang from '../../../../assets/logo-rslang.svg';
 //
 import styles from './NavLogo.style';
 
-const NavLogo = () => {
+const NavLogo: React.FC = () => {
   const classes = styles();
 
   return (

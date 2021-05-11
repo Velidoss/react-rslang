@@ -20,12 +20,12 @@ import { navLinks } from '../../../../config/navLinks';
 import styles from './NavDrawer.style';
 import ChooseLevel from '../../../MiniGames/ChooseLevel/ChooseLevel';
 
-const NavDrawer = () => {
+const NavDrawer: React.FC = () => {
   const classes = styles();
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [openModal, setOpenModal] = React.useState(false);
-  const [gamePathState, setGamePathState] = React.useState('/sprint');
-  const [gameName, setGameName] = React.useState('Спринт');
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const [gamePathState, setGamePathState] = React.useState<string>('/sprint');
+  const [gameName, setGameName] = React.useState<string>('Спринт');
 
   const toggleDrawer = () => { setIsOpen(!isOpen); };
 
@@ -37,7 +37,7 @@ const NavDrawer = () => {
     setOpenModal(false);
   };
 
-  const handleGameClick = (path, name) => {
+  const handleGameClick = (path: string, name: string) => {
     setGamePathState(path);
     setGameName(name);
     handleOpenModal();
@@ -117,7 +117,6 @@ const NavDrawer = () => {
             gamePath={gamePathState}
             handleCloseModal={handleCloseModal}
             gameName={gameName}
-            source="menu"
           />
         </Container>
       </Modal>

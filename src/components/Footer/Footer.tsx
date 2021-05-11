@@ -10,11 +10,11 @@ import { team, miniGameLocations } from '../../constants/mainConstants';
 //
 import styles from './Footer.style';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const classes = styles();
   const { pathname } = useLocation();
 
-  return !(miniGameLocations.includes(pathname)) && (
+  return !(miniGameLocations.includes(pathname)) ? (
     <footer className={classes.root}>
       <Box className={classes.wrapper}>
         <a
@@ -31,7 +31,7 @@ const Footer = () => {
         <Typography variant="subtitle2" className={classes.year}>2021</Typography>
       </Box>
     </footer>
-  );
+  ) : null;
 };
 
 export { Footer };

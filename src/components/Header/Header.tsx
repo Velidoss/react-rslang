@@ -12,7 +12,7 @@ import { HeaderAuth } from './HeaderAuth';
 //
 import styles from './Header.style';
 
-const Header = () => {
+const Header: React.FC = () => {
   const { pathname } = useLocation();
   const classes = styles();
 

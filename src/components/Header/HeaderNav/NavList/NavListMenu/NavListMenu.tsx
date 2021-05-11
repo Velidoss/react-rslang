@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {
   Menu, MenuItem, Modal, Container,
 } from '@material-ui/core';
@@ -9,6 +8,7 @@ import { HeaderButton } from '../../../../_common';
 import ChooseLevel from '../../../../MiniGames/ChooseLevel/ChooseLevel';
 //
 import { removeLocalStorageItem } from '../../../../../utils/loсalStorage';
+import INavLink from './../../../../../interfaces/INavLink';
 
 const useStyles = makeStyles((theme) => ({
   modalContainer: {
@@ -23,15 +23,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavListMenu = ({ label, links }) => {
+interface NavListMenuProps {
+  label: string;
+  links: INavLink[];
+}
+
+const NavListMenu: React.FC<NavListMenuProps> = ({ label, links }) => {
   const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openModal, setOpenModal] = React.useState(false);
-  const [gamePath, setGamePath] = React.useState('/sprint');
-  const [gameName, setGameName] = React.useState('Спринт');
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const [gamePath, setGamePath] = React.useState<string>('/sprint');
+  const [gameName, setGameName] = React.useState<string>('Спринт');
 
-  const handleClick = (event) => { setAnchorEl(event.currentTarget); };
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => { setAnchorEl(event.currentTarget); };
   const handleClose = () => { setAnchorEl(null); };
   const handleScroll = () => {
     if (anchorEl) {
@@ -53,7 +58,7 @@ const NavListMenu = ({ label, links }) => {
     setOpenModal(false);
   };
 
-  const handleGameClick = (path, name) => {
+  const handleGameClick = (path: string, name: string) => {
     removeLocalStorageItem('textBookLocation');
     setGamePath(path);
     setGameName(name);
@@ -107,14 +112,6 @@ const NavListMenu = ({ label, links }) => {
       </Modal>
     </>
   );
-};
-
-NavListMenu.propTypes = {
-  label: PropTypes.string.isRequired,
-  links: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string,
-    path: PropTypes.string,
-  })).isRequired,
 };
 
 export { NavListMenu };

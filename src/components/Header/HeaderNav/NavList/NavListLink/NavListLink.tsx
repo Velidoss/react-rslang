@@ -1,20 +1,19 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 //
 import { HeaderButton } from '../../../../_common';
 
-const NavListLink = ({ path, label }) => (
+interface NavListLinkProps {
+  path: string;
+  label: string;
+}
+
+const NavListLink: React.FC<NavListLinkProps> = ({ path, label }) => (
   <HeaderButton
     label={label}
     component={Link}
     to={path}
   />
 );
-
-NavListLink.propTypes = {
-  path: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-};
 
 export { NavListLink };

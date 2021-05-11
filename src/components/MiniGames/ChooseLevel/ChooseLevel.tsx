@@ -1,10 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Container, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import getRandomKey from '../../../utils/getRandomKey';
 import miniGamesConstants from '../../../constants/miniGamesConstants';
+
+
+interface ChooseLevelProps {
+  gamePath: string; 
+  gameName: string; 
+  handleCloseModal: () => void;
+}
 
 const useStyles = makeStyles(() => ({
   chooseLevelBtn: {
@@ -12,7 +18,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ChooseLevel = ({ gamePath, gameName, handleCloseModal }) => {
+const ChooseLevel: React.FC<ChooseLevelProps> = ({ gamePath, gameName, handleCloseModal }) => {
   const classes = useStyles();
   const randomPageNum = Math.floor(Math.random() * miniGamesConstants.pagesNum);
 
@@ -45,12 +51,6 @@ const ChooseLevel = ({ gamePath, gameName, handleCloseModal }) => {
       ))}
     </Container>
   );
-};
-
-ChooseLevel.propTypes = {
-  gamePath: PropTypes.string.isRequired,
-  gameName: PropTypes.string.isRequired,
-  handleCloseModal: PropTypes.func.isRequired,
 };
 
 export default ChooseLevel;

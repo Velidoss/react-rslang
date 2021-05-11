@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   ListItem,
@@ -7,7 +6,14 @@ import {
   ListItemText,
 } from '@material-ui/core';
 
-const NavDrawerItem = ({
+interface NavDrawerItemProps {
+  path: string;
+  label: string;
+  onClick: () => void;
+  icon: any;
+}
+
+const NavDrawerItem: React.FC<NavDrawerItemProps> = ({
   path, label, icon, onClick,
 }) => (
   <ListItem
@@ -21,12 +27,5 @@ const NavDrawerItem = ({
     <ListItemText primary={label} />
   </ListItem>
 );
-
-NavDrawerItem.propTypes = {
-  path: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  icon: PropTypes.instanceOf(Object).isRequired,
-};
 
 export { NavDrawerItem };

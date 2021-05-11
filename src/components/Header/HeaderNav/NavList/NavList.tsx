@@ -6,7 +6,7 @@ import { NavListMenu } from './NavListMenu';
 //
 import { navLinks } from '../../../../config/navLinks';
 
-const NavList = () => (
+const NavList: React.FC = () => (
   <Grid container alignItems="center" spacing={1}>
     {navLinks.map(({ label, path }) => (
       <Grid item key={label}>

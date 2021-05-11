@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {
   Box,
   Link,
@@ -10,7 +9,11 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 //
 import styles from './DevIcon.style';
 
-const DevIcon = ({ name }) => {
+interface DevIconProps {
+  name: string;
+}
+
+const DevIcon: React.FC<DevIconProps> = ({ name }) => {
   const classes = styles();
 
   return (
@@ -27,10 +30,6 @@ const DevIcon = ({ name }) => {
       </Link>
     </Box>
   );
-};
-
-DevIcon.propTypes = {
-  name: PropTypes.string.isRequired,
 };
 
 export { DevIcon };

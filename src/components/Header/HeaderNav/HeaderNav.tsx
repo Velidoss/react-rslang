@@ -5,7 +5,7 @@ import { NavList } from './NavList';
 import { NavDrawer } from './NavDrawer';
 import { NavLogo } from './NavLogo';
 
-const HeaderNav = () => (
+const HeaderNav: React.FC = () => (
   <Grid container alignItems="center" justify="space-between" spacing={2}>
     <Hidden mdUp>
       <Grid item>

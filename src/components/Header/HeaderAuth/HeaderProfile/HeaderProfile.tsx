@@ -10,7 +10,7 @@ import { useAuth } from '../../../../contexts/AuthContext';
 //
 import styles from './HeaderProfile.style';
 
-const HeaderProfile = () => {
+const HeaderProfile: React.FC = () => {
   const {
     auth: {
       name, avatar,

@@ -8,7 +8,7 @@ import { HeaderProfile } from './HeaderProfile';
 //
 import { useAuth } from '../../../contexts/AuthContext';
 
-const HeaderAuth = () => {
+const HeaderAuth: React.FC = () => {
   const { isAuth } = useAuth();
 
   return isAuth
