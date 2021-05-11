@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <AppBar
       position={pathname === '/' ? 'absolute' : 'static'}
-      className={pathname === '/' ? classes.root : null}
+      className={pathname === '/' ? classes.root : undefined}
     >
       <Toolbar>
         <Grid
