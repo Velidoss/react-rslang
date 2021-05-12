@@ -1,11 +1,14 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 //
 import { Box, Paper } from '@material-ui/core';
 //
 import styles from './FormCard.style';
 
-const FormCard = ({ children }) => {
+interface FormCardProps {
+  children: React.ReactNode[];
+}
+
+const FormCard: React.FC<FormCardProps> = ({ children }) => {
   const classes = styles();
 
   return (
@@ -15,10 +18,6 @@ const FormCard = ({ children }) => {
       </Paper>
     </Box>
   );
-};
-
-FormCard.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export { FormCard };

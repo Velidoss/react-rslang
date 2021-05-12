@@ -1,9 +1,9 @@
 // attribution
 // https://codepen.io/ryanmclaughlin/pen/XJopVe
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 
-export default makeStyles((theme) => ({
+export default makeStyles((theme: Theme) => ({
   root: {
     position: 'fixed',
     top: 0,
