@@ -5,7 +5,7 @@ import { ReactComponent as IconLoader } from '../../../assets/icon-loader.svg';
 //
 import styles from './Loader.style';
 
-const Loader = () => {
+const Loader: React.FC = () => {
   const classes = styles();
 
   return (
