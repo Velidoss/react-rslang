@@ -5,7 +5,7 @@ import { Profile } from './Profile/Profile';
 //
 import { useAuth } from '../../contexts/AuthContext';
 
-const Account = () => {
+const Account: React.FC = () => {
   const { isAuth } = useAuth();
 
   return isAuth

@@ -3,10 +3,10 @@ import { FormControlLabel, Switch } from '@material-ui/core';
 //
 import { useCustomTheme } from '../../../../contexts/CustomThemeContext';
 
-const ThemeSwitch = () => {
+const ThemeSwitch: React.FC = () => {
   const { changeTheme, isDark } = useCustomTheme();
 
-  const handleChange = () => {
+  const handleChange = (): void => {
     changeTheme(isDark ? 'light' : 'dark');
   };
 

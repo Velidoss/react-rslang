@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import {
   Grid,
   Dialog,
@@ -18,19 +17,27 @@ import { avatarSelector } from '../../../../store/selectors/avatarSelector';
 import { useAuthChange } from '../../../../contexts/AuthContext';
 //
 import styles from './AvatarModal.style';
+import { AppDispatch } from '../../../../store/store';
 
-const AvatarModal = ({
+interface AvatarModalProps {
+  open: boolean;
+  onClose: () => void,
+  userId: string,
+  token: string;
+}
+
+const AvatarModal: React.FC<AvatarModalProps> = ({
   open, onClose, userId, token,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const classes = styles();
-  const formRef = React.useRef();
+  const formRef = React.useRef<HTMLFormElement | null>(null);
   const { updateAvatar } = useAuthChange();
-  const [currentFile, setCurrentFile] = React.useState(null);
-  const [previewImage, setPreviewImage] = React.useState(null);
+  const [currentFile, setCurrentFile] = React.useState<any>(null);
+  const [previewImage, setPreviewImage] = React.useState<any>(null);
   const { isLoading } = useSelector(avatarSelector);
 
-  const selectFile = (event) => {
+  const selectFile = (event: any) => { //  aded any because of I could not type this part
     const img = event.target.files[0];
     setCurrentFile(img);
     setPreviewImage(URL.createObjectURL(img));
@@ -46,11 +53,11 @@ const AvatarModal = ({
     onClose();
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(formRef.current);
+    const data = new FormData(formRef.current ?? undefined);
 
-    dispatch(avatarUpdateAC(userId, token, data)).then((res) => {
+    dispatch(avatarUpdateAC(userId, token, data)).then((res: any) => { // type this later
       if (res) {
         updateAvatar(res);
       }
@@ -139,13 +146,6 @@ const AvatarModal = ({
       </DialogContent>
     </Dialog>
   );
-};
-
-AvatarModal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  userId: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
 };
 
 export { AvatarModal };

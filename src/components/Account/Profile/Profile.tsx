@@ -15,7 +15,7 @@ import { useAuthChange, useAuth } from '../../../contexts/AuthContext';
 import portraitPlaceholder from '../../../assets/portrait-placeholder.png';
 import styles from './Profile.style';
 
-const Profile = () => {
+const Profile: React.FC = () => {
   const classes = styles();
   const {
     auth: {

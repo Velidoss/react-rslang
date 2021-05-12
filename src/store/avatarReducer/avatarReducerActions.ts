@@ -1,6 +1,9 @@
 import axios from 'axios';
+import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 //
 import DataAccessConstants from '../../constants/DataAccessConstants';
+import { RootState } from '../store';
 import { AVATAR_REQUEST, AVATAR_SUCCESS, AVATAR_FAILURE } from './avatarReducerActionTypes';
 
 const {
@@ -10,9 +13,9 @@ const {
 
 const request = () => ({ type: AVATAR_REQUEST });
 const success = () => ({ type: AVATAR_SUCCESS });
-const failure = (message) => ({ type: AVATAR_FAILURE, payload: message });
+const failure = (message: string) => ({ type: AVATAR_FAILURE, payload: message });
 
-const sendData = (userId, token, data) =>
+const sendData = (userId:string, token: string, data: FormData) =>
   axios({
     data,
     method: 'put',
@@ -23,11 +26,14 @@ const sendData = (userId, token, data) =>
     },
   });
 
-export const avatarUpdateAC = (userId, token, data) => (dispatch) => {
+export const avatarUpdateAC: any = (
+    userId:string, token: string, data: FormData,
+  ): ThunkAction<void, RootState, unknown, AnyAction> => (dispatch): Promise<any> => {
+
   dispatch(request());
 
   return sendData(userId, token, data)
-    .then((res) => {
+    .then((res: any) => { // response without ok ??
       if (res.ok === false) {
         throw new Error();
       }
