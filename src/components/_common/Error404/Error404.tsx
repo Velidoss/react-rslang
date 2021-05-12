@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Box } from '@material-ui/core';
 
-const Error404 = () => (
+const Error404: React.FC = () => (
   <Typography>
     <Box component="h1">
       404
