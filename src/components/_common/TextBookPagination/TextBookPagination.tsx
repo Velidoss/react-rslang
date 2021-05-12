@@ -1,10 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Pagination } from '@material-ui/lab';
 //
 import { TEXTBOOK_PAGES_QUANTITY } from '../../../constants/textBookConstants';
 
-const TextBookPagination = ({ currentPage, changePage }) => (
+interface TextBookPaginationProps {
+  currentPage: number;
+  changePage: any;
+}
+
+const TextBookPagination: React.FC<TextBookPaginationProps> = (
+    { currentPage, changePage }
+  ) => (
   <Pagination
     shape="rounded"
     page={currentPage + 1}
@@ -12,10 +18,5 @@ const TextBookPagination = ({ currentPage, changePage }) => (
     onChange={changePage}
   />
 );
-
-TextBookPagination.propTypes = {
-  currentPage: PropTypes.number.isRequired,
-  changePage: PropTypes.func.isRequired,
-};
 
 export { TextBookPagination };
