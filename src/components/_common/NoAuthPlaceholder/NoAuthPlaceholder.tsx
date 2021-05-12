@@ -5,7 +5,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 //
 import styles from './NoAuthPlaceholder.style';
 
-const NoAuthPlaceholder = () => {
+const NoAuthPlaceholder: React.FC = () => {
   const classes = styles();
 
   return (
