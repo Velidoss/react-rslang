@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {
   Tab,
   Tabs,
@@ -9,10 +8,23 @@ import { TabPanel } from './TabPanel';
 //
 import styles from './VerticalTabPage.style';
 
-const VerticalTabPage = ({ ariaLabel, config }) => {
+interface VerticalTabPageProps {
+  ariaLabel: string; 
+  config: [{
+    label: string;
+    children: React.ReactNode;
+    index: number;
+    value: number;
+    tabPanelId: string;
+    tabId: string;
+    content: any;
+  }]
+}
+
+const VerticalTabPage: React.FC<VerticalTabPageProps> = ({ ariaLabel, config }) => {
   const classes = styles();
-  const [value, setValue] = React.useState(0);
-  const handleTabChange = (_, newValue) => { setValue(newValue); };
+  const [value, setValue] = React.useState<number>(0);
+  const handleTabChange = (_: any, newValue: number) => { setValue(newValue); };
 
   return (
     <div className={classes.root}>
@@ -54,16 +66,6 @@ const VerticalTabPage = ({ ariaLabel, config }) => {
       </div>
     </div>
   );
-};
-
-VerticalTabPage.propTypes = {
-  ariaLabel: PropTypes.string.isRequired,
-  config: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    tabId: PropTypes.string.isRequired,
-    tabPanelId: PropTypes.string.isRequired,
-    content: PropTypes.instanceOf(Object).isRequired,
-  })).isRequired,
 };
 
 export { VerticalTabPage };

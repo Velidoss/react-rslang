@@ -1,8 +1,16 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Box } from '@material-ui/core';
 
-const TabPanel = ({
+interface TabPanelProps {
+  children: React.ReactNode;
+  index: number;
+  value: number;
+  tabPanelId: string;
+  tabId: string;
+  className: any;
+}
+
+const TabPanel: React.FC<TabPanelProps> = ({
   children,
   value,
   index,
@@ -20,13 +28,5 @@ const TabPanel = ({
     {children}
   </Box>
 );
-
-TabPanel.propTypes = {
-  children: PropTypes.node.isRequired,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-  tabPanelId: PropTypes.string.isRequired,
-  tabId: PropTypes.string.isRequired,
-};
 
 export { TabPanel };

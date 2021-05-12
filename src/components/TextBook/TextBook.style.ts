@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const useTextBookStyles = makeStyles((theme) => ({
+const useTextBookStyles = makeStyles((theme: Theme) => ({
   root: {
     '& .header-wrapper': {
       margin: '1rem 0',
