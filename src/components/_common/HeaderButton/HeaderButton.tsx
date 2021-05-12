@@ -1,8 +1,11 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 
-const HeaderButton = ({ label, ...buttonProps }) => (
+interface HeaderButtonProps {
+  label: string;
+}
+
+const HeaderButton: React.FC<HeaderButtonProps> = ({ label, ...buttonProps }) => (
   <Button
     disableElevation
     variant="contained"
@@ -12,9 +15,5 @@ const HeaderButton = ({ label, ...buttonProps }) => (
     {label}
   </Button>
 );
-
-HeaderButton.propTypes = {
-  label: PropTypes.string.isRequired,
-};
 
 export { HeaderButton };
