@@ -1,4 +1,8 @@
-export default (words, userWords) =>
+import ITextBookWord from './../../../../interfaces/ITextBookWord';
+import IUserWord from './../../../../interfaces/IUserWord';
+
+
+const getPageStats = (words: ITextBookWord[], userWords: IUserWord[]) =>
   words.reduce(
     (acc, { id }) => {
       const userWord = userWords.find(({ wordId }) => id === wordId);
@@ -38,4 +42,7 @@ export default (words, userWords) =>
       'Правильных ответов': 0,
       'Неправильных ответов': 0,
     },
-  );
+);
+
+
+export default getPageStats;

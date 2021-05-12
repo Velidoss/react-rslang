@@ -15,8 +15,15 @@ import textBookSelector from '../../../store/selectors/textBookSelector';
 //
 import { useAuth } from '../../../contexts/AuthContext';
 import UserWordsPagination from '../../_common/UserWordsPagination/UserWordsPagination';
+import ITextBookWord from '../../../interfaces/ITextBookWord';
 
-const DeletedWords = ({
+
+interface DeletedWordsProps {
+  showControls: boolean; 
+  showTranslation: boolean;
+}
+
+const DeletedWords: React.FC<DeletedWordsProps> = ({
   showControls, showTranslation,
 }) => {
   const dispatch = useDispatch();
@@ -30,11 +37,11 @@ const DeletedWords = ({
     isAuth,
   } = useAuth();
 
-  const changePage = (_, number) => { setPageNumber(number - 1); };
+  const changePage = (_: any, number: number) => { setPageNumber(number - 1); };
 
   React.useEffect(() => {
     dispatch(fetchUserDeletedWords(userId, token, pageNumber));
-  }, [userId, token, pageNumber]);
+  }, [userId, token, pageNumber, dispatch]);
 
   return !isAuth
     ? <NoAuthPlaceholder />
@@ -43,7 +50,7 @@ const DeletedWords = ({
         <div className="list-wrapper">
           <List className="list">
             {
-              deletedWords.map((word) => (
+              deletedWords.map((word: ITextBookWord) => (
                 <WordItem
                   key={word._id}
                   word={word}
@@ -76,11 +83,6 @@ const DeletedWords = ({
         </div>
       </>
     );
-};
-
-DeletedWords.propTypes = {
-  showControls: PropTypes.bool.isRequired,
-  showTranslation: PropTypes.bool.isRequired,
 };
 
 export { DeletedWords };
