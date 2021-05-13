@@ -1,7 +1,8 @@
 export { AvatarUploadInput } from './AvatarUploadInput';
 export { Error404 } from './Error404';
 export { FormCard } from './FormCard';
-export { HeaderButton } from './HeaderButton';
+export { NavListLinkButton } from './NavListLinkButton';
+export { NavListMenuButton } from './NavListMenuButton';
 export { ImageLink } from './ImageLink';
 export { Loader } from './Loader';
 export { VerticalTabPage } from './VerticalTabPage';

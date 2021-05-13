@@ -10,12 +10,12 @@ import { Cancel } from '@material-ui/icons';
 //
 import style from './AvatarUploadInput.style';
 
-const AvatarUploadInput = () => {
-  const [currentFile, setCurrentFile] = React.useState(null);
-  const [previewImage, setPreviewImage] = React.useState(null);
+const AvatarUploadInput: React.FC = () => {
+  const [currentFile, setCurrentFile] = React.useState<any>(null);
+  const [previewImage, setPreviewImage] = React.useState<any>(null);
   const classes = style();
 
-  const selectFile = (event) => {
+  const selectFile = (event: any) => { //  aded any because of I could not type this part
     const img = event.target.files[0];
     setCurrentFile(img);
     setPreviewImage(URL.createObjectURL(img));
@@ -58,19 +58,19 @@ const AvatarUploadInput = () => {
               />
             )}
             {currentFile && (
-            <Typography
-              className={classes.imageName}
-              variant="body2"
-            >
-              {currentFile.name}
-            </Typography>
+              <Typography
+                className={classes.imageName}
+                variant="body2"
+              >
+                {currentFile.name}
+              </Typography>
             )}
           </Grid>
-          <Grid item>
+          <Grid item> 
             {previewImage && (
-            <IconButton color="secondary" component="span" type="contained" onClick={clearCurrentFile}>
-              <Cancel />
-            </IconButton>
+              <IconButton color="secondary" component="span" onClick={clearCurrentFile}>
+                <Cancel />
+              </IconButton>
             )}
           </Grid>
         </Grid>

@@ -4,11 +4,11 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 //
-import { HeaderButton } from '../../../../_common';
 import ChooseLevel from '../../../../MiniGames/ChooseLevel/ChooseLevel';
 //
 import { removeLocalStorageItem } from '../../../../../utils/loсalStorage';
 import INavLink from './../../../../../interfaces/INavLink';
+import { NavListMenuButton } from '../../../../_common/NavListMenuButton';
 
 const useStyles = makeStyles((theme) => ({
   modalContainer: {
@@ -68,10 +68,8 @@ const NavListMenu: React.FC<NavListMenuProps> = ({ label, links }) => {
 
   return (
     <>
-      <HeaderButton
+      <NavListMenuButton
         label={label}
-        aria-controls="simple-menu"
-        aria-haspopup="true"
         onClick={handleClick}
       />
       <Menu
