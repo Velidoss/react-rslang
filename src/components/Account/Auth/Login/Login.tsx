@@ -13,34 +13,42 @@ import {
   Typography,
 } from '@material-ui/core';
 //
-import { AvatarUploadInput, FormCard, Loader } from '../../../_common';
+import { FormCard, Loader } from '../../../_common';
 //
-import { registerAC } from '../../../../store/registerReducer/registerReducerActions';
-import { registerSelector } from '../../../../store/selectors/registerSelector';
+import { loginAC } from '../../../../store/loginReducer/loginReducerActions';
+import { loginSelector } from '../../../../store/selectors/loginSelector';
 //
+import { useAuthChange } from '../../../../contexts/AuthContext';
 import {
   emailInputFieldRules,
   textInputFieldRules,
-  getFormInputProps,
 } from '../../../../constants/authConstants';
+import { AppDispatch } from '../../../../store/store';
 
-const Register = () => {
-  const dispatch = useDispatch();
-  const formRef = React.useRef();
+const Login: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const formRef = React.useRef<HTMLFormElement | null>(null);
   const {
-    control, errors, handleSubmit,
+    control,
+    errors,
+    handleSubmit,
   } = useForm();
   const {
-    isReady,
     isLoading,
     isError,
     errorComponentProps,
-  } = useSelector(registerSelector, shallowEqual);
+  } = useSelector(loginSelector, shallowEqual);
+  const { login } = useAuthChange();
 
-  const onSubmit = () => {
-    const data = new FormData(formRef.current);
+  const onSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
+    const data = new FormData(formRef.current ?? undefined);
 
-    dispatch(registerAC(data));
+    dispatch(loginAC(data))
+      .then((res: any) => {
+        if (res) {
+          login(res);
+        }
+      });
   };
 
   return (
@@ -52,20 +60,15 @@ const Register = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h6" align="center">Регистрация</Typography>
+            <Typography variant="h6" align="center">Логин</Typography>
             {
-              isError && (
-              <Typography variant="subtitle2" align="center" color="error">
-                {errorComponentProps.message}
-              </Typography>
-              )
-            }
-            {
-              isReady && (
-              <Typography variant="subtitle2" align="center">
-                Теперь вы можете войти в профиль на вкладке Логин
-              </Typography>
-              )
+              isError
+                ? (
+                  <Typography variant="subtitle2" align="center" color="error">
+                    {errorComponentProps.message}
+                  </Typography>
+                )
+                : null
             }
           </Grid>
           <Grid item xs={12}>
@@ -78,29 +81,14 @@ const Register = () => {
                   defaultValue=""
                   render={(props) => (
                     <TextField
-                      {...getFormInputProps(true)}
+                      required
+                      fullWidth={true}
+                      size="small"
+                      variant="outlined"
                       label="E-mail"
                       placeholder="example@mail.com"
                       error={!!(errors.email)}
                       helperText={errors.email?.message}
-                      {...props}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="name"
-                  rules={textInputFieldRules}
-                  control={control}
-                  defaultValue=""
-                  render={(props) => (
-                    <TextField
-                      {...getFormInputProps(true)}
-                      label="Никнейм"
-                      placeholder="User123"
-                      error={!!(errors.name)}
-                      helperText={errors.name?.message}
                       {...props}
                     />
                   )}
@@ -114,7 +102,10 @@ const Register = () => {
                   defaultValue=""
                   render={(props) => (
                     <TextField
-                      {...getFormInputProps(true)}
+                      required
+                      fullWidth={true}
+                      size="small"
+                      variant="outlined"
                       type="password"
                       label="Пароль"
                       placeholder="Password123"
@@ -124,9 +115,6 @@ const Register = () => {
                     />
                   )}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <AvatarUploadInput />
               </Grid>
             </Grid>
           </Grid>
@@ -139,7 +127,7 @@ const Register = () => {
               variant="contained"
               type="submit"
             >
-              Зарегистрироваться
+              Войти
             </Button>
           </Grid>
         </Grid>
@@ -148,4 +136,4 @@ const Register = () => {
   );
 };
 
-export { Register };
+export { Login };

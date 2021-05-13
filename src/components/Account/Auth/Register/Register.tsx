@@ -13,42 +13,34 @@ import {
   Typography,
 } from '@material-ui/core';
 //
-import { FormCard, Loader } from '../../../_common';
+import { AvatarUploadInput, FormCard, Loader } from '../../../_common';
 //
-import { loginAC } from '../../../../store/loginReducer/loginReducerActions';
-import { loginSelector } from '../../../../store/selectors/loginSelector';
+import { registerAC } from '../../../../store/registerReducer/registerReducerActions';
+import { registerSelector } from '../../../../store/selectors/registerSelector';
 //
-import { useAuthChange } from '../../../../contexts/AuthContext';
 import {
   emailInputFieldRules,
   textInputFieldRules,
-  getFormInputProps,
 } from '../../../../constants/authConstants';
+import { AppDispatch } from '../../../../store/store';
 
-const Login = () => {
-  const dispatch = useDispatch();
-  const formRef = React.useRef();
+const Register = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const formRef = React.useRef<HTMLFormElement | null>(null);
   const {
-    control,
-    errors,
-    handleSubmit,
+    control, errors, handleSubmit,
   } = useForm();
   const {
+    isReady,
     isLoading,
     isError,
     errorComponentProps,
-  } = useSelector(loginSelector, shallowEqual);
-  const { login } = useAuthChange();
+  } = useSelector(registerSelector, shallowEqual);
 
-  const onSubmit = () => {
-    const data = new FormData(formRef.current);
+  const onSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
+    const data = new FormData(formRef.current ?? undefined);
 
-    dispatch(loginAC(data))
-      .then((res) => {
-        if (res) {
-          login(res);
-        }
-      });
+    dispatch(registerAC(data));
   };
 
   return (
@@ -60,15 +52,20 @@ const Login = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h6" align="center">Логин</Typography>
+            <Typography variant="h6" align="center">Регистрация</Typography>
             {
-              isError
-                ? (
-                  <Typography variant="subtitle2" align="center" color="error">
-                    {errorComponentProps.message}
-                  </Typography>
-                )
-                : null
+              isError && (
+              <Typography variant="subtitle2" align="center" color="error">
+                {errorComponentProps.message}
+              </Typography>
+              )
+            }
+            {
+              isReady && (
+              <Typography variant="subtitle2" align="center">
+                Теперь вы можете войти в профиль на вкладке Логин
+              </Typography>
+              )
             }
           </Grid>
           <Grid item xs={12}>
@@ -81,11 +78,35 @@ const Login = () => {
                   defaultValue=""
                   render={(props) => (
                     <TextField
-                      {...getFormInputProps(true)}
+                      required
+                      fullWidth={true}
+                      size="small"
+                      variant="outlined"
                       label="E-mail"
                       placeholder="example@mail.com"
                       error={!!(errors.email)}
                       helperText={errors.email?.message}
+                      {...props}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  name="name"
+                  rules={textInputFieldRules}
+                  control={control}
+                  defaultValue=""
+                  render={(props) => (
+                    <TextField
+                      required
+                      fullWidth={true}
+                      size="small"
+                      variant="outlined"
+                      label="Никнейм"
+                      placeholder="User123"
+                      error={!!(errors.name)}
+                      helperText={errors.name?.message}
                       {...props}
                     />
                   )}
@@ -99,7 +120,10 @@ const Login = () => {
                   defaultValue=""
                   render={(props) => (
                     <TextField
-                      {...getFormInputProps(true)}
+                      required
+                      fullWidth={true}
+                      size="small"
+                      variant="outlined"
                       type="password"
                       label="Пароль"
                       placeholder="Password123"
@@ -109,6 +133,9 @@ const Login = () => {
                     />
                   )}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <AvatarUploadInput />
               </Grid>
             </Grid>
           </Grid>
@@ -121,7 +148,7 @@ const Login = () => {
               variant="contained"
               type="submit"
             >
-              Войти
+              Зарегистрироваться
             </Button>
           </Grid>
         </Grid>
@@ -130,4 +157,4 @@ const Login = () => {
   );
 };
 
-export { Login };
+export { Register };

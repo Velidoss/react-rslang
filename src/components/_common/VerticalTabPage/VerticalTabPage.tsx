@@ -7,18 +7,11 @@ import {
 import { TabPanel } from './TabPanel';
 //
 import styles from './VerticalTabPage.style';
+import ITabConfig from './../../../interfaces/ITabConfig';
 
 interface VerticalTabPageProps {
   ariaLabel: string; 
-  config: [{
-    label: string;
-    children: React.ReactNode;
-    index: number;
-    value: number;
-    tabPanelId: string;
-    tabId: string;
-    content: any;
-  }]
+  config: ITabConfig[];
 }
 
 const VerticalTabPage: React.FC<VerticalTabPageProps> = ({ ariaLabel, config }) => {

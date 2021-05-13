@@ -19,7 +19,7 @@ const tabsConfig = [
   },
 ];
 
-const Auth = () => (
+const Auth: React.FC = () => (
   <VerticalTabPage
     ariaLabel="auth-tabs"
     config={tabsConfig}
